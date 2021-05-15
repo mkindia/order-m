@@ -9,7 +9,7 @@ $("#consi2 tbody").on('click', '#sho', function () {
 
     var url = $("#indexForm").attr("data-url");
 
-    var currow = $(this).attr("sat")
+    var currow = $(this).attr("sat");
     // var currow=$(this).attr('sat');
     // var col1 = currow.find('td:eq(0)').text();
     
@@ -25,6 +25,21 @@ $("#consi2 tbody").on('click', '#sho', function () {
 
     });
 
+
+    $.ajax({
+
+        url: url="sentform",
+        data: {
+            'orderid': currow
+        },
+        success: function (data) {
+            $("#sentdetaildata").html(data);
+        }
+
+    });
+   
+  
+   
 });
 
 
@@ -33,8 +48,8 @@ $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
     var url = $("#sentdetailform").attr("sentdetail-url");
    
     //var url="sent_data"
-    var id = $(this).attr("atb")
-   
+    var id = $(this).attr("atb");
+  
     // var currow=$(this).attr('sat');
     // var col1 = currow.find('td:eq(0)').text();
     $.ajax({
@@ -80,7 +95,24 @@ $("#consid").change(function(){
 
         }
 
-    });       
+    });     
+    
+
+    //for sent refresh
+    alert(programingId)
+    
+    $.ajax({
+
+        url: url,
+        data: {
+            'orderid': programingId
+        },
+        success: function (data) {
+            $("#sentdetaildata").html(data);
+        }
+
+    });
+
 
 });    
 
