@@ -1,0 +1,53 @@
+                                <!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Client</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'  %}">
+
+
+</head>
+
+<body>
+
+<div class="container-fluid" >
+    
+    <div class="row justify-content-lg-center">
+        
+        <div class="col col-lg-4 ">
+            <h6 class="alert alert-primary text-center "> New Consinees </h6>
+            
+            <form class="form" action="#" method="POST">
+                {% csrf_token %}                
+                {{form}}
+                                </br>
+                  <select style="display:none;" name="submit">
+                 <option></option> </select>
+                 <div lass="d-grid gap-2 d-md-flex justify-content-md-end me-3">
+                    <input class="btn btn-info" type="submit">
+                 </div>
+            </form>
+                      
+           
+        </div>
+       
+    </div>
+
+</div>
+        
+     
+
+        <script src="{% static 'js/bootstrap.js' %}"></script>
+        <script src="{% static 'js/popper.js' %}"></script>
+        <script src="{% static 'js/jQuery.js' %}"></script>
+        <script src="{% static 'js/ajex.js' %}"></script>
+
+       
+
+
+
+</body>
+
+</html>

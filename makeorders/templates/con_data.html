@@ -1,0 +1,38 @@
+
+                        {% for con in consi %}
+                            <tr class="text-center">
+                               
+                                <td>
+                                    {{ con.consignee }}
+                                </td>
+                                <td>
+                                    {{ con.station }}
+                                </td>
+                                
+                                <td>
+                                    {{ con.trasport }}
+                                </td>
+
+                                <td>
+                                
+                                        
+                                        <form action="{% url 'addorder' con.id %}" method="GET" class="d-inline" >
+                                     
+                                        <input class="btn btn-outline-primary btn-sm" type="submit" value="Add Order">
+                                        </form>
+                                        
+                                        
+                                        <form action="{% url 'edit_consignee' con.id  %}"  method="POST" class="d-inline" >
+                                            {% csrf_token %}
+                                                                                 
+                                        <input class="btn btn-outline-success btn-sm" type="submit"  value="Edit" >
+                                        </form>
+                                        
+                                        
+                                        <input class="btn btn-outline-secondary btn-sm d-inline" id="sho" sat={{con.id}} type="button"
+                                        value="Orders">
+                                        
+                                        
+                                </td>
+                            </tr>
+                            {% endfor %}

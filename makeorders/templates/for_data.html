@@ -1,0 +1,38 @@
+
+        {% for orders in order %}
+        <tr class="text-center" {% if orders.ordered_cartons == orders.sent_cancel %} 
+        style="background-color:#e0fbea;" {% else %} style="background-color: #FFFFFF;" {% endif %}>
+               <td>
+                        {{ orders.orderdate}}
+                </td>
+                <td>
+                        {{ orders.item_name }}
+                </td>
+                <td>
+                        {{ orders.ordered_cartons }}
+                </td>              
+                <td>
+                        {{ orders.sent_cancel }}
+                </td>
+                <td>
+                        {{orders.balance}}
+                </td>
+                
+                <td>
+                                 <!-- Button trigger modal -->
+                            
+                        <input type="button" {% if orders.sent_cancel == 0 %} disabled=true {% endif %} class="btn btn-outline-success btn-sm" data-bs-toggle="modal" 
+                        data-bs-target="#sent_datails" id="sentdetailbtn" atb={{ orders.id }} value="Details" >
+                                               
+                
+                        
+                      
+                       <form action="{% url 'addsent' orders.id %}" method="GET" class="d-inline" >
+                                     
+                                        <input class="btn btn-outline-primary btn-sm" type="submit"
+                                        {% if orders.ordered_cartons == orders.sent_cancel %} disabled=true  {% endif %} value="Send">
+                         </form>
+                        
+                </td>
+        </tr>
+        {% endfor %}

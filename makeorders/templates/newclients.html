@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Client</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css'  %}">
+  
+</head>
+
+<body>
+
+    <div class="container-xl-fluid">
+        <div class="row">
+           
+            <div class="col-xl-12">
+            <form action="{% url 'add_party' %}" method="POST">
+                        {% csrf_token %}
+                <div  class="row">
+                        
+                             <div id="confind" con-url={% url 'con_id' %}  class=" col-xl-5 p-3 bg-light">
+                                <select id="consid" class="form-select form-select-md mb-md-2 bold" name='id'>
+                                    <option class="fs-5" value="selectparty"> Select Party</option>
+                                      {% for con in partys %}
+                                          <option class="fs-5" value="{{ con.id }} "> {{ con.party }}</option>
+                                       {% endfor %}
+                                </select>
+                              </div>
+                        
+                       <div class=" col-xl-7 p-3 bg-light ">
+                        
+                             <input  type="submit" id="add_consignee" class="btn btn-info" value="Add Consinee"> 
+                              <button  type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#add_party">
+                                Add Party
+                              </button>   
+                     
+                        </div>
+                  
+                </div>
+            </form>
+               
+            </div>
+       
+
+
+            <div class="col-xl-5 p-3 bg-light">
+
+                <div id="indexForm" data-url="{% url 'for_data' %}">
+                    {% csrf_token %}
+
+                    <h6 class="alert alert-danger text-center "><strong>CONSIGNEES</strong></h6>
+
+
+                    <table class="table table-small" id="consi2">
+                        <thead class="thead-light">
+                            <tr class="text-center">
+                                <th scope="col">Consignee</th>
+                                <th scope="col">Station</th>                               
+                                <th scope="col">Trasport</th>
+                                <th scope="col">Options</th>
+                            </tr>
+                        </thead>
+                        <tbody id="consign">
+                           
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+
+            </div>
+            <div class="col-xl-7 p-3">
+
+                <h6 class="alert alert-success text-center"><strong>ORDERS</strong></h6>
+
+                <form id="sentdetailform" sentdetail-url="{% url 'sent_data' %}">
+                <table class="table" id="ordertableid">
+                    <thead class="thead-dark">
+                        <tr class="text-center">
+                            <th scope="col">Date </th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Crtons</th>
+                            <th scope="col">Sent/Cancel</th>                         
+                            <th scope="col">Balance</th>   
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="orders">
+
+                    </tbody>
+
+                </table>
+                </form>
+            </div>
+
+        </div>
+
+               
+    </div>
+
+
+
+
+<!-- Modal add_party-->
+<div class="modal fade" id="add_party" data-bs-backdrop="static" data-bs-keyboard="false"
+ tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Party</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+        {% csrf_token%}
+            {{clientform}}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3 mb-3">
+                <input class="btn btn-success " type="submit" name="submit_button">
+            </div>
+         
+        </form>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Modal Show Sent Details-->
+<div class="modal fade" id="sent_datails" tabindex="-1" data-bs-backdrop="static"
+ data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Orders Sent Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+            
+            <form > 
+                <table class="table" id="sentdetailtable">
+                    <thead class="thead-dark">
+                        <tr class="text-center">
+                            <th scope="col">Date </th>                            
+                            <th scope="col">Crtons</th>
+                            <th scope="col">Status</th>                        
+                            <th scope="col">By</th> 
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="sentdetaildata" >
+                        
+                    </tbody>
+
+                </table>
+
+            </form>
+               
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+   
+   
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script src="{% static 'js/popper.js' %}"></script>
+    <script src="{% static 'js/jQuery.js' %}"></script>
+    <script src="{% static 'js/ajex.js' %}"></script>
+   
+
+</body>
+
+</html>

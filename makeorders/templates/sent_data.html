@@ -1,0 +1,27 @@
+                        {% for details in sent_details %}
+                            <tr class="text-center">
+
+
+                                <td>
+                                    {{details.date }}
+                                </td>
+                                <td>
+                                    {{ details.cartons }}
+                                </td>
+                                
+                                <td>
+                                    {{ details.status }}
+                                </td>
+                                <td>
+                                    {{ details.by }}
+                                </td>
+                               <td>
+                                    <form action="#" method="POST" class="d-inline" >                                     
+                                        <input class="btn btn-outline-primary btn-sm" type="submit" value="Edit">
+                                    </form>
+                                     <form action="#" method="POST" class="d-inline" >                                     
+                                        <input class="btn btn-outline-secondary btn-sm" type="submit" value="Delete">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
