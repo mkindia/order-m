@@ -20,7 +20,7 @@
                 <div  class="row bg-dark m-0">
                         <div class="col-md-6 p-2">
                              <div id="confind" con-url={% url 'con_id' %} >
-                                <select id="consid" class="form-select fs-5" name='id'>
+                                <select id="consid" class="form-select" name='id'>
                                     <option class="fs-5" value="selectparty"> Select Party</option>
                                       {% for con in partys %}
                                           <option class="fs-5" value="{{ con.id }} "> {{ con.party }}</option>
@@ -30,8 +30,8 @@
                         </div>
                        <div class=" col-md-6 p-2">
                         
-                             <input  type="submit" id="add_consignee" class="btn btn-primary fs-5" value="Add Consinee"> 
-                              <button  type="button" class="btn btn-primary fs-5" data-bs-toggle="modal" data-bs-target="#add_party">
+                             <input  type="submit" id="add_consignee" class="btn btn-primary btn-sm" value="Add Consinee"> 
+                              <button  type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#add_party">
                                 Add Party
                               </button>   
                      
@@ -44,41 +44,43 @@
        
 
 
-            <div class="col-lg-6 pt-2 bg-light">
+            <div class="col-lg-12 pt-2 bg-light over">
 
-                <div id="indexForm" data-url="{% url 'for_data' %}">
+                <div id="indexForm" data-url="{% url 'for_data' %}" class="table-responsive">
                     {% csrf_token %}
 
-                    <h6 class="alert alert-danger text-center fs-4"><strong>Consignees</strong></h6>
+                    <h6 class="alert alert-danger text-center fs-6s"><strong>Consignees</strong></h6>
 
-
-                    <table class="table table-small" id="consi2">
-                        <thead class="thead-light">
-                            <tr class="text-center fs-5">
+                     
+                    <table class="table" id="consi2">
+                        <thead class="table-dark">
+                            <tr class="text-center">
                                 <th scope="col">Consignee</th>
                                 <th scope="col">Station</th>                               
                                 <th scope="col">Trasport</th>
                                 <th scope="col">Options</th>
                             </tr>
                         </thead>
+                                          
                         <tbody id="consign">
                            
                         </tbody>
+                       
                     </table>
-
-
+                   
+                   
 
                 </div>
 
             </div>
-            <div class="col-lg-6 pt-2">
+            <div class="col-lg-12 pt-2">
 
-                <h6 class="alert alert-success text-center fs-4"><strong>Orders</strong></h6>
+                <h6 class="alert alert-success text-center fs-6"><strong>Orders</strong></h6>
 
-                <form id="sentdetailform" sentdetail-url="{% url 'sent_data' %}">
+                <form id="sentdetailform" sentdetail-url="{% url 'sent_data' %}" class="table-responsive">
                 <table class="table" id="ordertableid">
-                    <thead class="thead-dark">
-                        <tr class="text-center fs-5">
+                    <thead class="table-dark">
+                        <tr class="text-center">
                             <th scope="col">Date </th>
                             <th scope="col">Item</th>
                             <th scope="col">Crtons</th>
@@ -89,7 +91,7 @@
                     </thead>
 
                     <tbody id="orders">
-
+                        
                     </tbody>
 
                 </table>
@@ -130,7 +132,6 @@
 </div>
 
 
-
 <!-- Modal Show Sent Details-->
 <div class="modal fade" id="sent_datails" tabindex="-1" 
  data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -168,8 +169,6 @@
     </div>
   </div>
 </div>
-
-
 
    
    

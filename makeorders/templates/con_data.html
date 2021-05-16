@@ -1,6 +1,7 @@
 
                         {% for con in consi %}
-                            <tr class="text-center fs-4">
+                       
+                            <tr class="text-center fw-bolder">
                                
                                 <td>
                                     {{ con.consignee }}
@@ -18,25 +19,27 @@
                                         
                                         <form action="{% url 'addorder' con.id %}" method="GET" class="d-inline" >
                                      
-                                        <input class="btn btn-primary" type="submit" value="Add Order">
+                                        <input class="btn btn-primary btn-sm" type="submit" value="Add Order">
                                         </form>
                                         
                                         
                                         <form action="{% url 'edit_consignee' con.id  %}"  method="POST" class="d-inline" >
                                             {% csrf_token %}
                                                                                  
-                                        <input class="btn btn-success" type="submit"  value="Edit" >
+                                        <input class="btn btn-success btn-sm" type="submit"  value="Edit" >
                                         </form>
                                         <form action="#"  method="POST" class="d-inline" >
                                             {% csrf_token %}
                                                                                  
-                                        <input class="btn btn-danger" type="submit"  value="Delete" >
+                                        <input class="btn btn-danger btn-sm" type="submit"  value="Delete" >
                                         </form>                                        
                                         <form class="d-inline">
-                                        <input class="btn btn-dark" id="sho" sat={{con.id}} type="button"
+                                        <input class="btn btn-dark btn-sm" id="sho" sat={{con.id}} type="button"
                                         value="Orders">
                                         </form>
                                         
                                 </td>
+                                
                             </tr>
+                           
                             {% endfor %}

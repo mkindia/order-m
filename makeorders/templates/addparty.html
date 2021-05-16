@@ -20,14 +20,15 @@
          
             <h5 class="alert alert-primary text-center fs-4 "> New Consinees </h5>
             
-            <form class="form fs-4" action="#" method="POST">
-                {% csrf_token %}                
+            <form class="form fs-3" action="" method="POST">
+                {% csrf_token %}  
+                             
                 {{form.as_p}}
-                                </br>
+                                               </br>
                   <select style="display:none;" name="submit">
                  <option></option> </select>
-                 <div class="d-grid gap-2 d-md-flex justify-content-md-end me-3">
-                    <input class="btn btn-info" type="submit">
+                 <div class="d-grid gap-2 d-md-flex justify-content-end me-3">
+                    <input class="btn btn-info btn-lg" type="submit">
                  </div>
             </form>
                       
