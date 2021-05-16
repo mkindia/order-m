@@ -11,14 +11,14 @@
 
 <body>
 
-    <div class="container-xxl">
+    <div class="container-lg">
         <div class="row ">
            
-            <div class="col-sm-12 justify-content-center">
+            <div class="col-md-12 justify-content-center">
             <form action="{% url 'add_party' %}" method="POST">
                         {% csrf_token %}
                 <div  class="row bg-dark m-0">
-                        <div class="col-sm-5 p-2">
+                        <div class="col-md-6 p-2">
                              <div id="confind" con-url={% url 'con_id' %} >
                                 <select id="consid" class="form-select fs-5" name='id'>
                                     <option class="fs-5" value="selectparty"> Select Party</option>
@@ -28,7 +28,7 @@
                                 </select>
                               </div>
                         </div>
-                       <div class=" col-sm-7 p-2">
+                       <div class=" col-md-6 p-2">
                         
                              <input  type="submit" id="add_consignee" class="btn btn-primary fs-5" value="Add Consinee"> 
                               <button  type="button" class="btn btn-primary fs-5" data-bs-toggle="modal" data-bs-target="#add_party">
@@ -44,7 +44,7 @@
        
 
 
-            <div class="col-xl-5 pt-2 bg-light">
+            <div class="col-lg-6 pt-2 bg-light">
 
                 <div id="indexForm" data-url="{% url 'for_data' %}">
                     {% csrf_token %}
@@ -71,7 +71,7 @@
                 </div>
 
             </div>
-            <div class="col-xl-7 pt-2">
+            <div class="col-lg-6 pt-2">
 
                 <h6 class="alert alert-success text-center fs-4"><strong>Orders</strong></h6>
 

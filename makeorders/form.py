@@ -1,4 +1,5 @@
 from django import forms
+from django.forms.forms import Form
 from .models import Clients, Consignees, Orders, Sentorder
 
 class Clientform(forms.ModelForm):
@@ -15,9 +16,10 @@ class consigneeform(forms.ModelForm):
     class Meta:
         model = Consignees
         fields = ['consignee', 'station', 'trasport',]
-        widgets = {'consignee':forms.TextInput(attrs={'class':'form-control'}),
-        'station':forms.TextInput(attrs={'class':'form-control'}),        
-        'trasport':forms.TextInput(attrs={'class':'form-control'}),}
+        labels={'consignee':'Consignee',}
+        widgets = {'consignee':forms.TextInput(attrs={'class':'form-control form-control-lg'}),                      
+                    'station':forms.TextInput(attrs={'class':'form-control form-control-lg'}),        
+                   'trasport':forms.TextInput(attrs={'class':'form-control form-control-lg'}),}
                 
 
 

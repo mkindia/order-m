@@ -12,20 +12,21 @@
 
 <body>
 
-<div class="container-fluid" >
+<div class="container-lg" >
     
     <div class="row justify-content-lg-center">
         
-        <div class="col col-lg-4 ">
-            <h6 class="alert alert-primary text-center "> New Consinees </h6>
+        <div class="col">
+         
+            <h5 class="alert alert-primary text-center fs-4 "> New Consinees </h5>
             
-            <form class="form" action="#" method="POST">
+            <form class="form fs-4" action="#" method="POST">
                 {% csrf_token %}                
-                {{form}}
+                {{form.as_p}}
                                 </br>
                   <select style="display:none;" name="submit">
                  <option></option> </select>
-                 <div lass="d-grid gap-2 d-md-flex justify-content-md-end me-3">
+                 <div class="d-grid gap-2 d-md-flex justify-content-md-end me-3">
                     <input class="btn btn-info" type="submit">
                  </div>
             </form>

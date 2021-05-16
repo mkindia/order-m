@@ -38,16 +38,14 @@ def con_id(request):
 
 def add_consignee(request): 
     if request.method == 'POST':
-        party_id=Party_id
-        print(party_id)                   
-        
+        party_id=Party_id       
         confom=consigneeform(request.POST)           
         if confom.is_valid(): 
                 sht=confom.cleaned_data['consignee']
                 sta=confom.cleaned_data['station']           
                 tr=confom.cleaned_data['trasport']
                 sev=Consignees(party_id=party_id, consignee=sht, station=sta, trasport=tr)
-                #sev.save()          
+                sev.save()          
                 print("seved")                   
                 return HttpResponseRedirect('/')
         confom=consigneeform()    

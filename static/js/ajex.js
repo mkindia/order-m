@@ -26,20 +26,7 @@ $("#consi2 tbody").on('click', '#sho', function () {
     });
 
 
-    $.ajax({
-
-        url: url="sentform",
-        data: {
-            'orderid': currow
-        },
-        success: function (data) {
-            $("#sentdetaildata").html(data);
-        }
-
-    });
-   
-  
-   
+       
 });
 
 
@@ -82,6 +69,24 @@ $("#consid").change(function(){
         document.getElementById('add_consignee').disabled=true;
     }
 
+    // for clear orders
+    url2="/for_data/";
+     var orderid = 0;
+    //alert(url)
+    $.ajax({
+
+        url: url2,
+        data: {
+            'orderid': orderid
+        },
+        success: function (data) {    
+                   
+            $("#orders").html(data);
+        }
+
+    });
+
+// for connsignees
       
     $.ajax({
 
@@ -95,24 +100,10 @@ $("#consid").change(function(){
 
         }
 
-    });     
+    }); 
     
 
-    //for sent refresh
-    alert(programingId)
-    
-    $.ajax({
-
-        url: url,
-        data: {
-            'orderid': programingId
-        },
-        success: function (data) {
-            $("#sentdetaildata").html(data);
-        }
-
-    });
-
+     
 
 });    
 

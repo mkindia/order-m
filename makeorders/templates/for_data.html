@@ -1,6 +1,6 @@
 
         {% for orders in order %}
-        <tr class="text-center fs-4" {% if orders.ordered_cartons == orders.sent_cancel %} 
+        <tr class="text-center fs-6" {% if orders.ordered_cartons == orders.sent_cancel %} 
         style="background-color:#e0fbea;" {% else %} style="background-color: #FFFFFF;" {% endif %}>
                <td>
                         {{ orders.orderdate}}
@@ -20,17 +20,18 @@
                 
                 <td>
                                  <!-- Button trigger modal -->
-                            
-                        <input type="button" {% if orders.sent_cancel == 0 %} disabled=true {% endif %} class="btn btn-success btn-sm" data-bs-toggle="modal" 
-                        data-bs-target="#sent_datails" id="sentdetailbtn" atb={{ orders.id }} value="Details" >
-                                               
-                
-                        
+                        <form class="d-inline">
+                                         <input type="button" {% if orders.sent_cancel == 0 %} disabled=true {% endif %} 
+                                         class="btn btn-success " data-bs-toggle="modal" 
+                                                data-bs-target="#sent_datails" id="sentdetailbtn" 
+                                                atb={{ orders.id }}  value="Details">
+                        </form>                    
                       
                        <form action="{% url 'addsent' orders.id %}" method="GET" class="d-inline" >
                                      
-                                        <input class="btn btn-primary btn-sm" type="submit"
-                                        {% if orders.ordered_cartons == orders.sent_cancel %} disabled=true  {% endif %} value="Send">
+                                        <input class="btn btn-primary mt-1 " type="submit"
+                                        {% if orders.ordered_cartons == orders.sent_cancel %} disabled=true  {% endif %} 
+                                        value="Send">
                          </form>
                         
                 </td>
