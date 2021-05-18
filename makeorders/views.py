@@ -5,7 +5,7 @@ from makeorders import form
 
 
 # Create your views here.
-def newclients(request):      
+def home(request):      
     
     con = Consignees.objects.all()    
     party=Clients.objects.all()
@@ -23,7 +23,7 @@ def newclients(request):
         clientform=Clientform()
         sentorder_form=consigneeform()
 
-    return render(request, "newclients.html", {'cons': con, 'partys':party,'sent_details':sentdatails,
+    return render(request, "index.html", {'cons': con, 'partys':party,'sent_details':sentdatails,
     'clientform':clientform, 'sentorder_form':sentorder_form,})
 
 def con_id(request):

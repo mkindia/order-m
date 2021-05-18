@@ -19,7 +19,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.newclients, name='newclients'),
+    path('', views.home, name='home'),
     path('for_data/',views.order_data, name='for_data'),
     path('addparty/',views.add_consignee, name='add_party'),
     path('editconsignee/<int:conid>/',views.edit_consignee, name='edit_consignee'),

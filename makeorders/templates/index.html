@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock title %}
+
+{% load static %}
+{% block homepage %}
+
+   <form action="{% url 'add_party' %}" class="row g-0 p-2 bg-light" method="POST">
+                        {% csrf_token %}                       
+                                
+                             <div id="confind" con-url={% url 'con_id' %} class="form-floating p-1 col-lg-6">
+                                <select id="consid" class="form-select" name='id' >
+                                    <option value="selectparty"> Select Party</option>
+                                      {% for con in partys %}
+                                          <option value="{{ con.id }} "> {{ con.party }}</option>
+                                       {% endfor %}
+                                </select>
+                                <label for="confind ">Party</label>
+                              </div>
+                              <div id="consigneeselect" con-url={% url 'for_data' %} class= "form-floating p-1 col-lg-6">
+                               <select id="consign" class="form-select" name='id' >
+                                <option value="selectparty" selected> Select Consignee</option>
+                                      
+                                </select>
+                                <label for="confind ">Consignee</label>
+                              </div>
+                              
+                               <div class="col-lg-12">                             
+                                <div class="row g-1">               
+                                <div class="col-4 g-1">
+                                 <input  type="button" class="form-control btn-outline-primary rounded-pill me-2" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">
+                                 </div>
+                                 <div class="col-4 g-1">
+                                 <input  type="submit" id="add_consignee" class=" form-control btn-outline-primary rounded-pill me-2" value="Add Consinee">
+                                </div>
+                                <div class="col-4 g-1"> 
+                               
+                                 <input  type="submit" class="form-control btn-outline-primary rounded-pill me-2" value="Add Orders" data-bs-toggle="modal" data-bs-target="#add_party">
+                                </div> 
+                                 <div class="col-4 g-1">
+                                 <input  type="submit" id="add_consignee" class="form-control btn-outline-primary rounded-pill me-2" value="Edit Orders">
+                                </div>
+                                 <div class="col-4 g-1">
+                                 <input  type="submit"  class="form-control btn-outline-primary rounded-pill me-2" value="Delete Consignee">  
+                                    </div>
+                                    <div class="col-4 g-1">
+                                 <input  type="submit"  class="form-control btn-outline-primary rounded-pill me-2" value="Orders">                                                 
+                                </div>
+                                                                    
+                                 </div>
+                               </div>
+              
+            </form>
+  
+   {% endblock homepage %}
+
+
+
+
+{% block content %}
+
+
+<div class="col-lg-12 mt-2 rounded">
+    <h6 class="alert alert-primary text-center">Orders</h6>
+                <form id="sentdetailform" sentdetail-url="{% url 'sent_data' %}" class="table-responsive">
+                <table class="table table-success table-sm table-striped" id="ordertableid">
+                    <thead class="thead-dark">
+                        <tr class="text-center">
+                            <th scope="col">Date </th>
+                            <th scope="col">Item</th>
+                            <th scope="col">Crtons</th>
+                            <th scope="col">Sent/Cancel</th>                         
+                            <th scope="col">Balance</th>                           
+                        </tr>
+                    </thead>
+
+                    <tbody id="orders">
+                        
+                    </tbody>
+
+                </table>
+                </form>
+       
+ </div>
+
+
+
+
+
+<!-- Modal add_party-->
+<div class="modal fade" id="add_party"  data-bs-keyboard="false"
+ tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Party</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST">
+        {% csrf_token%}
+            {{clientform}}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3 mb-3">
+                <input class="btn btn-success " type="submit" name="submit_button">
+            </div>
+         
+        </form>
+      </div>
+      
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Show Sent Details-->
+<div class="modal fade" id="sent_datails" tabindex="-1" 
+ data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Orders Sent Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">  
+            
+            <form > 
+                <table class="table" id="sentdetailtable">
+                    <thead class="thead-dark">
+                        <tr class="text-center fs-5">
+                            <th scope="col">Date </th>                            
+                            <th scope="col">Crtons</th>
+                            <th scope="col">Status</th>                        
+                            <th scope="col">By</th> 
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="sentdetaildata" >
+                        
+                    </tbody>
+
+                </table>
+
+            </form>
+               
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

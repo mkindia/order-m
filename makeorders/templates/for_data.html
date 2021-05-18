@@ -1,6 +1,6 @@
 
         {% for orders in order %}
-        <tr class="text-center fw-bold" {% if orders.ordered_cartons == orders.sent_cancel %} 
+        <tr class="text-center" {% if orders.ordered_cartons == orders.sent_cancel %} 
         style="background-color:#e0fbea;" {% else %} style="background-color: #FFFFFF;" {% endif %}>
                <td>
                         {{ orders.orderdate}}
@@ -18,22 +18,33 @@
                         {{orders.balance}}
                 </td>
                 
-                <td>
-                                 <!-- Button trigger modal -->
-                        <form class="d-inline">
+                
+        </tr>
+        <tr>
+         <td colspan="3"></td>
+
+                <td colspan="2">
+                <div class="row g-1">
+                  <div class="col-6 g-1">               
+                         <form >
                                          <input type="button" {% if orders.sent_cancel == 0 %} disabled=true {% endif %} 
-                                         class="btn btn-success btn-sm" data-bs-toggle="modal" 
-                                                data-bs-target="#sent_datails" id="sentdetailbtn" 
+                                         class="form-control btn-outline-success rounded-pill btn-sm" data-bs-toggle="modal" 
+                                    -            data-bs-target="#sent_datails" id="sentdetailbtn" 
                                                 atb={{ orders.id }}  value="Details">
-                        </form>                    
-                      
-                       <form action="{% url 'addsent' orders.id %}" method="GET" class="d-inline" >
+                        </form>    
+                 
+                </div>
+                        <div class="col-6 g-1">
+                                      <form action="{% url 'addsent' orders.id %}" method="GET" >
                                      
-                                        <input class="btn btn-primary btn-sm mt-1 " type="submit"
+                                        <input class="form-control btn-outline-primary rounded-pill btn-sm" type="submit"
                                         {% if orders.ordered_cartons == orders.sent_cancel %} disabled=true  {% endif %} 
                                         value="Send">
-                         </form>
-                        
-                </td>
-        </tr>
+                                      </form> 
+                         </div>
+                 </div>
+                 </td>
+                 </td> 
+                    
+                </tr>
         {% endfor %}

@@ -4,12 +4,13 @@ $(document).ready(function(){
    
     
 document.getElementById('add_consignee').disabled=true;
+document.getElementById('consign').disabled=true;
 
-$("#consi2 tbody").on('click', '#sho', function () {
+$("#consign").change(function () {
 
-    var url = $("#indexForm").attr("data-url");
-
-    var currow = $(this).attr("sat");
+    var url = $("#consigneeselect").attr("con-url");
+    
+    var currow =  $(this).val();
     // var currow=$(this).attr('sat');
     // var col1 = currow.find('td:eq(0)').text();
     
@@ -63,12 +64,16 @@ $("#consid").change(function(){
     {
         
         document.getElementById("add_consignee").disabled=false;
+        document.getElementById('consign').disabled=false;
     }
     else
     {
         document.getElementById('add_consignee').disabled=true;
+        document.getElementById('consign').disabled=true;
+        programingId=0;
     }
 
+    
     // for clear orders
     url2="/for_data/";
      var orderid = 0;
@@ -89,13 +94,13 @@ $("#consid").change(function(){
 // for connsignees
       
     $.ajax({
-
+            
         url: url,
         data:{
             'cons1':programingId
         },
         success:function(data) {
-            
+           
             $("#consign").html(data);
 
         }
