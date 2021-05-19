@@ -52,7 +52,7 @@ def add_consignee(request):
     else:       
      confom=consigneeform()
     #print(id) 
-    return render(request, 'addparty.html', {'form':confom,})  
+    return render(request, 'add_consignee.html', {'form':confom,})  
 
 def edit_consignee(request, conid):
     if request.method == 'POST':        

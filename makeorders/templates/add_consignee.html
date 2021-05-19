@@ -1,0 +1,28 @@
+                                <!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %} Add Consignee {% endblock title %}
+
+{% load static %}
+
+{% block content %}
+       
+        <div class="col-sm-12 g-2">
+            <h5 class="alert alert-danger text-center"> New Consinees </h5>
+            
+            <form action="" method="POST">
+                {% csrf_token %}  
+                             
+                {{form.as_p}}
+                                               </br>
+                  <select style="display:none;" name="submit">
+                 <option></option> </select>
+                
+                    <input class="form-control btn-success " type="submit">
+                
+            </form>
+                      
+           </div>
+      
+        
+ {% endblock content %}    

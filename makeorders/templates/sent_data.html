@@ -15,13 +15,23 @@
                                 <td>
                                     {{ details.by }}
                                 </td>
-                               <td>
+                              
+                                <tr>
+                                 <td colspan="2" >  </td>   
+                                 <td colspan="2">
+                                  <div class="row g-1">
+                                    <div class="col-6 g-1">                       
                                     <form action="#" method="POST" class="d-inline" >                                     
-                                        <input class="btn btn-outline-success rounded-pill btn-sm" type="submit" value="Edit">
+                                        <input class="form-control btn-outline-success rounded-pill btn-sm" type="submit" value="Edit">
                                     </form>
+                                     </div>
+                                     <div class="col-6 g-1">
                                      <form action="#" method="POST" class="d-inline" >                                     
-                                        <input class="btn btn-outline-danger rounded-pill btn-sm" type="submit" value="Delete">
+                                        <input class="form-control btn-outline-danger rounded-pill btn-sm" type="submit" value="Delete">
                                     </form>
+                                      </div>
+                                </div>
                                 </td>
+                                </tr>
                             </tr>
                         {% endfor %}

@@ -3,7 +3,7 @@
 $(document).ready(function(){
    
     
-document.getElementById('add_consignee').disabled=true;
+//document.getElementById('add_consignee').disabled=true;
 document.getElementById('consign').disabled=true;
 
 $("#consign").change(function () {
@@ -63,12 +63,12 @@ $("#consid").change(function(){
     if(programingId != "selectparty")
     {
         
-        document.getElementById("add_consignee").disabled=false;
+      //  document.getElementById("add_consignee").disabled=false;
         document.getElementById('consign').disabled=false;
     }
     else
     {
-        document.getElementById('add_consignee').disabled=true;
+      //  document.getElementById('add_consignee').disabled=true;
         document.getElementById('consign').disabled=true;
         programingId=0;
     }

@@ -17,9 +17,9 @@ class consigneeform(forms.ModelForm):
         model = Consignees
         fields = ['consignee', 'station', 'trasport',]
         labels={'consignee':'Consignee',}
-        widgets = {'consignee':forms.TextInput(attrs={'class':'form-control fs-3'}),                      
-                 'station':forms.TextInput(attrs={'class':'form-control fs-3'}),        
-                   'trasport':forms.TextInput(attrs={'class':'form-control fs-3'}),}
+        widgets = {'consignee':forms.TextInput(attrs={'class':'form-control'}),                      
+                 'station':forms.TextInput(attrs={'class':'form-control'}),        
+                   'trasport':forms.TextInput(attrs={'class':'form-control'}),}
                 
 
 
