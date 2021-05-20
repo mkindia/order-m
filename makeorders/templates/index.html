@@ -4,12 +4,18 @@
 
 {% load static %}
 {% block homepage %}
-
+<p> 
+{% if messages %}
+{% for message in messages %}
+<small> {% if message.tags %} class="{{message.tags}}" {% endif %} {{message}} </small>
+{% endfor %}
+{% endif %}
+</p> <a href="{% url 'user_logout' %}">Logout</a>
    <form action="{% url 'add_party' %}" class="row g-0 p-2 bg-light" method="POST">
                         {% csrf_token %}    
  <nav class="navbar navbar-expand-lg navbar-light alert-primary rounded p-2" >
    <div class="container-fluid">
-    <a class="navbar-brand">Manage order </a>
+    <a class="navbar-brand">Manage Order </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,36 +23,40 @@
       <ul class="navbar-nav">
         <li>
         
-      <input  type="button" class="form-control btn-outline-primary rounded-pill btn-sm m-1" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">
-                                
-                               
+           <div class="row g-1 me-1" >
+               <div class="col-6 g-1">
+                <input  type="button" class="form-control btn-outline-primary rounded-pill m-1" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">
+               </div>  
+                <div class="col-6 g-1"> 
+                  <input  type="button" class="form-control btn-outline-primary rounded-pill m-1" value="Edit party" data-bs-toggle="modal" data-bs-target="#add_party">
+                </div>    
+            </div>   
         </li>
+      
         <li>
-        
-          <input  type="button" class="form-control btn-outline-primary rounded-pill btn-sm m-1" value="Edit party" data-bs-toggle="modal" data-bs-target="#add_party">
-                                
-                               
+        <div class="row g-1 me-1" >
+               <div class="col-6 g-1">
+                  <input  type="button" class="form-control btn-outline-primary rounded-pill m-1" value="Delete party" data-bs-toggle="modal" data-bs-target="#add_party">
+                 </div> 
+                 <div class="col-6 g-1">
+                  <input  type="submit" id="add_consignee" class=" form-control btn-outline-primary rounded-pill m-1" value="Add Consinee">    
+                 </div> 
+        </div>                                
         </li>
+       
         <li>
-        
-          <input  type="button" class="form-control btn-outline-primary rounded-pill btn-sm m-1" value="Delete party" data-bs-toggle="modal" data-bs-target="#add_party">
-                                
-                               
+         <div class="row g-1 me-1" >
+               <div class="col-6 g-1">
+              <input  type="submit" id="edit_consignee" class=" form-control btn-outline-primary rounded-pill m-1" value="Edit Consinee">
+              </div>
+               <div class="col-6 g-1">
+               <input  type="submit" id="delete_consignee" class=" form-control btn-outline-primary rounded-pill m-1" value="Delete Consinee">
+               </div>
+         </div>                  
         </li>
+       
         <li>
-         <input  type="submit" id="add_consignee" class=" form-control btn-outline-primary btn-sm rounded-pill m-1" value="Add Consinee">
-                                
-        </li>
-        <li>
-         <input  type="submit" id="edit_consignee" class=" form-control btn-outline-primary btn-sm rounded-pill m-1" value="Edit Consinee">
-                                
-        </li>
-        <li>
-         <input  type="submit" id="delete_consignee" class=" form-control btn-outline-primary btn-sm rounded-pill m-1" value="Delete Consinee">
-                                
-        </li>
-        <li>
-         <input  type="submit" id="add_orders" class=" form-control btn-outline-primary btn-sm rounded-pill m-1" value="Add Orders">
+         <input  type="submit" id="add_orders" class=" form-control btn-outline-primary rounded-pill m-1" value="Add Orders">
                                
         </li>
         
@@ -65,17 +75,16 @@
                                 </select>
                                 <label for="confind ">Party</label>
                               </div>
-                              <div id="consigneeselect" con-url={% url 'for_data' %} class= "form-floating pt-1 ps-1 col-lg-6">
+                              <div id="consigneeselect" con-url={% url 'for_data' %} class= "form-floating pt-1 col-lg-6">
                                <select id="consign" class="form-select" name='id' >
-                                <option value="selectparty" selected> Select Consignee</option>
-                                      
+                                <option value="Select Consignee" selected> Select Consignee</option>                                      
                                 </select>
                                 <label for="confind ">Consignee</label>
                               </div>
                               
-                              <div class="col-lg-12">                             
+                            <!--  <div class="col-lg-12">                             
                                 <div class="row g-1">
-                            <!--   <div class="col-4 g-1">
+                               <div class="col-4 g-1">
                                  <input  type="button" class="form-control btn-outline-primary rounded-pill btn-sm me-2" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">
                                 </div>
                                  <div class="col-4 g-1">
@@ -93,10 +102,10 @@
                                     </div> 
                                     <div class="col-4 g-1">
                                  <input  type="submit"  class="form-control btn-outline-primary rounded-pill btn-sm me-2" value="Orders">                                                 
-                                </div> -->
+                                </div> 
                                                                     
                                  </div>
-                               </div>
+                               </div> -->
               
             </form>
   
@@ -105,7 +114,7 @@
 
 {% block content %}
 
-<div class="col-lg-12 rounded">
+<div class="col-lg">
     <h6 class="alert alert-success text-center">Orders</h6>
                 <form id="sentdetailform" sentdetail-url="{% url 'sent_data' %}" class="table-responsive">
                 <table class="table table-success table-sm table-striped" id="ordertableid">

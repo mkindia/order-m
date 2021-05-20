@@ -1,8 +1,32 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import redirect, render, HttpResponseRedirect
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from .models import Clients, Consignees, Orders, Sentorder
 from .form import consigneeform, ordesform, Sentorderform, Clientform
 from makeorders import form
 
+#User Login form
+def user_login(request):
+    if request.method=='POST':
+        fm=AuthenticationForm(request=request, data=request.POST)
+        if fm.is_valid():
+            uname=fm.cleaned_data['username']
+            upass=fm.cleaned_data['password']
+            vuser=authenticate(username=uname, password=upass)
+            if vuser is not None:
+                login(request, vuser)
+                messages.success(request,'Success')
+                return HttpResponseRedirect('/')
+
+    else:        
+        fm=AuthenticationForm()
+    return render(request,'userlogin.html',{'form':fm})
+
+#Logout user
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/userlogin/')   
 
 # Create your views here.
 def home(request):      

@@ -3,7 +3,7 @@
 $(document).ready(function(){
    
     
-//document.getElementById('add_consignee').disabled=true;
+document.getElementById('add_orders').disabled=true;
 document.getElementById('consign').disabled=true;
 
 $("#consign").change(function () {
@@ -13,6 +13,17 @@ $("#consign").change(function () {
     var currow =  $(this).val();
     // var currow=$(this).attr('sat');
     // var col1 = currow.find('td:eq(0)').text();
+
+    if(currow != "Select Consignee")
+    {
+        
+        document.getElementById("add_orders").disabled=false;
+    }
+    else
+    {
+        document.getElementById('add_orders').disabled=true;
+        currow=0;
+    }
     
     $.ajax({
 
@@ -63,12 +74,12 @@ $("#consid").change(function(){
     if(programingId != "selectparty")
     {
         
-      //  document.getElementById("add_consignee").disabled=false;
+       // document.getElementById("add_orders").disabled=false;
         document.getElementById('consign').disabled=false;
     }
     else
     {
-      //  document.getElementById('add_consignee').disabled=true;
+      //  document.getElementById('add_orders').disabled=true;
         document.getElementById('consign').disabled=true;
         programingId=0;
     }
