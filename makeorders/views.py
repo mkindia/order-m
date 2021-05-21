@@ -3,25 +3,28 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Clients, Consignees, Orders, Sentorder
-from .form import consigneeform, ordesform, Sentorderform, Clientform
+from .form import consigneeform, ordesform, Sentorderform, Clientform, Userauthform
 from makeorders import form
 
 #User Login form
 def user_login(request):
-    if request.method=='POST':
-        fm=AuthenticationForm(request=request, data=request.POST)
-        if fm.is_valid():
-            uname=fm.cleaned_data['username']
-            upass=fm.cleaned_data['password']
-            vuser=authenticate(username=uname, password=upass)
-            if vuser is not None:
-                login(request, vuser)
-                messages.success(request,'Success')
-                return HttpResponseRedirect('/')
+    if not request.user.is_authenticated:
+        if request.method=='POST':
+            fm=Userauthform(request=request, data=request.POST)
+            if fm.is_valid():
+                uname=fm.cleaned_data['username']
+                upass=fm.cleaned_data['password']
+                vuser=authenticate(username=uname, password=upass)
+                if vuser is not None:
+                    login(request, vuser)
+                    #messages.success(request,'Success')
+                    return HttpResponseRedirect('/')
 
-    else:        
-        fm=AuthenticationForm()
-    return render(request,'userlogin.html',{'form':fm})
+        else:        
+            fm=Userauthform()
+        return render(request,'userlogin.html',{'form':fm})
+    else:
+        return HttpResponseRedirect('/')    
 
 #Logout user
 def user_logout(request):
@@ -30,7 +33,7 @@ def user_logout(request):
 
 # Create your views here.
 def home(request):      
-    
+  if request.user.is_authenticated:
     con = Consignees.objects.all()    
     party=Clients.objects.all()
     sentdatails=Sentorder.objects.all()    
@@ -48,7 +51,9 @@ def home(request):
         sentorder_form=consigneeform()
 
     return render(request, "index.html", {'cons': con, 'partys':party,'sent_details':sentdatails,
-    'clientform':clientform, 'sentorder_form':sentorder_form,})
+    'clientform':clientform, 'sentorder_form':sentorder_form, 'username':request.user,})
+  else:
+    return HttpResponseRedirect('/userlogin/')
 
 def con_id(request):
     

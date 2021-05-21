@@ -1,6 +1,17 @@
 from django import forms
+from django.contrib.auth import authenticate
+from django.forms import fields, widgets
+from django.forms.fields import Field
 from django.forms.forms import Form
+from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.forms import AuthenticationForm
 from .models import Clients, Consignees, Orders, Sentorder
+from makeorders import models
+
+class Userauthform(AuthenticationForm):
+         fields=['first_name']
+         username=forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
+         password=forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 class Clientform(forms.ModelForm):
     class Meta:
