@@ -2,32 +2,34 @@
 
 $(document).ready(function(){
    
+    //alert('hello');
     
-document.getElementById('add_orders').disabled=true;
-document.getElementById('consign').disabled=true;
+  //document.getElementById('navconsignee').disabled=true;
+ // document.getElementById('consign').disabled=true;
+ // document.getElementById('navaddorders').disabled=true;
 
 $("#consign").change(function () {
 
-    var url = $("#consigneeselect").attr("con-url");
+   // var url = $("#consigneeselect").attr("con-url");
     
     var currow =  $(this).val();
     // var currow=$(this).attr('sat');
     // var col1 = currow.find('td:eq(0)').text();
-
+   // alert(url)
     if(currow != "Select Consignee")
     {
         
-        document.getElementById("add_orders").disabled=false;
+     //  document.getElementById("navconsignee").disabled=false;
     }
     else
     {
-        document.getElementById('add_orders').disabled=true;
+      //  document.getElementById('navconsignee').disabled=true;
         currow=0;
     }
     
     $.ajax({
 
-        url: url,
+        url: '/for_data/',
         data: {
             'conid': currow
         },
@@ -44,7 +46,7 @@ $("#consign").change(function () {
 
 $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
 
-    var url = $("#sentdetailform").attr("sentdetail-url");
+   // var url = $("#sentdetailform").attr("sentdetail-url");
    
     //var url="sent_data"
     var id = $(this).attr("atb");
@@ -53,7 +55,7 @@ $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
     // var col1 = currow.find('td:eq(0)').text();
     $.ajax({
 
-        url: url,
+        url: '/sent_data/',
         data: {
             'orderid': id
         },
@@ -68,32 +70,33 @@ $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
 
 $("#consid").change(function(){
 
-    var url = $("#confind").attr("con-url");
+   // var url = $("#confind").attr("con-url");
     var programingId= $(this).val();
-    
+    var orderid = 0;
+   // alert(url)
     if(programingId != "selectparty")
     {
-        
+
        // document.getElementById("add_orders").disabled=false;
-        document.getElementById('consign').disabled=false;
+    //  document.getElementById('consign').disabled=false;
     }
     else
     {
       //  document.getElementById('add_orders').disabled=true;
-        document.getElementById('consign').disabled=true;
+       // document.getElementById('consign').disabled=true;
         programingId=0;
+      
     }
 
     
     // for clear orders
-    url2="/for_data/";
-     var orderid = 0;
-    //alert(url)
+    url2="/for_data/";   
+   
     $.ajax({
 
         url: url2,
         data: {
-            'orderid': orderid
+            'conid': orderid
         },
         success: function (data) {    
                    
@@ -106,7 +109,7 @@ $("#consid").change(function(){
       
     $.ajax({
             
-        url: url,
+        url: '/con_data/',
         data:{
             'cons1':programingId
         },

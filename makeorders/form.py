@@ -27,7 +27,7 @@ class consigneeform(forms.ModelForm):
     class Meta:
         model = Consignees
         fields = ['consignee', 'station', 'trasport',]
-        labels={'consignee':'Consignee',}
+        labels={'consignee':'Consignee Name',}
         widgets = {'consignee':forms.TextInput(attrs={'class':'form-control'}),                      
                  'station':forms.TextInput(attrs={'class':'form-control'}),        
                    'trasport':forms.TextInput(attrs={'class':'form-control'}),}
@@ -37,8 +37,9 @@ class consigneeform(forms.ModelForm):
 class ordesform(forms.ModelForm):
     class Meta:
         model = Orders
-        fields = ['orderdate','item_name','ordered_cartons']
+        fields = ['orderdate','item_name','item_price','ordered_cartons']
         widgets ={'orderdate':forms.DateInput(attrs={'class':'form-control','type':'Date'}),
+            'item_price':forms.TextInput(attrs={'class':'form-control','type':'number','step':'0.01'}),
             'item_name':forms.TextInput(attrs={'class':'form-control'}),
             'ordered_cartons':forms.TextInput(attrs={'class':'form-control','type':'integer'}),            
         }

@@ -21,11 +21,14 @@ class Consignees(models.Model):
     def __str__(self):
         return str( self.consignee )
 
+class Items(models.Model):
+    item_name=models.CharField(max_length=30)
 
 class Orders(models.Model):
     consignees = models.ForeignKey(Consignees, on_delete=models.CASCADE)
     orderdate = models.DateField()
-    item_name = models.CharField(max_length=30)    
+    item_name = models.CharField(max_length=30)
+    item_price = models.FloatField(default=10.00)
     ordered_cartons = models.PositiveIntegerField(default=1)
     sent_cancel = models.PositiveIntegerField(default=0, blank=True, null=True)
     balance = models.PositiveIntegerField(default=0, blank=True, null=True)

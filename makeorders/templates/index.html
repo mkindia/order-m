@@ -3,131 +3,88 @@
 {% block title %} Home {% endblock title %}
 
 {% load static %}
+
 {% block homepage %}
 
 
- {% if messages %}
- <div class="alert alert-warning alert-dismissible fade show" role="alert">
-{% for message in messages %}
-<!-- {% if message.tags %} class="{{message.tags}}" {% endif %} --> {{message}}
-{% endfor %}
-<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+ {% if messages %} 
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      {% for message in messages %}
+      <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} --> {{message}}
+      {% endfor %}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
 {% endif %}
   
+  
 
-<form action="{% url 'add_party' %}" class="row g-0 p-2 bg-light" method="POST">
-                        {% csrf_token %}    
- <nav class="navbar navbar-expand-lg navbar-light alert-primary rounded p-2" > 
-   <div class="container-fluid">       
-   <h class="navbar-brand">Wellcome <span>{{username.first_name}}</span> <span><a class="badge text-danger  text-decoration-none" href="{% url 'user_logout' %}">Logout</a>  </span> </h>  
- 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+ <nav class="navbar navbar-expand-md navbar-light alert-primary p-2" > 
+   <div class="container-fluid"> 
+    <div class="navbar-brand">    
+         {{username.first_name}} <span>                  
+        <a class="text-decoration-none text-danger ms-1" href="{% url 'user_logout' %}">Logout</a>
+       </span>    
+    </div>    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>    
-    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-
-           <div class="row g-1 me-1" >
-               <div class="col-6 g-1">
-                <input  type="button" class="form-control btn-outline-primary rounded-pill m-1" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">
-               </div>  
-                <div class="col-6 g-1"> 
-                  <input  type="button" class="form-control btn-outline-primary rounded-pill m-1" value="Edit party" data-bs-toggle="modal" data-bs-target="#add_party">
-                </div>    
-            </div>   
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    
+      <ul class="navbar-nav">  
+              <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Party
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" type="button" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">Add Party</a></li>
+           
+            <li><a class="dropdown-item" href="#">Edit Party</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Delete Party</a></li>
+          </ul>
         </li>
-      
-        <li>
-        <div class="row g-1 me-1" >
-               <div class="col-6 g-1">
-                  <input  type="button" class="form-control btn-outline-primary rounded-pill m-1" value="Delete party" data-bs-toggle="modal" data-bs-target="#add_party">
-                 </div> 
-                 <div class="col-6 g-1">
-                  <input  type="submit" id="add_consignee" class=" form-control btn-outline-primary rounded-pill m-1" value="Add Consinee">    
-                 </div> 
-        </div>                                
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" id="navconsignee" data-bs-toggle="dropdown" aria-expanded="false">
+            Consignee
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+            <li><a class="dropdown-item" href="{% url 'add_party' %}">Add Consignee</a></li>          
+            <li><a class="dropdown-item" href="{% url 'edit_consignee' %}">Edit Consignee</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Delete Consignee</a></li>            
+            </ul>
         </li>
-       
-        <li>
-         <div class="row g-1 me-1" >
-               <div class="col-6 g-1">
-              <input  type="submit" id="edit_consignee" class=" form-control btn-outline-primary rounded-pill m-1" value="Edit Consinee">
-              </div>
-               <div class="col-6 g-1">
-               <input  type="submit" id="delete_consignee" class=" form-control btn-outline-primary rounded-pill m-1" value="Delete Consinee">
-               </div>
-         </div>                  
-        </li>
-       
-        <li>
-         <input  type="submit" id="add_orders" class=" form-control btn-outline-primary rounded-pill m-1" value="Add Orders">
-                               
-        </li>
-       
-      </ul>            
-    </div>     
-  </div>
-  <div>  
-    </div> 
-   
- </nav>
-                   
-                                
-                             <div id="confind" con-url={% url 'con_id' %} class="form-floating ps-1 pt-1 p-1 col-lg-6">
-                                <select id="consid" class="form-select " name='id' >
-                                    <option value="selectparty"> Select Party</option>
-                                      {% for con in partys %}
-                                          <option value="{{ con.id }} "> {{ con.party }}</option>
-                                       {% endfor %}
-                                </select>
-                                <label for="confind ">Party</label>
-                              </div>
-                              <div id="consigneeselect" con-url={% url 'for_data' %} class= "form-floating p-1 col-lg-6">
-                               <select id="consign" class="form-select" name='id' >
-                                <option value="Select Consignee" selected> Select Consignee</option>                                      
-                                </select>
-                                <label for="confind ">Consignee</label>
-                              </div>
-                              
-                            <!--  <div class="col-lg-12">                             
-                                <div class="row g-1">
-                               <div class="col-4 g-1">
-                                 <input  type="button" class="form-control btn-outline-primary rounded-pill btn-sm me-2" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">
-                                </div>
-                                 <div class="col-4 g-1">
-                                 <input  type="submit" id="add_consignee" class=" form-control btn-outline-primary btn-sm rounded-pill me-2" value="Add Consinee">
-                                </div> 
-                                <div class="col-4 g-1"> 
-                               
-                                 <input  type="submit" class="form-control btn-outline-primary rounded-pill btn-sm me-2" value="Add Orders" data-bs-toggle="modal" data-bs-target="#add_party">
-                                </div> 
-                                 <div class="col-4 g-1">
-                                <input  type="submit" id="add_consignee" class="form-control btn-outline-primary btn-sm rounded-pill me-2" value="Edit Orders">
-                                </div> 
-                                 <div class="col-4 g-1">
-                                 <input  type="submit"  class="form-control btn-outline-primary rounded-pill btn-sm me-2" value="Delete Consignee">  
-                                    </div> 
-                                    <div class="col-4 g-1">
-                                 <input  type="submit"  class="form-control btn-outline-primary rounded-pill btn-sm me-2" value="Orders">                                                 
-                                </div> 
-                                                                    
-                                 </div>
-                               </div> -->
-              
-            </form>
-  
-   {% endblock homepage %}
+        <li><a class="nav-link" href="{% url 'addorder' %}">Add Order</a></li>                          
+      </ul>      
+    </div>
 
+    </div>
+  </nav>
+ {% endblock homepage %}
+  {% block content %}
+    <div class="row">                        
 
-{% block content %}
-
-<div class="col-lg">
-    <h6 class="alert alert-success text-center">Orders</h6>
-                <form id="sentdetailform" sentdetail-url="{% url 'sent_data' %}" class="table-responsive">
-                <table class="table table-success table-sm table-striped" id="ordertableid">
-                    <thead class="thead-dark">
+       <div class="form-floating ps-1 pt-1 p-1 col-md-6">
+           <select id="consid" class="form-select " name='id' >
+            <option value="selectparty"> Select Party</option>
+                  {% for party in partys %}
+            <option value="{{ party.id }} "> {{ party.party }}</option>
+                  {% endfor %}
+            </select>
+            <label for="confind ">Party</label>
+       </div>
+       <div class= "form-floating p-1 col-md-6">
+           <select id="consign" class="form-select" name='id' >
+              <option value="Select Consignee" selected> Select Consignee</option>                                     
+           </select>
+           <label for="consigneeselect ">Consignee</label>
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-12 g-0 ps-1 pe-1">
+                 <div class="form-floating alert-success fs-5 mt-1 mb-1 bold rounded text-center">Orders</div>
+                    <table class="table table-success table-sm table-striped" id="ordertableid">
+                    <thead>
                         <tr class="text-center">
                             <th scope="col">Date </th>
                             <th scope="col">Item</th>
@@ -135,21 +92,9 @@
                             <th scope="col">Sent/Cancel</th>                         
                             <th scope="col">Balance</th>                           
                         </tr>
-                    </thead>
-
-                    <tbody id="orders">
-                        
-                    </tbody>
-
-                </table>
-                </form>
-       
- </div>
-
-
-
-
-
+                    </thead><tbody id="orders"></tbody></table>
+                </div>
+       </div>   
 <!-- Modal add_party-->
 <div class="modal fade" id="add_party"  data-bs-keyboard="false"
  tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -166,12 +111,10 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3 mb-3">
                 <input class="btn btn-success " type="submit" name="submit_button">
             </div>
-         
-        </form>
+            
+            </form>
+       </div>
       </div>
-      
-      
-    </div>
   </div>
 </div>
 
