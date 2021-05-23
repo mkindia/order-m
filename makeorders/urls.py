@@ -20,15 +20,19 @@ from . import views
 
 urlpatterns = [
     path('userlogin/',views.user_login,name="user_login"),
-     path('userlogout/',views.user_logout,name="user_logout"),
+    path('userlogout/',views.user_logout,name="user_logout"),
     path('', views.home, name='home'),
     path('for_data/',views.order_data, name='for_data'),
-    path('addparty/',views.add_consignee, name='add_party'),
+    path('addconsignee/',views.add_consignee, name='add_consignee'),
     path('editconsignee/',views.edit_consignee, name='edit_consignee'),
     path('con_data/',views.con_id, name='con_id'),
     path('addorder/',views.add_order, name='addorder'),
     path('addsent/<int:ordid>/',views.addsent, name='addsent'),
     path('sent_data/',views.sent_data, name='sent_data'),
+    path('add_items/',views.add_items, name='add_items'),
+    path('edititems/',views.edit_items, name='edit_items'),
+    path('item_data/',views.item_data, name='item_data'),
+     path('addparty/',views.add_party, name='addparty'),
    
     
    

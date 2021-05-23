@@ -68,6 +68,29 @@ $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
 });
 
 
+// for addorder item_data for id id_tem_name
+if (window.location.pathname == '/addorder/'){
+    $.ajax({
+            
+        url: '/item_data/',
+        data:{
+            'id':0
+        },
+        success:function(data) {
+          
+            $("#id_item_name").html(data);
+    
+        }}); 
+ }
+else if(window.location.pathname == '/alert.php'){
+     $("#mytextfield").hover()
+     {
+       alert('message');
+     }
+ }
+
+
+// for home page and orders
 $("#consid").change(function(){
 
    // var url = $("#confind").attr("con-url");

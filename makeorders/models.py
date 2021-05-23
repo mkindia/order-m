@@ -4,7 +4,8 @@ from django.db import models
 # Create your models here.
 class Clients(models.Model):
     party = models.CharField(max_length=30)
-    address = models.CharField(max_length=30)
+    station = models.CharField(max_length=30)
+    transport = models.CharField(max_length=30)
 
     # renames the instances of the model
     # with their title name
@@ -16,13 +17,16 @@ class Consignees(models.Model):
     party = models.ForeignKey(Clients, on_delete=models.CASCADE)
     consignee = models.CharField(max_length=30)
     station = models.CharField(max_length=30)    
-    trasport = models.CharField(max_length=30)
+    transport = models.CharField(max_length=30)
 
     def __str__(self):
         return str( self.consignee )
 
 class Items(models.Model):
-    item_name=models.CharField(max_length=30)
+    item_name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return str (self.item_name )
 
 class Orders(models.Model):
     consignees = models.ForeignKey(Consignees, on_delete=models.CASCADE)

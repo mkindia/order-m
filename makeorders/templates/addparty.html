@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Party {% endblock title %}
+
+{% load static %}
+
+{% block content %} 
+    {% if messages %} 
+     <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+        {{message}}
+        {% endfor %}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}       
+            <h5 class="alert alert-danger text-center text-capitalize"> New Party </h5>            
+            <form method="POST">
+                {% csrf_token %}  
+                
+                 <div class="row g-2">                                
+                    {% for fm in clients %}
+                      <div class="col-md-4">
+                       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} 
+                      </div>                    
+                    {% endfor %}             
+                     </br>
+                 </div>
+                    <input class="form-control btn-success mt-2" type="submit" value="submit">                              
+            </form>
+{% endblock content %}    

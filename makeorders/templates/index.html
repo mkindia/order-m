@@ -30,13 +30,13 @@
     </button>    
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     
-      <ul class="navbar-nav">  
+      <ul class="navbar-nav" id="navid">  
               <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Party
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" type="button" value="Add party" data-bs-toggle="modal" data-bs-target="#add_party">Add Party</a></li>
+            <li><a class="dropdown-item" href="{% url 'addparty' %}">Add Party</a></li>
            
             <li><a class="dropdown-item" href="#">Edit Party</a></li>
             <li><hr class="dropdown-divider"></li>
@@ -48,13 +48,24 @@
             Consignee
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> 
-            <li><a class="dropdown-item" href="{% url 'add_party' %}">Add Consignee</a></li>          
+            <li><a class="dropdown-item" href="{% url 'add_consignee' %}">Add Consignee</a></li>          
             <li><a class="dropdown-item" href="{% url 'edit_consignee' %}">Edit Consignee</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Delete Consignee</a></li>            
             </ul>
         </li>
-        <li><a class="nav-link" href="{% url 'addorder' %}">Add Order</a></li>                          
+         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" id="navitems" data-bs-toggle="dropdown" aria-expanded="false">
+            Items
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> 
+            <li><a class="dropdown-item" href="{% url 'add_items' %}">Add Items</a></li>          
+            <li><a class="dropdown-item" href="{% url 'edit_items' %}">Edit items</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Delete items</a></li>            
+            </ul>
+        </li>
+        <li class="addorder" ><a class="nav-link" href="{% url 'addorder' %}">Add Order</a></li>                         
       </ul>      
     </div>
 
@@ -81,7 +92,7 @@
         </div>
     </div>
     <div class="row">
-    <div class="col-md-12 g-0 ps-1 pe-1">
+               <div class="col-md-12 g-0 ps-1 pe-1">
                  <div class="form-floating alert-success fs-5 mt-1 mb-1 bold rounded text-center">Orders</div>
                     <table class="table table-success table-sm table-striped" id="ordertableid">
                     <thead>
@@ -93,66 +104,42 @@
                             <th scope="col">Balance</th>                           
                         </tr>
                     </thead><tbody id="orders"></tbody></table>
+                  </div>
                 </div>
-       </div>   
-<!-- Modal add_party-->
-<div class="modal fade" id="add_party"  data-bs-keyboard="false"
- tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Party</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form method="POST">
-        {% csrf_token%}
-            {{clientform}}
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3 mb-3">
-                <input class="btn btn-success " type="submit" name="submit_button">
-            </div>
-            
-            </form>
-       </div>
-      </div>
-  </div>
-</div>
 
-<!-- Modal Show Sent Details-->
+  </div>
+
+                <!-- Modal Show Sent Details-->
 <div class="modal fade" id="sent_datails" tabindex="-1" 
- data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Orders Sent Details</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">  
-            
-            <form > 
-                <table class="table" id="sentdetailtable">
-                    <thead class="thead-dark">
-                        <tr class="text-center fs-5">
-                            <th scope="col">Date </th>                            
-                            <th scope="col">Crtons</th>
-                            <th scope="col">Status</th>                        
-                            <th scope="col">By</th>                             
-                        </tr>
-                    </thead>
+            <div class="modal-body"> 
 
-                    <tbody id="sentdetaildata" >
-                        
-                    </tbody>
-
-                </table>
-
-            </form>
-               
-        
-      </div>
-      
+                  <form >
+                      <table class="table" id="sentdetailtable">
+                          <thead class="thead-dark">
+                              <tr class="text-center fs-5">
+                                  <th scope="col">Date </th>                            
+                                  <th scope="col">Crtons</th>
+                                  <th scope="col">Status</th>                        
+                                  <th scope="col">By</th>                             
+                              </tr>
+                          </thead>
+                          <tbody id="sentdetaildata" >                        
+                          </tbody>
+                      </table>
+                  </form>          
+            </div>
     </div>
+
   </div>
+
 </div>
+
 
 {% endblock content %}
