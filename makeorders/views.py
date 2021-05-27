@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import Clients, Consignees, Orders, Sentorder, Items
 from .form import consigneeform, ordesform, Sentorderform, Clientform, Userauthform, Itemsform
 from makeorders import form
-
+from django.utils.translation import ugettext
 #User Login form
 def user_login(request):
     if not request.user.is_authenticated:
@@ -59,11 +59,11 @@ def add_consignee(request):
                 return HttpResponseRedirect('/addparty/')
                  
         if confom.is_valid():
-                sht=confom.cleaned_data['consignee']
-                sta=confom.cleaned_data['station']           
-                tr=confom.cleaned_data['trasport']
-                sev=Consignees(party_id=request.POST.get('party_id'), consignee=sht, station=sta, trasport=tr)
-                #sev.save()
+                sht=confom.cleaned_data['consignee'].title()
+                sta=confom.cleaned_data['station'].title()           
+                tr=confom.cleaned_data['transport'].title()
+                sev=Consignees(party_id=int(request.POST.get('party_id')), consignee=sht, station=sta, transport=tr)
+                sev.save()
                 
                 return HttpResponseRedirect('/')        
     
@@ -73,26 +73,31 @@ def add_consignee(request):
     #print(id) 
     return render(request, 'add_consignee.html', {'form':confom,'partys':party})  
 
-def edit_consignee(request):
-
-    if request.method == 'POST': 
-
+def edit_consignee(request, atri):
+    client=Clients.objects.all()
+    
+    if atri=='edit':
+     if request.method == 'POST':
+        print(request.POST.get('consigneeid'))
         confom=consigneeform(request.POST)
         if confom.is_valid():
-                #pi=Consignees.objects.get(pk=Consignee_id)
-                #pid= int(pi.party_id)
-                sht=confom.cleaned_data['consignee']
-                sta=confom.cleaned_data['station']           
-                tr=confom.cleaned_data['trasport']
-                #sev=Consignees(id=Consignee_id,party_id=pid, consignee=sht, station=sta, trasport=tr)
-                #sev.save()   
-                                 
+                pi=Consignees.objects.get(pk=request.POST.get('consigneeid'))
+                pid= int(pi.party_id)
+                sht=confom.cleaned_data['consignee'].title()
+                sta=confom.cleaned_data['station'].title()          
+                tr=confom.cleaned_data['transport'].title()
+                sev=Consignees(id=request.POST.get('consigneeid'),party_id=pid, consignee=sht, station=sta, transport=tr)
+                sev.save()                                 
                 return HttpResponseRedirect('/')
-    else:
-        #con=Consignees.objects.get(pk=Consignee_id)          
-        #conform=consigneeform(instance=con)        
-        conform=consigneeform()
-    return render(request,'editconsignee.html', {'editform':conform})
+    if atri=='delete':
+        if request.method=='POST':
+          if request.POST.get('consigneeid'):
+           pid=Consignees.objects.get(pk=request.POST.get('consigneeid'))
+           pid.delete()
+           return HttpResponseRedirect('/')
+
+     
+    return render(request,'editconsignee.html', {'partys':client})
 
    
 def order_data(request):
@@ -183,8 +188,10 @@ def add_items(request):
           else:
               itemForms=Itemsform(request.POST)
               if itemForms.is_valid():
-                  itemForms.save()          
-                  return HttpResponseRedirect('/')
+                 item_name=itemForms.cleaned_data['item_name'].title()
+                 sev=Items(item_name=item_name)
+                 sev.save()        
+                 return HttpResponseRedirect('/')
       else:
           itemform=Itemsform()
 
@@ -198,7 +205,7 @@ def item_data(request):
     
     return render(request, 'item_data.html', {'items':item})
 
-def add_party(request):
+def add_party(request):    
     if request.method=='POST':
         party=''       
         n=Clients.objects.filter(party=request.POST.get('party'))
@@ -211,9 +218,9 @@ def add_party(request):
         else:
             clients=Clientform(request.POST)
             if clients.is_valid():
-               name=clients.cleaned_data['party']
-               station=clients.cleaned_data['station']
-               transport=clients.cleaned_data['transport']
+               name=clients.cleaned_data['party'].title()
+               station=clients.cleaned_data['station'].title()
+               transport=clients.cleaned_data['transport'].title()
                partsev=Clients(party=name,station=station,transport=transport)
                partsev.save()
                pid=''
@@ -221,8 +228,61 @@ def add_party(request):
                for id in i:
                 pid=id.id
                consev=Consignees(party_id=int(pid),consignee=name,station=station,transport=transport)
-               consev.save()
+               consev.save()               
                return HttpResponseRedirect('/')
     else:
         clients=Clientform()
     return render(request,'addparty.html',{'clients':clients})
+    
+
+def edit_party(request, atri):
+   party=Clients.objects.all()
+   if atri=='edit':
+     if request.method=='POST':
+       if request.POST.get('party_id'):
+         pid=request.POST.get('party_id')
+         clients=Clientform(request.POST)
+         if clients.is_valid():
+             name=clients.cleaned_data['party'].title()
+             station=clients.cleaned_data['station'].title()
+             transport=clients.cleaned_data['transport'].title()
+             partsev=Clients(id=int(pid),party=name,station=station,transport=transport)
+             #partsev.save()
+             cid=''
+             i=Consignees.objects.filter(party_id=int(pid))
+             for id in i:
+                cid=id.id
+             consev=Consignees(id=int(cid),party_id=int(pid),consignee=name,station=station,transport=transport)
+             #consev.save()
+             return HttpResponseRedirect('/')
+   if atri=='delete':
+        if request.method=='POST':
+          if request.POST.get('party_id'):
+           pid=Clients.objects.get(pk=request.POST.get('party_id'))
+           pid.delete()
+           return HttpResponseRedirect('/')         
+           
+
+   return render(request,'editparty.html', {'partys':party})
+
+def form_data(request, atri):
+     if atri == 'party_editform':
+        pk=Clients.objects.get(pk=int(request.GET.get('partyid')))
+        dataform=Clientform(instance=pk)
+     if atri == 'party_deleteform':
+         pk=Clients.objects.get(pk=int(request.GET.get('partyid')))
+         dataform=Clientform(instance=pk) 
+     if atri == 'consignee_editform':
+         if request.GET.get('conid') :
+          pk= Consignees.objects.get(pk=int(request.GET.get('conid')))         
+          dataform=consigneeform(instance=pk)
+         else:
+             dataform=consigneeform()
+     if atri == 'consignee_deleteform':
+         if request.GET.get('conid') :
+          pk= Consignees.objects.get(pk=int(request.GET.get('conid')))         
+          dataform=consigneeform(instance=pk)
+         else:
+             dataform=consigneeform()         
+     
+     return render(request, 'form_data.html',{'form':dataform,'atri':atri})

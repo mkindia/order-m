@@ -1,10 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %} Add Consignee {% endblock title %}
+{% block title %}party{% endblock title %}
 
 {% load static %}
 
 {% block content %}
+
+
+
 {% if messages %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
   {% for message in messages %}
@@ -15,33 +18,28 @@
 {% endif %}
 
 
-<h5 class="alert alert-danger text-center"> New Consinees </h5>
 
 <form method="POST">
   {% csrf_token %}
+
   <div class="row g-2">
-    <div class="col-md-6">
-      <label for="consid">Party Name:</label>
-      <select id="consid" class="form-select " name='party_id' Required=true>
+    <h5 class="alert alert-danger text-center">Edit Party</h5>
+    <div class="form-floating">
+      <select id="partylist" class="form-select" name='party_id' required>
         <option></option>
         {% for party in partys %}
         <option value="{{ party.id }} "> {{ party.party }}</option>
         {% endfor %}
       </select>
+      <label for="confind ">Select Party</label>
+    </div>
+
+    <div class="row g-2" id="form_data">
 
     </div>
-    {% for fm in form %}
-    <div class="col-md-6">
-      {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
-    </div>
-    <br>
-    {% endfor %}
-    </br>
+
+
   </div>
-  <input class="form-control btn-success mt-2" type="submit" value="submit">
-
 </form>
 
-
-
-{% endblock content %}
+{% endblock content%}

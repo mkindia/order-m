@@ -1,0 +1,41 @@
+    
+      
+    {% if atri == 'party_editform' %}
+     {% for fm in form %}
+      <div class="col-md-4">
+       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
+       </div>                                     
+     {% endfor %}
+     <br>
+     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update"> 
+    {% endif %}
+
+    {% if atri == 'party_deleteform' %}
+     {% for fm in form %}
+      <div class="col-md-4">
+       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
+       </div>                                     
+     {% endfor %}
+     <br>
+     <input class="form-control btn-danger mt-2" id="btnaction" type="submit" value="Delete"> 
+    {% endif %}
+   
+   {% if atri == 'consignee_editform' %}
+     {% for fm in form %}
+      <div class="col-md-4">
+       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
+       </div>                                     
+     {% endfor %}
+     <br>
+     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update"> 
+      {% endif %}  
+  
+   {% if atri == 'consignee_deleteform' %}
+     {% for fm in form %}
+      <div class="col-md-4">
+       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
+       </div>                                     
+     {% endfor %}
+     <br>
+     <input class="form-control btn-danger mt-2" id="btnaction" type="submit" value="Delete"> 
+   {% endif %}

@@ -24,7 +24,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('for_data/',views.order_data, name='for_data'),
     path('addconsignee/',views.add_consignee, name='add_consignee'),
-    path('editconsignee/',views.edit_consignee, name='edit_consignee'),
+    path('editconsignee/<atri>/',views.edit_consignee, name='edit_consignee'),
     path('con_data/',views.con_id, name='con_id'),
     path('addorder/',views.add_order, name='addorder'),
     path('addsent/<int:ordid>/',views.addsent, name='addsent'),
@@ -32,7 +32,10 @@ urlpatterns = [
     path('add_items/',views.add_items, name='add_items'),
     path('edititems/',views.edit_items, name='edit_items'),
     path('item_data/',views.item_data, name='item_data'),
-     path('addparty/',views.add_party, name='addparty'),
+    path('addparty/',views.add_party, name='addparty'),
+    path('editparty/<atri>/',views.edit_party, name='edit_party'),
+    path('form_data/<atri>',views.form_data, name='form_data'),
+    
    
     
    

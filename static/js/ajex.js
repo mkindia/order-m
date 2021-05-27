@@ -1,14 +1,6 @@
 
 
-$(document).ready(function(){
-   
-    //alert('hello');
-    
-  //document.getElementById('navconsignee').disabled=true;
- // document.getElementById('consign').disabled=true;
- // document.getElementById('navaddorders').disabled=true;
-
-$("#consign").change(function () {
+$(document).ready(function(){$("#consign").change(function () {
 
    // var url = $("#consigneeselect").attr("con-url");
     
@@ -41,7 +33,7 @@ $("#consign").change(function () {
 
 
        
-});
+    });
 
 
 $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
@@ -65,7 +57,7 @@ $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
 
     });
 
-});
+ });
 
 
 // for addorder item_data for id id_tem_name
@@ -82,36 +74,158 @@ if (window.location.pathname == '/addorder/'){
     
         }}); 
  }
-else if(window.location.pathname == '/alert.php'){
-     $("#mytextfield").hover()
-     {
-       alert('message');
-     }
- }
+// For Edit Party
+if(window.location.pathname=='/editparty/edit/'){$("#partylist").change(function(){
+    alert('');
+    var selectvalue= $(this).val();
+    $.ajax({
+
+        url: '/form_data/party_editform',
+        data: {
+            'partyid': selectvalue
+        },
+        success: function (data) {    
+                   alert(selectvalue);
+            $("#form_data").html(data);
+        }
+    })
+})}
+// For Delete Party
+if(window.location.pathname=='/editparty/delete/'){$("#partylist").change(function(){
+    alert('');
+    var selectvalue= $(this).val();
+    $.ajax({
+
+        url: '/form_data/party_deleteform',
+        data: {
+            'partyid': selectvalue
+        },
+        success: function (data) {    
+                   alert(selectvalue);
+            $("#form_data").html(data);
+        }
+    })
+})}
+// For Edit Consignee
+if(window.location.pathname=='/editconsignee/edit/'){
+  
+    $("#partylist").change(function(){
+        var partyid= $(this).val();
+       
+        if(partyid=="selectparty")
+        {
+            partyid=0;
+        }
+        $.ajax({
+            
+            url: '/con_data/',
+            data:{
+                'cons1':partyid
+            },
+            success:function(data) {               
+                $("#consigneelist").html(data);                    
+            }    
+        });
+       
+    });
 
 
-// for home page and orders
+    $("#consigneelist").change(function(){
+    
+    var selectvalue= $(this).val();
+  
+    $.ajax({
+
+        url: '/form_data/consignee_editform',
+        data: {
+            'conid': selectvalue
+        },
+        success: function (data) {    
+                   alert(selectvalue);
+            $("#form_data").html(data);
+        }
+    })
+
+   });
+
+
+
+
+
+}
+
+// For Delete Consignee
+if(window.location.pathname=='/editconsignee/delete/'){
+
+    $("#partylist").change(function(){
+        var partyid= $(this).val();
+       
+        if(partyid=="selectparty")
+        {
+            partyid=0;
+        }
+        $.ajax({
+            
+            url: '/con_data/',
+            data:{
+                'cons1':partyid
+            },
+            success:function(data) {               
+                $("#consigneelist").html(data);                    
+            }    
+        });
+       
+    });
+
+
+    $("#consigneelist").change(function(){
+    
+    var selectvalue= $(this).val();
+  
+    $.ajax({
+
+        url: '/form_data/consignee_deleteform',
+        data: {
+            'conid': selectvalue
+        },
+        success: function (data) {    
+                   alert(selectvalue);
+            $("#form_data").html(data);
+        }
+    })
+
+   });
+
+}
+ 
+ //for edit party
+/*$("#editparty").click(function(){
+    alert('Hello');
+    $('#editformaction').attr('action','party/edit/')
+})
+
+$("#deleteparty").click(function(){
+    alert('Hello');
+   // $('#btnaction').attr('value','Delete')
+    $('#editformaction').attr('action','party/delete/')
+})*/
+
+ // for home page and orders
 $("#consid").change(function(){
 
    // var url = $("#confind").attr("con-url");
     var programingId= $(this).val();
     var orderid = 0;
    // alert(url)
-    if(programingId != "selectparty")
+    if(programingId == "selectparty")
     {
 
-       // document.getElementById("add_orders").disabled=false;
-    //  document.getElementById('consign').disabled=false;
-    }
-    else
-    {
-      //  document.getElementById('add_orders').disabled=true;
-       // document.getElementById('consign').disabled=true;
+
         programingId=0;
-      
+
     }
 
-    
+   
     // for clear orders
     url2="/for_data/";   
    
@@ -142,16 +256,7 @@ $("#consid").change(function(){
 
         }
 
-    }); 
-    
-
-     
-
-});    
-
-
-
-
+    }); });    
 
 
 });

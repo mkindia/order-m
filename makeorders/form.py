@@ -13,7 +13,7 @@ class Itemsform(forms.ModelForm):
         model = Items
         fields = ['item_name']
         labels={'item_name':'Item Name',}
-        widgets = {'item_name':forms.TextInput(attrs={'class':'form-control'})}
+        widgets = {'item_name':forms.TextInput(attrs={'class':'form-control text-capitalize'})}
 
 
 class Userauthform(AuthenticationForm):
@@ -25,11 +25,11 @@ class Clientform(forms.ModelForm):
     class Meta:
         model = Clients
         fields = ['party', 'station', 'transport']
-        widgets = {'party':forms.TextInput(attrs={'class':'form-control'}),
-        'station':forms.TextInput(attrs={'class':'form-control'}),
-        'transport':forms.TextInput(attrs={'class':'form-control'}),
+        widgets = {'party':forms.TextInput(attrs={'class':'form-control text-capitalize'}),
+        'station':forms.TextInput(attrs={'class':'form-control text-capitalize'}),
+        'transport':forms.TextInput(attrs={'class':'form-control text-capitalize'}),
         }
-
+       
 
 
 class consigneeform(forms.ModelForm):
@@ -37,9 +37,9 @@ class consigneeform(forms.ModelForm):
         model = Consignees
         fields = ['consignee', 'station', 'transport',]
         labels={'consignee':'Consignee Name',}
-        widgets = {'consignee':forms.TextInput(attrs={'class':'form-control'}),                      
-                 'station':forms.TextInput(attrs={'class':'form-control'}),        
-                   'transport':forms.TextInput(attrs={'class':'form-control'}),}
+        widgets = {'consignee':forms.TextInput(attrs={'class':'form-control text-capitalize'}),                      
+                 'station':forms.TextInput(attrs={'class':'form-control text-capitalize'}),        
+                   'transport':forms.TextInput(attrs={'class':'form-control text-capitalize'}),}
                 
 
 
@@ -49,7 +49,7 @@ class ordesform(forms.ModelForm):
         fields = ['orderdate','item_name','item_price','ordered_cartons']
         widgets ={'orderdate':forms.DateInput(attrs={'class':'form-control','type':'Date'}),
             'item_price':forms.TextInput(attrs={'class':'form-control','type':'number','step':'0.01'}),
-            'item_name':forms.Select(attrs={'class':'form-select'}),
+            'item_name':forms.Select(attrs={'class':'form-select text-capitalize'}),
             'ordered_cartons':forms.TextInput(attrs={'class':'form-control','type':'integer'}),            
         }
 

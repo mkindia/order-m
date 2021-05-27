@@ -1,42 +1,35 @@
 {% extends 'base.html' %}
 
-{% block title %} Add Consignee {% endblock title %}
+{% block title %} Edit Consignee {% endblock title %}
 
 {% load static %}
 
-{% block content %}  
-<div class="row">       
-        <div class="col-sm-12 g-2">
-            <h6 class="alert alert-primary text-center "> Edit Consinees </h6>
-            
-            <form class="form" action="" method="POST">
-                {% csrf_token %}                
-                {{editform.as_p}}
-                                </br>
-                  
-                 <div lass="d-grid gap-2 d-md-flex justify-content-md-end me-3">
-                    <input class="btn btn-info" type="submit">
-                 </div>
-            </form>
+{% block content %}
+<form method="POST">
+      {% csrf_token %}
+      <div class="row g-2">
+            <h5 class="alert alert-danger text-center">Edit Consignee</h5>
+            <div class="form-floating ps-1 pt-1 p-1 col-md-12">
+                  <select id="partylist" class="form-select " name='party_id' required>
+                        <option value="selectparty"> Select Party</option>
+                        {% for party in partys %}
+                        <option value="{{ party.id }} "> {{ party.party }}</option>
+                        {% endfor %}
+                  </select>
+                  <label for="confind ">Select Party</label>
+            </div>
+            <div class="form-floating ps-1 pt-1 p-1 col-md-12">
 
-           
-        </div>
-       
-    </div>
+                  <select id="consigneelist" class="form-select" name='consigneeid' required>
+                        <option></option>
+                  </select>
+                  <label for="consigneeselect ">Consignee</label>
 
-{% endblock content %}
-        
-     
+            </div>
 
-        <script src="{% static 'js/bootstrap.js' %}"></script>
-        <script src="{% static 'js/popper.js' %}"></script>
-        <script src="{% static 'js/jQuery.js' %}"></script>
-        <script src="{% static 'js/ajex.js' %}"></script>
+            <div class="row g-2" id="form_data">
 
-       
+            </div>
+</form>
 
-
-
-</body>
-
-</html>
+</div>{% endblock content %}
