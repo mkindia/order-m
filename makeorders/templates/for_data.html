@@ -1,5 +1,5 @@
 {% for orders in order %}
-<tr class="text-center" {% if orders.ordered_cartons==orders.sent_cancel %} style="background-color:#e0fbea;" {% else %}
+<tr class="text-center" {% if orders.ordered_cartons == orders.sent_cancel %} style="background-color:#e0fbea;" {% else %}
         style="background-color: #FFFFFF;" {% endif %}>
         <td>
                 {{ orders.orderdate}}
@@ -8,20 +8,19 @@
                 {{ orders.item_name }}
         </td>
         <td>
-                {{ orders.ordered_cartons }}
+                {{ orders.qty }} / {{orders.unit}}
         </td>
         <td>
-                {{ orders.sent_cancel }}
+                {{ orders.sent_cancel }} / {{orders.unit}}
         </td>
         <td>
-                {{orders.balance}}
+                {{orders.balance}} / {{orders.unit}}
         </td>
 </tr>
 <tr>
-        <td colspan="2"></td>
         <td colspan="1">
                 <div class="row g-1">
-                        <div class="col-12 text-end Bold">
+                        <div class="col-12 text-center Bold">
                                 <h class="badge  bg-success rounded-pill">Price {{orders.item_price}}</h>
                         </div>
                 </div>
@@ -29,8 +28,26 @@
         <td colspan="2">
                 <div class="row g-1">
                         <div class="col-6 g-1">
+                                <form action="{% url 'addorder' 'edit' orders.id %}" method="GET"> 
+                                        
+                                        <input class="form-control btn-outline-success rounded-pill btn-sm"
+                                        atb={{ orders.id }}  type="submit" value="Edit">
+                                </form>
+
+                        </div>
+                        <div class="col-6 g-1">
+                                <form action="" method="GET">
+                                        <input class="form-control btn-outline-danger rounded-pill btn-sm "
+                                                type="submit" value="Delete">
+                                </form>
+                        </div>
+                </div>
+        </td>
+        <td colspan="2">
+                <div class="row g-1">
+                        <div class="col-6 g-1">
                                 <form>
-                                        <input type="button" {% if orders.sent_cancel==0 %} disabled=true {% endif %}
+                                        <input type="button" {% if orders.sent_cancel == 0 %} disabled=true {% endif %}
                                                 class="form-control btn-outline-success rounded-pill btn-sm"
                                                 data-bs-toggle="modal" data-bs-target="#sent_datails" id="sentdetailbtn"
                                                 atb={{ orders.id }} value="Details">
@@ -40,8 +57,7 @@
                         <div class="col-6 g-1">
                                 <form action="{% url 'addsent' orders.id %}" method="GET">
                                         <input class="form-control btn-outline-primary rounded-pill btn-sm"
-                                                type="submit" {% if orders.ordered_cartons==orders.sent_cancel %}
-                                                disabled=true {% endif %} value="Send">
+                                                type="submit" {% if orders.qty == orders.sent_cancel %} disabled=true {% endif %} value="Send">
                                 </form>
                         </div>
                 </div>

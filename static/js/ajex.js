@@ -1,13 +1,22 @@
 
 
-$(document).ready(function(){$("#consign").change(function () {
+$(document).ready(function(){
 
-   // var url = $("#consigneeselect").attr("con-url");
+    // auto hde navbar
+    $(window).on('click', function(event){
+        // element over which click was made
+        var clickOver = $(event.target)
+        if ($('.navbar .navbar-toggler').attr('aria-expanded') == 'true' && clickOver.closest('.navbar').length === 0) {
+            // Click on navbar toggler button
+            $('button[aria-expanded="true"]').click();
+        }
+    });
+
+    // change party and consignee
+$("#consign").change(function () {   
     
     var currow =  $(this).val();
-    // var currow=$(this).attr('sat');
-    // var col1 = currow.find('td:eq(0)').text();
-   // alert(url)
+    
     if(currow != "Select Consignee")
     {
         
@@ -33,18 +42,12 @@ $(document).ready(function(){$("#consign").change(function () {
 
 
        
-    });
+});
 
-
+// For show sent item
 $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
 
-   // var url = $("#sentdetailform").attr("sentdetail-url");
-   
-    //var url="sent_data"
     var id = $(this).attr("atb");
-  
-    // var currow=$(this).attr('sat');
-    // var col1 = currow.find('td:eq(0)').text();
     $.ajax({
 
         url: '/sent_data/',
@@ -58,25 +61,11 @@ $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
     });
 
  });
-
-
-// for addorder item_data for id id_tem_name
-if (window.location.pathname == '/addorder/'){
-    $.ajax({
-            
-        url: '/item_data/',
-        data:{
-            'id':0
-        },
-        success:function(data) {
-          
-            $("#id_item_name").html(data);
+ 
+ // For edit party
+if(window.location.pathname=='/editparty/edit/'){
     
-        }}); 
- }
-// For Edit Party
-if(window.location.pathname=='/editparty/edit/'){$("#partylist").change(function(){
-    alert('');
+    $("#partylist").change(function(){   
     var selectvalue= $(this).val();
     $.ajax({
 
@@ -85,14 +74,16 @@ if(window.location.pathname=='/editparty/edit/'){$("#partylist").change(function
             'partyid': selectvalue
         },
         success: function (data) {    
-                   alert(selectvalue);
+                  
             $("#form_data").html(data);
         }
     })
-})}
+})
+
+}
 // For Delete Party
 if(window.location.pathname=='/editparty/delete/'){$("#partylist").change(function(){
-    alert('');
+    
     var selectvalue= $(this).val();
     $.ajax({
 
@@ -101,7 +92,7 @@ if(window.location.pathname=='/editparty/delete/'){$("#partylist").change(functi
             'partyid': selectvalue
         },
         success: function (data) {    
-                   alert(selectvalue);
+                   
             $("#form_data").html(data);
         }
     })
@@ -141,7 +132,7 @@ if(window.location.pathname=='/editconsignee/edit/'){
             'conid': selectvalue
         },
         success: function (data) {    
-                   alert(selectvalue);
+                   
             $("#form_data").html(data);
         }
     })
@@ -189,7 +180,7 @@ if(window.location.pathname=='/editconsignee/delete/'){
             'conid': selectvalue
         },
         success: function (data) {    
-                   alert(selectvalue);
+
             $("#form_data").html(data);
         }
     })
@@ -197,33 +188,14 @@ if(window.location.pathname=='/editconsignee/delete/'){
    });
 
 }
- 
- //for edit party
-/*$("#editparty").click(function(){
-    alert('Hello');
-    $('#editformaction').attr('action','party/edit/')
-})
-
-$("#deleteparty").click(function(){
-    alert('Hello');
-   // $('#btnaction').attr('value','Delete')
-    $('#editformaction').attr('action','party/delete/')
-})*/
-
- // for home page and orders
-$("#consid").change(function(){
-
-   // var url = $("#confind").attr("con-url");
+// For select party
+$("#consid").change(function()
+{
     var programingId= $(this).val();
     var orderid = 0;
    // alert(url)
     if(programingId == "selectparty")
-    {
-
-
-        programingId=0;
-
-    }
+    { programingId=0; }
 
    
     // for clear orders
@@ -242,7 +214,7 @@ $("#consid").change(function(){
 
     });
 
-// for connsignees
+  // for connsignees
       
     $.ajax({
             
@@ -256,7 +228,12 @@ $("#consid").change(function(){
 
         }
 
-    }); });    
+      });
+
+ });  
+ 
+ 
+ 
 
 
 });

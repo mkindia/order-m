@@ -6,7 +6,7 @@
                                     {{details.date }}
                                 </td>
                                 <td>
-                                    {{ details.cartons }}
+                                    {{ details.qty }}
                                 </td>
                                 
                                 <td>
@@ -21,12 +21,14 @@
                                  <td colspan="2">
                                   <div class="row g-1">
                                     <div class="col-6 g-1">                       
-                                    <form action="#" method="POST" class="d-inline" >                                     
+                                    <form action="#" method="POST" class="d-inline" > 
+                                     {% csrf_token %}                                    
                                         <input class="form-control btn-outline-success rounded-pill btn-sm" type="submit" value="Edit">
                                     </form>
                                      </div>
                                      <div class="col-6 g-1">
-                                     <form action="#" method="POST" class="d-inline" >                                     
+                                     <form action="#" method="POST" class="d-inline" >
+                                      {% csrf_token %}                                  
                                         <input class="form-control btn-outline-danger rounded-pill btn-sm" type="submit" value="Delete">
                                     </form>
                                       </div>

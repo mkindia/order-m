@@ -29,13 +29,26 @@ class Items(models.Model):
         return str (self.item_name )
 
 class Orders(models.Model):
+
+    units=[('Bag','Bag'),
+    ('Box','Box'),
+    ('Dozen','Dozen'),
+    ('Gms.','Gms.'),
+    ('Kgs.','Kgs.'),
+    ('Meter','Meter'),
+    ('Pcs.','Pcs.'),
+    ('Roll','Roll'),
+    ('Liter','Liter'),
+    ('Carton','Carton'),]
+
     consignees = models.ForeignKey(Consignees, on_delete=models.CASCADE)
     orderdate = models.DateField()
     item_name = models.CharField(max_length=30)
-    item_price = models.FloatField(default=10.00)
-    ordered_cartons = models.PositiveIntegerField(default=1)
-    sent_cancel = models.PositiveIntegerField(default=0, blank=True, null=True)
-    balance = models.PositiveIntegerField(default=0, blank=True, null=True)
+    item_price = models.FloatField(default=0.00)
+    qty = models.FloatField(default=1)
+    unit = models.CharField(max_length=30,choices=units,default='Carton',)
+    sent_cancel = models.FloatField(default=0.00, blank=True, null=True)
+    balance = models.FloatField(default=0.00, blank=True, null=True)
         
 
     # renames the instances of the model
@@ -55,7 +68,7 @@ class Sentorder(models.Model):
 
     orders = models.ForeignKey(Orders, on_delete=models.CASCADE)
     date = models.DateField()
-    cartons = models.PositiveIntegerField(default=1)
+    qty = models.FloatField(default=1)
     status = models.CharField(max_length=30,blank=True, null=True, choices=sent_cancel,default='Delivered',)
     by = models.CharField(max_length=30, blank=True, null=True, choices=by,default='ByUs',)
    

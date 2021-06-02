@@ -126,3 +126,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # by me
 STATICFILES_DIRS =[os.path.join(BASE_DIR,'static'),]
+# By me For session time out
+SESSION_COOKIE_AGE = 360

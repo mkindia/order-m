@@ -35,8 +35,7 @@ class Clientform(forms.ModelForm):
 class consigneeform(forms.ModelForm):
     class Meta:
         model = Consignees
-        fields = ['consignee', 'station', 'transport',]
-        labels={'consignee':'Consignee Name',}
+        fields = ['consignee', 'station', 'transport',]       
         widgets = {'consignee':forms.TextInput(attrs={'class':'form-control text-capitalize'}),                      
                  'station':forms.TextInput(attrs={'class':'form-control text-capitalize'}),        
                    'transport':forms.TextInput(attrs={'class':'form-control text-capitalize'}),}
@@ -46,20 +45,22 @@ class consigneeform(forms.ModelForm):
 class ordesform(forms.ModelForm):
     class Meta:
         model = Orders
-        fields = ['orderdate','item_name','item_price','ordered_cartons']
+        fields = ['orderdate','item_price','qty','unit']
+        labels={'qty':'Qty'}
         widgets ={'orderdate':forms.DateInput(attrs={'class':'form-control','type':'Date'}),
-            'item_price':forms.TextInput(attrs={'class':'form-control','type':'number','step':'0.01'}),
-            'item_name':forms.Select(attrs={'class':'form-select text-capitalize'}),
-            'ordered_cartons':forms.TextInput(attrs={'class':'form-control','type':'integer'}),            
+            'item_price':forms.TextInput(attrs={'class':'form-control','type':'number','step':'0.01'}),           
+            'qty':forms.TextInput(attrs={'class':'form-control','type':'number'}),
+            'unit':forms.Select(attrs={'class':'form-select'}),           
         }
 
 
 class Sentorderform(forms.ModelForm):
     class Meta:
         model = Sentorder
-        fields=['date','cartons','status','by',]        
+        fields=['date','qty','status','by',] 
+        labels={'qty':'Cartons'}       
         widgets = {'date':forms.DateInput(attrs={'class':'form-control','type':'date'}),
-        'cartons':forms.TextInput(attrs={'class':'form-control','type':'integer'}),
+        'qty':forms.TextInput(attrs={'class':'form-control','type':'number'}),
         'status':forms.Select(attrs={'class':'form-select'}),
         'by':forms.Select(attrs={'class':'form-select'}),
         }

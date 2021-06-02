@@ -13,6 +13,7 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endif %}
+
 <h5 class="alert alert-danger text-center text-capitalize"> New Party </h5>
 <form method="POST">
   {% csrf_token %}
@@ -24,7 +25,14 @@
     </div>
     {% endfor %}
     </br>
+    <div class="col-md-6">
+    <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="submit">
+    </div>
+    <div class="col-md-6">
+    <input class="form-control btn-primary mt-2" id="btnaction" type="submit" value="home">
+    </div>
   </div>
-  <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="submit">
+
+  
 </form>
 {% endblock content %}

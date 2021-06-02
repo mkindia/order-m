@@ -2,9 +2,11 @@
       
     {% if atri == 'party_editform' %}
      {% for fm in form %}
-      <div class="col-md-4">
+     {% if fm.name != 'party' %} 
+      <div class="col-md-6">
        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
-       </div>                                     
+       </div>
+       {% endif %}                           
      {% endfor %}
      <br>
      <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update"> 
@@ -22,13 +24,15 @@
    
    {% if atri == 'consignee_editform' %}
      {% for fm in form %}
-      <div class="col-md-4">
-       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
-       </div>                                     
+     {% if fm.name != 'consignee' %} 
+      <div class="col-md-6">
+       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} 
+      </div>
+      {% endif %}                               
      {% endfor %}
      <br>
-     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update"> 
-      {% endif %}  
+     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update">
+   {% endif %}  
   
    {% if atri == 'consignee_deleteform' %}
      {% for fm in form %}

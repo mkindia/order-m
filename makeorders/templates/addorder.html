@@ -4,11 +4,23 @@
 
 {% load static %}
 {% block content %}
-<h6 class="alert alert-primary text-center "> New Order </h6>
+{% if messages %}
+<div class="alert alert-success alert-dismissible fade show mt-1" role="alert">
+  {% for message in messages %}
+  <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} --> {{message}}
+  {% endfor %}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+<h6 class="alert alert-primary text-center mt-1">
+  {% if sitem == 'None' %} New Order {% endif %}
+  {% if sitem != 'None' %} Edit Order {% endif %}
+</h6>
 <form class="form" id="test_form" method="POST">
   {% csrf_token %}
-  <div class="row g-0">
-    <div class="form-floating p-1 col-md-6">
+  <div class="row g-2">
+    {% if sitem == 'None' %}
+    <div class="form-floating  col-md-6">
       <select id="consid" class="form-select " name='party_id' Required=true>
         <option></option>
         {% for party in partys %}
@@ -18,24 +30,48 @@
       <label for="confind ">Party</label>
     </div>
 
-    <div class="form-floating p-1 col-md-6">
+    <div class="form-floating col-md-6">
       <select id="consign" class="form-select" name='consignee_id' Required=true>
         <option></option>
       </select>
       <label for="consigneeselect ">Consignee</label>
     </div>
+    {% endif %}
   </div>
 
-  <div class="row">
+  <div class="row g-3">
+
+
     {% for fm in orderform %}
-    <div class="col-md-6">
-      {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+    <div class="col-md-4"> {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} </div>
+    {% endfor %}
+
+    <div class="col-md-4">
+      <label for="item_name">Select Item:</label>
+      <select class="form-select text-capitalize" name="item_name" id="item_name">
+        {% for item in items %}
+        {% if item.item_name == sitem %}
+        <option value="{{item}}" selected>{{item}}</option>
+        {% else %}
+        <option value="{{item}}">{{item}}</option>
+        {% endif %}
+        {% endfor %}
+      </select>
+           
     </div>
     <br>
-    {% endfor %}
+
+  
   </div>
   </br>
-  <input class="form-control btn-success" type="submit" name="submit_button">
+  <div class="row g-2">
+    <div class="col-md-6">
+      <input class="form-control btn-success" type="submit" name="submit_button">
+    </div>
+    <div class="col-md-6">
+      <a class="form-control btn-primary text-center text-decoration-none" href="{% url 'home' %}" >Home</a>
+    </div>
+  </div>
 
 </form>
 
