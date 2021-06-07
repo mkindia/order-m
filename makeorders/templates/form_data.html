@@ -7,7 +7,7 @@
        </div>                          
      {% endfor %}
      <br>
-     <input class="form-control btn-outline-success mt-2" id="btnaction" type="submit" value="Update"> 
+     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update"> 
     {% endif %}
 
     {% if atri == 'party_deleteform' %}
@@ -17,7 +17,7 @@
        </div>                                     
      {% endfor %}
      <br>
-     <input class="form-control btn-outline-danger mt-2" id="btnaction" type="submit" value="Delete"> 
+     <input class="form-control btn-danger mt-2" id="btnaction" type="submit" value="Delete"> 
     {% endif %}
    
    {% if atri == 'consignee_editform' %}
@@ -29,7 +29,7 @@
      <br>
      
      <div class="col-md-12 mt-3">
-     <input class="form-control btn-outline-success" id="btnaction" type="submit" value="Update">
+     <input class="form-control btn-success" id="btnaction" type="submit" value="Update">
      </div>
      
    {% endif %}  
@@ -41,7 +41,9 @@
        </div>                                     
      {% endfor %}
      <br>
+     <div class="col-md-12">
      <input class="form-control btn-danger mt-2" id="btnaction" type="submit" value="Delete"> 
+     </div>
    {% endif %}
 
    {% if atri == 'item_editform' %}

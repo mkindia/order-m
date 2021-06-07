@@ -129,96 +129,93 @@ def order_data(request):
 
 def add_order(request, atri, oid):
      if request.user.is_authenticated:
-      party=Clients.objects.all()
-      items = Items.objects.all()
-      item='None'
-      
-
-      if atri == 'edit':         
-          ordfom=Orders.objects.all()
-          adfom=Orders.objects.get(pk=int(oid))
-          
-          ordfom=ordesform(instance=adfom)
-          ordfom1=Orders.objects.filter(pk=int(oid))
-          for it in ordfom1 :
-              item=it.item_name
-              con_id=it.consignees_id
-              #print(it.item_name)
-          if request.method =='POST':
-            ordfom=ordesform(request.POST)
-            if ordfom.is_valid():
-                date=ordfom.cleaned_data['orderdate']
-                item_name=request.POST.get('item_name')
-                item_price=ordfom.cleaned_data['item_price']
-                cartons=ordfom.cleaned_data['qty']
-                unit=ordfom.cleaned_data['unit']     
-                sev=Orders(id=oid,consignees_id=con_id,orderdate=date,
-                item_name=item_name,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
-                sev.save()
-                #print(ordfom.cleaned_data['item_name'])
-                messages.success(request,'Order update successed')
-                return HttpResponseRedirect('/addorder/edit/'+str(oid)+'/')
-          
-      if atri == 'add':        
-        if request.method =='POST':
-            ordfom=ordesform(request.POST)
-            if ordfom.is_valid():
-                date=ordfom.cleaned_data['orderdate']
-                item_name=request.POST.get('item_name')
-                item_price=ordfom.cleaned_data['item_price']
-                cartons=ordfom.cleaned_data['qty']
-                unit=ordfom.cleaned_data['unit']     
-                sev=Orders(consignees_id=request.POST.get('consignee_id'),orderdate=date,
-                item_name=item_name,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
-                sev.save()
-                #print(ordfom.cleaned_data['item_name'])
-                messages.success(request,'Order added successed')
-                return HttpResponseRedirect('/addorder/add/0/')
-                
-        else:
-            ordfom=ordesform()       
+        party=Clients.objects.all()
+        items = Items.objects.all()
+        item='None'   
+        if atri == 'edit':         
+            ordfom=Orders.objects.all()
+            adfom=Orders.objects.get(pk=int(oid))
             
+            ordfom=ordesform(instance=adfom)
+            ordfom1=Orders.objects.filter(pk=int(oid))
+            for it in ordfom1 :
+                item=it.item_name
+                con_id=it.consignees_id
+                #print(it.item_name)
+            if request.method =='POST':
+                ordfom=ordesform(request.POST)
+                if ordfom.is_valid():
+                    date=ordfom.cleaned_data['orderdate']
+                    item_name=request.POST.get('item_name')
+                    item_price=ordfom.cleaned_data['item_price']
+                    cartons=ordfom.cleaned_data['qty']
+                    unit=ordfom.cleaned_data['unit']     
+                    sev=Orders(id=oid,consignees_id=con_id,orderdate=date,
+                    item_name=item_name,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
+                    sev.save()
+                    messages.success(request,'Order update successed')
+                    return HttpResponseRedirect('/')
+            
+        if atri == 'add':        
+            if request.method =='POST':
+                ordfom=ordesform(request.POST)
+                if ordfom.is_valid():
+                    date=ordfom.cleaned_data['orderdate']
+                    item_name=request.POST.get('item_name')
+                    item_price=ordfom.cleaned_data['item_price']
+                    cartons=ordfom.cleaned_data['qty']
+                    unit=ordfom.cleaned_data['unit']     
+                    sev=Orders(consignees_id=request.POST.get('consignee_id'),orderdate=date,
+                    item_name=item_name,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
+                    sev.save()
+                    #print(ordfom.cleaned_data['item_name'])
+                    messages.success(request,'Order added successed')
+                    return HttpResponseRedirect('/addorder/add/0/')
+                    
+            else:
+                ordfom=ordesform()       
+     else:
+         return HttpResponseRedirect('/')       
      return render(request,'addorder.html', {'orderform':ordfom,'partys':party,'sitem':item,'items':items})
 
 def addsent(request, ordid):
-   
-    sento = Orders.objects.filter(id=ordid)
-    sentform=Sentorderform(request.POST)
-    
-    ordercarton=0
-    
-    for c in sento :
-        Ordersid=c.id
-        sent_cancel=c.sent_cancel
-        ordercarton=c.qty     
-       
-    if request.method =='POST':
-       
-       if sentform.is_valid():
-           date=sentform.cleaned_data['date']          
-           cartons=sentform.cleaned_data['qty']
-           status=sentform.cleaned_data['status']
-           by=sentform.cleaned_data['by']
-           sev=Sentorder(orders_id=int(ordid),date=date,
-           qty=cartons,status=status,by=by)
-           sentcancel=sent_cancel+cartons
-           if ordercarton>=sentcancel :
-             sev.save()
-             Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons),
-             balance=ordercarton-sentcancel)
-             return HttpResponseRedirect('/')
-           else:
-               
-               print("corderd compliet Or Want to extra order")
-           #updateorder=Orders(consignees_id=consigneeid, sent_cancel=sent_cancel+int(cartons))
-           #updateorder.save()
-           #sev.save()
-           #return HttpResponseRedirect('/')
-           sentform=Sentorderform()
-    else:  
-      
-        sentform=Sentorderform()
-
+    if request.user.is_authenticated:
+        
+            sento = Orders.objects.filter(id=ordid)
+            sentform=Sentorderform(request.POST)            
+            ordercarton=0            
+            for c in sento :
+                Ordersid=c.id
+                sent_cancel=c.sent_cancel
+                ordercarton=c.qty     
+            
+            if request.method =='POST':            
+                if sentform.is_valid():
+                    date=sentform.cleaned_data['date']          
+                    cartons=sentform.cleaned_data['qty']
+                    status=sentform.cleaned_data['status']
+                    by=sentform.cleaned_data['by']
+                    sev=Sentorder(orders_id=int(ordid),date=date,
+                    qty=cartons,status=status,by=by)
+                    sentcancel=sent_cancel+cartons
+                    if ordercarton>=sentcancel :
+                        sev.save()
+                        Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons),
+                        balance=ordercarton-sentcancel)
+                        return HttpResponseRedirect('/')
+                    else:
+                        
+                        print("corderd compliet Or Want to extra order")
+                    #updateorder=Orders(consignees_id=consigneeid, sent_cancel=sent_cancel+int(cartons))
+                    #updateorder.save()
+                    #sev.save()
+                    #return HttpResponseRedirect('/')
+                        sentform=Sentorderform()
+                else:  
+                
+                    sentform=Sentorderform()
+    else:
+        return HttpResponseRedirect('/')
     return render(request,'addsent.html',{'sentform':sentform,})   
 
 def sent_data(request):  
@@ -287,77 +284,82 @@ def items(request, atri):
         return HttpResponseRedirect('/')
     return render(request,'items.html',{'action':action,'items':item})
 
-def add_party(request):    
-    if request.method=='POST':
-        party=''       
-        n=Clients.objects.filter(party=request.POST.get('party'))
-        for c in n :
-            party=c.party
+def add_party(request):
+    if request.user.is_authenticated:  
+            if request.method=='POST':
+                party=''       
+                n=Clients.objects.filter(party=request.POST.get('party'))
+                for c in n :
+                    party=c.party
 
-        if str(party)== str(request.POST.get('party')):
-            messages.warning(request,'Party Already Exist')
-            return HttpResponseRedirect('/addparty/')
-        else:
-            clients=Clientform(request.POST)
-            if clients.is_valid():
-               name=clients.cleaned_data['party'].title()
-               station=clients.cleaned_data['station'].title()
-               transport=clients.cleaned_data['transport'].title()
-               partsev=Clients(party=name,station=station,transport=transport)
-               partsev.save()
-               pid=''
-               i=Clients.objects.filter(party=name)
-               for id in i:
-                pid=id.id
-               consev=Consignees(party_id=int(pid),consignee=name,station=station,transport=transport)
-               consev.save()               
-               return HttpResponseRedirect('/')
+                if str(party)== str(request.POST.get('party')):
+                    messages.warning(request,'Party Already Exist')
+                    return HttpResponseRedirect('/addparty/')
+                else:
+                    clients=Clientform(request.POST)
+                    if clients.is_valid():
+                        name=clients.cleaned_data['party'].title()
+                        station=clients.cleaned_data['station'].title()
+                        transport=clients.cleaned_data['transport'].title()
+                        partsev=Clients(party=name,station=station,transport=transport)
+                        partsev.save()
+                        pid=''
+                        i=Clients.objects.filter(party=name)
+                        for id in i:
+                            pid=id.id
+                        consev=Consignees(party_id=int(pid),consignee=name,station=station,transport=transport)
+                        consev.save()               
+                        return HttpResponseRedirect('/')
+            else:
+               clients=Clientform()
     else:
-        clients=Clientform()
+        return HttpResponseRedirect('/')            
     return render(request,'addparty.html',{'clients':clients})
 
 def edit_party(request, atri):
-   party=Clients.objects.all()
-   if atri=='edit':
-       if request.method=='POST':
-            if request.POST.get('party_id'):
-                pid=request.POST.get('party_id')
-                clients=Clientform(request.POST)
-                if clients.is_valid():
-                    name=clients.cleaned_data['party'].title()
-                    station=clients.cleaned_data['station'].title()
-                    transport=clients.cleaned_data['transport'].title()
-                    pi=Clients.objects.get(pk=int(pid))
-                    conflict=Clients.objects.all()
-                    con=''
-                    noofcon=0
-                    for i in conflict:
-                        con=i.party                                       
-                        if con == name and name != pi.party :
-                            noofcon+=1                        
-                    if noofcon >= 1:                        
-                        messages.warning(request,'Party Already Exist  '+ name)
-                        return HttpResponseRedirect('/editparty/edit/')                   
-                    else :                        
-                        partsev=Clients(id=int(pid),party=name,station=station,transport=transport)
-                        partsev.save()
-                        cid=''
-                        i=Consignees.objects.filter(party_id=int(pid))
-                        for id in i:
-                            cid=id.id
-                        consev=Consignees(id=int(cid),party_id=int(pid),consignee=name,station=station,transport=transport)
-                        consev.save()
-                        messages.success(request,'Party Update Success  '+ name)
-                        return HttpResponseRedirect('/editparty/edit/')
-   if atri=='delete':
-        if request.method=='POST':
-          if request.POST.get('party_id'):
-           pid=Clients.objects.get(pk=request.POST.get('party_id'))
-           pid.delete()
-           return HttpResponseRedirect('/')         
-           
+    if request.user.is_authenticated:
+        party=Clients.objects.all()
+        if atri=='edit':
+            if request.method=='POST':
+                    if request.POST.get('party_id'):
+                        pid=request.POST.get('party_id')
+                        clients=Clientform(request.POST)
+                        if clients.is_valid():
+                            name=clients.cleaned_data['party'].title()
+                            station=clients.cleaned_data['station'].title()
+                            transport=clients.cleaned_data['transport'].title()
+                            pi=Clients.objects.get(pk=int(pid))
+                            conflict=Clients.objects.all()
+                            con=''
+                            noofcon=0
+                            for i in conflict:
+                                con=i.party                                       
+                                if con == name and name != pi.party :
+                                    noofcon+=1                        
+                            if noofcon >= 1:                        
+                                messages.warning(request,'Party Already Exist  '+ name)
+                                return HttpResponseRedirect('/editparty/edit/')                   
+                            else :                        
+                                partsev=Clients(id=int(pid),party=name,station=station,transport=transport)
+                                partsev.save()
+                                cid=''
+                                i=Consignees.objects.filter(party_id=int(pid))
+                                for id in i:
+                                    cid=id.id
+                                consev=Consignees(id=int(cid),party_id=int(pid),consignee=name,station=station,transport=transport)
+                                consev.save()
+                                messages.success(request,'Party Update Success  '+ name)
+                                return HttpResponseRedirect('/editparty/edit/')
+        if atri=='delete':
+                if request.method=='POST':
+                    if request.POST.get('party_id'):
+                        pid=Clients.objects.get(pk=request.POST.get('party_id'))
+                        pid.delete()
+                        return HttpResponseRedirect('/')         
+    else:
+        return HttpResponseRedirect('/')
 
-   return render(request,'editparty.html', {'partys':party})
+    return render(request,'editparty.html', {'partys':party})
 
 def form_data(request, atri):
      if atri == 'party_editform':

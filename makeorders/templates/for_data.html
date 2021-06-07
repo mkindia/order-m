@@ -31,7 +31,8 @@
                                 <form action="{% url 'addorder' 'edit' orders.id %}" method="GET"> 
                                         
                                         <input class="form-control btn-outline-success rounded-pill btn-sm"
-                                        atb={{ orders.id }}  type="submit" value="Edit">
+                                        atb={{ orders.id }}  type="submit" {% if orders.sent_cancel > 0 %} disabled=true {% endif %}
+                                        value="Edit">
                                 </form>
 
                         </div>

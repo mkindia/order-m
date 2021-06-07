@@ -7,16 +7,14 @@
 {% block homepage %}
 
 
-{% if messages %}
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  {% for message in messages %}
-  <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} --> {{message}}
-  {% endfor %}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{% if messages %}{% for message in messages %}
+<!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
+<div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-1" {% endif %} 
+     {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-1" {% endif %} role="alert">
+      <strog>{{message}}</strog>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-{% endif %}
-
-
+{% endfor %}{% endif %}
 
 <nav class="navbar navbar-expand-sm navbar-light alert-primary rounded m-2">
   <div class="container-fluid">
@@ -59,11 +57,11 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{% url 'add_consignee' %}">Add Consignee</a></li>
-            <li><a class="dropdown-item" href="{% url 'edit_consignee' 'edit' %}">Edit Consignee</a></li>
+            <li><a class="dropdown-item"  href="{% url 'edit_consignee' 'edit' %}">Edit Consignee</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="{% url 'edit_consignee' 'delete' %}">Delete Consignee</a></li>
+            <li><a class="dropdown-item text-danger" id='navdeleteconsignee' href="{% url 'edit_consignee' 'delete' %}">Delete Consignee</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
