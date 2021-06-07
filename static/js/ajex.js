@@ -61,6 +61,37 @@ $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
     });
 
  });
+
+ // For home
+ if(window.location.pathname=='/'){
+       $("#navid").on('click', '#nav_edit_consignee1', function(){
+        var conid=document.getElementById("consign").value;  
+        var token = '{{csrf_token}}';
+        var form = $(this).closest("form");
+        if(conid=='Select Consignee')
+        {
+            alert('Please Select Consignee');
+        }
+        else   
+        alert('else')           
+        $.ajax({          
+            
+            type:'POST',
+            url:'/editconsignee/edit/',
+            data: {'conid':conid,'X-CSRFToken':token},   
+            success: function (data) {
+              if (data.is_taken) {
+                alert(data.error_message);
+              }
+            }
+          });
+            
+        //window.location.href="/editconsignee/edit/?conid="+conid+"";
+         window.location.href="/editconsignee/edit/";
+
+       })
+    
+ }
  
  // For edit party
 if(window.location.pathname=='/editparty/edit/'){
@@ -82,7 +113,8 @@ if(window.location.pathname=='/editparty/edit/'){
 
 }
 // For Delete Party
-if(window.location.pathname=='/editparty/delete/'){$("#partylist").change(function(){
+if(window.location.pathname=='/editparty/delete/'){
+    $("#partylist").change(function(){
     
     var selectvalue= $(this).val();
     $.ajax({
@@ -188,6 +220,65 @@ if(window.location.pathname=='/editconsignee/delete/'){
    });
 
 }
+// For Edit Items
+if(window.location.pathname=='/items/edit/'){
+    
+    $("#select_item").change(function(){
+       
+        var selectvalue= $(this).val();
+        $.ajax({
+    
+            url: '/form_data/item_editform',
+            data: {
+                'item_id': selectvalue
+            },
+            success: function (data) {    
+                      
+                $("#form_data").html(data);
+            }
+        })
+    })
+
+
+}
+// For Delete Items
+if(window.location.pathname=='/items/delete/'){
+    
+    $("#select_item").change(function(){
+       
+        var selectvalue= $(this).val();
+        $.ajax({
+    
+            url: '/form_data/item_deleteform',
+            data: {
+                'item_id': selectvalue
+            },
+            success: function (data) {    
+                      
+                $("#form_data").html(data);
+            }
+        })
+    })
+
+
+}
+// For item add
+if(window.location.pathname=='/items/add/'){
+    
+    $.ajax({
+    
+        url: '/form_data/item_addform',
+        data: {
+            'item_id': 'None'
+        },
+        success: function (data) {
+           
+            $("#form_data").html(data);
+        }
+    })
+
+}
+
 // For select party
 $("#consid").change(function()
 {

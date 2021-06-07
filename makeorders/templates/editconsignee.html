@@ -7,19 +7,21 @@
 {% block content %}
 
 {% if messages %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  {% for message in messages %}
-  <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} --> {{message}}
-  {% endfor %}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{% for message in messages %}
+<!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
+<div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-1" {% endif %} 
+     {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-1" {% endif %} role="alert">
+      <strog>{{message}}</strog>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+{% endfor %}
 {% endif %}
 
-<form method="POST">
+<form method="POST" class="mt-1">
       {% csrf_token %}
       <div class="row g-2">
             <h5 class="alert alert-danger text-center">Edit Consignee</h5>
-            <div class="form-floating ps-1 pt-1 p-1 col-md-12">
+            <div class="form-floating ps-1 pt-1 p-1 col-md-6">
                   <select id="partylist" class="form-select " name='party_id' required>
                         <option value="selectparty"> Select Party</option>
                         {% for party in partys %}
@@ -28,18 +30,23 @@
                   </select>
                   <label for="confind ">Select Party</label>
             </div>
-            <div class="form-floating ps-1 pt-1 p-1 col-md-12">
-
+            <div class="form-floating ps-1 pt-1 p-1 col-md-6">
                   <select id="consigneelist" class="form-select" name='consigneeid' required>
                         <option></option>
                   </select>
                   <label for="consigneeselect ">Consignee</label>
 
             </div>
+      </div>
+      
+      <div id="form_data" class="row g-1">
 
-            <div class="row g-2" id="form_data">
-
-            </div>
+      </div>
+      <div class="row g-1">
+      <div class="col-md-12 mt-3">
+            <a class="form-control btn-primary text-center text-decoration-none" href="{% url 'home' %}" >Home</a>
+      </div>
+      </div>
 </form>
 
-</div>{% endblock content %}
+{% endblock content %}

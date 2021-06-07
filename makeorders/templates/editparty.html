@@ -9,14 +9,15 @@
 
 
 {% if messages %}
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {% for message in messages %}
-  {{message}}
-  {% endfor %}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+{% for message in messages %}
+<!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
+<div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-1" {% endif %} 
+     {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-1" {% endif %} role="alert">
+      <strog>{{message}}</strog>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+{% endfor %}
 {% endif %}
-
 
 
 <form method="POST">
@@ -34,10 +35,13 @@
       <label for="confind ">Select Party</label>
     </div>
 
-    <div class="row g-2" id="form_data">
+    <div class="row g-1" id="form_data">
 
     </div>
 
+    <div class="col-md-12 g-1 mt-2">
+      <a class="form-control btn-outline-primary text-center text-decoration-none" href="{% url 'home'%}" >Home</a>
+    </div>
 
   </div>
 </form>

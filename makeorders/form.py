@@ -40,8 +40,6 @@ class consigneeform(forms.ModelForm):
                  'station':forms.TextInput(attrs={'class':'form-control text-capitalize'}),        
                    'transport':forms.TextInput(attrs={'class':'form-control text-capitalize'}),}
                 
-
-
 class ordesform(forms.ModelForm):
     class Meta:
         model = Orders

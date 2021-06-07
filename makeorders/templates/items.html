@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Orders {% endblock title %}
+
+{% load static %}
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
+<div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-1" {% endif %} 
+     {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-1" {% endif %} role="alert">
+      <strog>{{message}}</strog>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+<div class="col-sm-10 col-md-8 col-lg-5 mx-auto">
+<h6 class="alert alert-primary text-center mt-2"> New Items </h6>
+<form class="form" method="POST">
+    {% csrf_token %}
+    <div class="row g-0" name="add">
+        {% if action == 'edit' or action == 'delete' %}
+        <div class="col-md-12">
+            <label for="consid">Select Item:</label>
+            <select id="select_item" class="form-select " name='item_id' Required=true>
+              <option></option>
+              {% for item in items %}
+              <option value="{{ item.id }} "> {{ item.item_name }}</option>
+              {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+       
+        <div class="col-md-12 mt-2" id='form_data'>
+            
+        </div>
+        <br>
+        
+
+        </br>
+        
+        <div class="col-sm-12 p-1">
+            <a class="form-control btn-primary mt-3 text-center text-decoration-none" href="{% url 'home' %}">Home</a>
+        </div>
+</form>
+</div>
+
+{% endblock content %}

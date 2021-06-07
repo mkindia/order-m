@@ -1,0 +1,8 @@
+
+{% for item in items %}
+{% if item.item_name == sitem %}
+<option value="{{ item.item_name }}" selected> {{item.item_name}}</option>
+{% else %}
+<option value="{{ item.item_name }}"> {{item.item_name}}</option>
+{% endif %}
+{% endfor %}

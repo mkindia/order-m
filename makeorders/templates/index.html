@@ -72,12 +72,12 @@
             Items
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'add_items' %}">Add Items</a></li>
-            <li><a class="dropdown-item" href="{% url 'edit_items' %}">Edit items</a></li>
+            <li><a class="dropdown-item" href="{% url 'items' 'add' %}">Add Items</a></li>
+            <li><a class="dropdown-item" href="{% url 'items' 'edit' %}">Edit items</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item" href="#">Delete items</a></li>
+            <li><a class="dropdown-item text-danger" href="{% url 'items' 'delete' %}">Delete items</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -129,7 +129,7 @@
           <th scope="col">Date </th>
           <th scope="col">Item</th>
           <th scope="col">Unit</th>
-          <th scope="col">Sent/Cancel</th>
+          <th scope="col">Status</th>
           <th scope="col">Balance</th>
         </tr>
       </thead>

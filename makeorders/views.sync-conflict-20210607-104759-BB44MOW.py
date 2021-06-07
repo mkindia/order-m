@@ -229,63 +229,37 @@ def sent_data(request):
         return HttpResponseRedirect('/')
     return render(request, 'sent_data.html', {'sent_details' : sentdetails,})
 
-def items(request, atri):
+def add_items(request):
     if request.user.is_authenticated:
-        item=Items.objects.all()
-        if atri=='add':
-            action='add'                  
-            if request.method=='POST':
-                item=''
-                itemname=request.POST.get('item_name')              
-                for item1 in Items.objects.filter(item_name=itemname) :
-                    item=item1
-                    
-                if str(itemname) == str(item) :
-                    messages.warning(request,'Item already Exist')              
-                    return HttpResponseRedirect('/items/add/')
-                else:
-                    itemForms=Itemsform(request.POST)
-                    if itemForms.is_valid():
-                        item_name=itemForms.cleaned_data['item_name'].title()
-                        sev=Items(item_name=item_name)
-                        sev.save()        
-                        return HttpResponseRedirect('/items/add/')
-           
-        if atri=='edit':
-            action='edit'
-            if request.POST.get('item_id'):
-                pid=request.POST.get('item_id')
-                itemform=Itemsform(request.POST)
-                if itemform.is_valid():
-                    name=itemform.cleaned_data['item_name'].title()
-                    pi=Items.objects.get(pk=int(pid))
-                    conflict=Items.objects.all()
-                    con=''
-                    noofcon=0
-                    for i in conflict:
-                        con=i.item_name                                     
-                        if con == name and name != pi.item_name :
-                            noofcon+=1                        
-                    if noofcon >= 1:                        
-                        messages.warning(request,'Item Already Exist  '+ name)
-                        return HttpResponseRedirect('/items/edit/')                   
-                    else :
-                        sev=Items(id=int(pid),item_name=name)
-                        sev.save()
-                        messages.success(request,'Item Update Success  '+ name)
-                        return HttpResponseRedirect('/items/edit/')
-                                   
-        if atri=='delete':
-             action='delete'
-             if request.method=='POST':
-                if request.POST.get('item_id'):
-                    pid=Items.objects.get(pk=request.POST.get('item_id').title())
-                    pid.delete()
-                    return HttpResponseRedirect('/')
+      if request.method=='POST':
+          item=''
+          itemname=request.POST.get('item_name')              
+          for item1 in Items.objects.filter(item_name=itemname) :
+              item=item1
             
+          if str(itemname) == str(item) :
+              messages.warning(request,'Item already Exist')              
+              return HttpResponseRedirect('/add_items/')
+          else:
+              itemForms=Itemsform(request.POST)
+              if itemForms.is_valid():
+                 item_name=itemForms.cleaned_data['item_name'].title()
+                 sev=Items(item_name=item_name)
+                 sev.save()        
+                 return HttpResponseRedirect('/')
+      else:
+          itemform=Itemsform()
     else:
         return HttpResponseRedirect('/')
-    return render(request,'items.html',{'action':action,'items':item})
+
+    return render(request,'add_items.html',{'itemforms':itemform})
+
+def edit_items(request):
+    if request.user.is_authenticated:
+        print('hell')
+    else:
+        return HttpResponseRedirect('/')
+    return render(request,'edititems.html')
 
 def add_party(request):    
     if request.method=='POST':
@@ -332,13 +306,16 @@ def edit_party(request, atri):
                     con=''
                     noofcon=0
                     for i in conflict:
-                        con=i.party                                       
+                        con=i.party
+                        print(i.party)                 
                         if con == name and name != pi.party :
                             noofcon+=1                        
-                    if noofcon >= 1:                        
+                    if noofcon >= 1:
+                        print(noofcon)
                         messages.warning(request,'Party Already Exist  '+ name)
                         return HttpResponseRedirect('/editparty/edit/')                   
-                    else :                        
+                    else :
+                        print(noofcon)
                         partsev=Clients(id=int(pid),party=name,station=station,transport=transport)
                         partsev.save()
                         cid=''
@@ -377,20 +354,6 @@ def form_data(request, atri):
           pk= Consignees.objects.get(pk=int(request.GET.get('conid')))         
           dataform=consigneeform(instance=pk)
          else:
-             dataform=consigneeform()
-     if atri == 'item_editform' :
-         if request.GET.get('item_id'):
-             pk=Items.objects.get(pk=int(request.GET.get('item_id')))
-             dataform=Itemsform(instance=pk)
-         else:
-             dataform=Itemsform()
-     if atri == 'item_deleteform' :
-         if request.GET.get('item_id'):
-             pk=Items.objects.get(pk=int(request.GET.get('item_id')))
-             dataform=Itemsform(instance=pk)
-         else:
-             dataform=Itemsform()        
-     if atri == 'item_addform':        
-           dataform=Itemsform()      
+             dataform=consigneeform()         
      
      return render(request, 'form_data.html',{'form':dataform,'atri':atri})

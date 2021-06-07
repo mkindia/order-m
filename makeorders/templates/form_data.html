@@ -2,14 +2,12 @@
       
     {% if atri == 'party_editform' %}
      {% for fm in form %}
-     {% if fm.name != 'party' %} 
-      <div class="col-md-6">
+      <div class="col-md-4">
        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
-       </div>
-       {% endif %}                           
+       </div>                          
      {% endfor %}
      <br>
-     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update"> 
+     <input class="form-control btn-outline-success mt-2" id="btnaction" type="submit" value="Update"> 
     {% endif %}
 
     {% if atri == 'party_deleteform' %}
@@ -19,19 +17,21 @@
        </div>                                     
      {% endfor %}
      <br>
-     <input class="form-control btn-danger mt-2" id="btnaction" type="submit" value="Delete"> 
+     <input class="form-control btn-outline-danger mt-2" id="btnaction" type="submit" value="Delete"> 
     {% endif %}
    
    {% if atri == 'consignee_editform' %}
-     {% for fm in form %}
-     {% if fm.name != 'consignee' %} 
+     {% for fm in form %} 
       <div class="col-md-6">
-       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} 
-      </div>
-      {% endif %}                               
+        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} 
+       </div>                                
      {% endfor %}
      <br>
-     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update">
+     
+     <div class="col-md-12 mt-3">
+     <input class="form-control btn-outline-success" id="btnaction" type="submit" value="Update">
+     </div>
+     
    {% endif %}  
   
    {% if atri == 'consignee_deleteform' %}
@@ -42,4 +42,30 @@
      {% endfor %}
      <br>
      <input class="form-control btn-danger mt-2" id="btnaction" type="submit" value="Delete"> 
+   {% endif %}
+
+   {% if atri == 'item_editform' %}
+     {% for fm in form %}
+      <div class="col-md-12">
+       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
+       </div>                                     
+     {% endfor %}
+     <br>
+     <input class="form-control btn-success mt-2"  type="submit" value="Submit"> 
+   {% endif %}
+
+   {% if atri == 'item_deleteform' %}
+     
+     <br>
+     <input class="form-control btn-danger mt-2"  type="submit" value="Delete"> 
+   {% endif %}
+
+   {% if atri == 'item_addform' %}
+     {% for fm in form %}
+      <div class="col-md-12">
+       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
+       </div>                                     
+     {% endfor %}
+     <br>
+     <input class="form-control btn-success mt-2"  type="submit" value="Submit"> 
    {% endif %}
