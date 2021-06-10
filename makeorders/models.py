@@ -54,7 +54,7 @@ class Orders(models.Model):
     # renames the instances of the model
     # with their title name
     def __str__(self):
-        return str (self.item_name )
+        return str (self.item_id )
 
 
 class Sentorder(models.Model):
