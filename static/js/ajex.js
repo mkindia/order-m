@@ -12,89 +12,88 @@ $(document).ready(function(){
         }
     });
 
+       // For select party
+       $("#consid").change(function()
+       {
+           var programingId= $(this).val();
+           var orderid = 0;
+       // alert(url)
+           if(programingId == "selectparty")
+           { programingId=0; }
 
+       
+           // for clear orders
+           url2="/for_data/";   
+       
+           $.ajax({
+
+               url: url2,
+               data: {
+                   'conid': orderid
+               },
+               success: function (data) {    
+                       
+                   $("#orders").html(data);
+               }
+
+           });
+
+       // for connsignees
+           
+           $.ajax({
+                   
+               url: '/con_data/',
+               data:{
+                   'cons1':programingId
+               },
+               success:function(data) {
+               
+                   $("#consign").html(data);
+
+               }
+
+           });
+
+       });  
+       
+
+           // change party and consignee
+       $("#consign").change(function () {   
+           
+           var currow =  $(this).val();
+           
+           if(currow != "Select Consignee")
+           {
+               
+           //  document.getElementById("navconsignee").disabled=false;
+           }
+           else
+           {
+           //  document.getElementById('navconsignee').disabled=true;
+               currow=0;
+           }
+           
+           $.ajax({
+
+               url: '/for_data/',
+               data: {
+                   'conid': currow
+               },
+               success: function (data) {
+                   $("#orders").html(data);
+               }
+
+           });
+
+
+           
+       });
 
 
  // For home
  if(window.location.pathname=='/'){
            
-            // For select party
-        $("#consid").change(function()
-        {
-            var programingId= $(this).val();
-            var orderid = 0;
-        // alert(url)
-            if(programingId == "selectparty")
-            { programingId=0; }
-
-        
-            // for clear orders
-            url2="/for_data/";   
-        
-            $.ajax({
-
-                url: url2,
-                data: {
-                    'conid': orderid
-                },
-                success: function (data) {    
-                        
-                    $("#orders").html(data);
-                }
-
-            });
-
-        // for connsignees
-            
-            $.ajax({
-                    
-                url: '/con_data/',
-                data:{
-                    'cons1':programingId
-                },
-                success:function(data) {
-                
-                    $("#consign").html(data);
-
-                }
-
-            });
-
-        });  
-        
-
-            // change party and consignee
-        $("#consign").change(function () {   
-            
-            var currow =  $(this).val();
-            
-            if(currow != "Select Consignee")
-            {
-                
-            //  document.getElementById("navconsignee").disabled=false;
-            }
-            else
-            {
-            //  document.getElementById('navconsignee').disabled=true;
-                currow=0;
-            }
-            
-            $.ajax({
-
-                url: '/for_data/',
-                data: {
-                    'conid': currow
-                },
-                success: function (data) {
-                    $("#orders").html(data);
-                }
-
-            });
-
-
-            
-        });
-
+     
         // For show sent item
         $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
 
@@ -112,19 +111,7 @@ $(document).ready(function(){
             });
 
         });
-        //for nav bar delete consignee
-       /* $("#navid").on('click','#navdeleteconsignee',function(){
-           if (confirm('Are you sure you want to Delete this ?')) {
-                // Save it!
-                location.replace("/editconsignee/delete/")
-              } else {
-                // Do nothing!
-                return false;
-              } 
              
-            
-        })*/
-
  }
  
  // For edit party
@@ -294,6 +281,43 @@ if(window.location.pathname=='/items/delete/'){
         })
     })
 
+    $("#form_data").on('click', '#itemdel', function () {
+
+        var id = $('#select_item').val();
+        $.ajax({
+
+            type : "POST", 
+            url: '/items/delete/',
+            data: {
+                item_id:id,
+             //item_name : $('#select_item').val(),
+             //last_name : $('#last_name').val(),
+             //csrfmiddlewaretoken: '{{ csrf_token }}',                 
+             dataType: "json",
+             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+             action: 'post'
+     
+            },
+            
+            success: function(data){
+              
+                if (data.msg!='None'){alert('Can not delete item Exist In order (  '+data.msg+'  )')}
+                if(data.msg=='None'){
+                     window.location.replace('/');
+                     alert('Item Delete Success');
+                    }
+                   
+               //$('#form_data').html(data.msg) /* response message */      
+               //       
+              
+            },
+     
+            failure: function() {
+                alert('Fail')
+            } 
+        });
+
+    });
 
 }
 // For item add

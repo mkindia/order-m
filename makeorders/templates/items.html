@@ -19,7 +19,7 @@
 <h6 class="alert alert-primary text-center mt-2"> New Items </h6>
 <form class="form" method="POST">
     {% csrf_token %}
-    <div class="row g-0" name="add">
+    <div class="row g-0">
         {% if action == 'edit' or action == 'delete' %}
         <div class="col-md-12">
             <label for="consid">Select Item:</label>

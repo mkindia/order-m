@@ -48,12 +48,12 @@
 
     <div class="col-md-4">
       <label for="item_name">Select Item:</label>
-      <select class="form-select text-capitalize" name="item_name" id="item_name">
+      <select class="form-select text-capitalize" name="item_id" id="item_name">
         {% for item in items %}
-        {% if item.item_name == sitem %}
-        <option value="{{item}}" selected>{{item}}</option>
+        {% if item.id == sitem %}
+        <option value="{{item.id}}" selected>{{item}}</option>
         {% else %}
-        <option value="{{item}}">{{item}}</option>
+        <option value="{{item.id}}">{{item}}</option>
         {% endif %}
         {% endfor %}
       </select>

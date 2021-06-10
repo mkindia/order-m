@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render, HttpResponseRedirect
+from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -122,55 +123,64 @@ def edit_consignee(request, atri):
    
 def order_data(request):
     
-    if request.GET.get('conid'):       
+    if request.GET.get('conid'):
+        items=Items.objects.all()     
         Consignee_id=request.GET.get('conid')          
         orders = Orders.objects.filter(consignees_id=Consignee_id)     
-    return render(request, 'for_data.html', {'order' : orders,})
+    return render(request, 'for_data.html', {'order' : orders,'item':items})
 
-def add_order(request, atri, oid):
+def add_order(request, atri):
      if request.user.is_authenticated:
         party=Clients.objects.all()
         items = Items.objects.all()
         item='None'   
-        if atri == 'edit':         
-            ordfom=Orders.objects.all()
-            adfom=Orders.objects.get(pk=int(oid))
-            
-            ordfom=ordesform(instance=adfom)
-            ordfom1=Orders.objects.filter(pk=int(oid))
-            for it in ordfom1 :
-                item=it.item_name
-                con_id=it.consignees_id
-                #print(it.item_name)
-            if request.method =='POST':
-                ordfom=ordesform(request.POST)
-                if ordfom.is_valid():
-                    date=ordfom.cleaned_data['orderdate']
-                    item_name=request.POST.get('item_name')
-                    item_price=ordfom.cleaned_data['item_price']
-                    cartons=ordfom.cleaned_data['qty']
-                    unit=ordfom.cleaned_data['unit']     
-                    sev=Orders(id=oid,consignees_id=con_id,orderdate=date,
-                    item_name=item_name,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
-                    sev.save()
-                    messages.success(request,'Order update successed')
-                    return HttpResponseRedirect('/')
-            
+        if atri == 'edit':            
+            #if request.is_ajax():
+             
+                oid=request.GET.get('oid', None)
+                print(oid)
+             
+                #response = {'msg':'Ajex return '} # response message
+                #return JsonResponse(response) # return response as JSON
+             
+                ordfom=Orders.objects.all()
+                adfom=Orders.objects.get(pk=int(oid))
+                
+                ordfom=ordesform(instance=adfom)
+                ordfom1=Orders.objects.filter(pk=int(oid))
+                for it in ordfom1 :
+                    item=it.item_id
+                    con_id=it.consignees_id
+                    #print(it.item_name)
+                if request.method =='POST':
+                    ordfom=ordesform(request.POST)
+                    if ordfom.is_valid():
+                        date=ordfom.cleaned_data['orderdate']
+                        item_id=request.POST.get('item_id')
+                        item_price=ordfom.cleaned_data['item_price']
+                        cartons=ordfom.cleaned_data['qty']
+                        unit=ordfom.cleaned_data['unit']     
+                        sev=Orders(id=oid,consignees_id=con_id,orderdate=date,
+                        item_id=item_id,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
+                        sev.save()
+                        messages.success(request,'Order update successed')
+                        return HttpResponseRedirect('/')
+        
         if atri == 'add':        
             if request.method =='POST':
                 ordfom=ordesform(request.POST)
                 if ordfom.is_valid():
                     date=ordfom.cleaned_data['orderdate']
-                    item_name=request.POST.get('item_name')
+                    item_id=request.POST.get('item_id')
                     item_price=ordfom.cleaned_data['item_price']
                     cartons=ordfom.cleaned_data['qty']
                     unit=ordfom.cleaned_data['unit']     
                     sev=Orders(consignees_id=request.POST.get('consignee_id'),orderdate=date,
-                    item_name=item_name,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
+                    item_id=item_id,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
                     sev.save()
                     #print(ordfom.cleaned_data['item_name'])
                     messages.success(request,'Order added successed')
-                    return HttpResponseRedirect('/addorder/add/0/')
+                    return HttpResponseRedirect('/addorder/add/')
                     
             else:
                 ordfom=ordesform()       
@@ -275,11 +285,23 @@ def items(request, atri):
         if atri=='delete':
              action='delete'
              if request.method=='POST':
-                if request.POST.get('item_id'):
-                    pid=Items.objects.get(pk=request.POST.get('item_id').title())
-                    pid.delete()
-                    return HttpResponseRedirect('/')
-            
+                if request.POST.get('item_id'):                   
+                    item1='None'                           
+                    ordfom=Orders.objects.filter(item_id=request.POST.get('item_id'))
+                    for it in ordfom : 
+                        item1=it.item_id               
+                    
+                    if item1 == 'None':                         
+                        pid=Items.objects.get(pk=request.POST.get('item_id'))                 
+                        pid.delete()
+                    else:
+                        itemname=Items.objects.filter(pk=request.POST.get('item_id'))
+                        for inn in itemname:
+                             item1=inn.item_name      
+                            
+                    response = {'msg':item1} # response message
+                    return JsonResponse(response) # return response as JSON
+                     
     else:
         return HttpResponseRedirect('/')
     return render(request,'items.html',{'action':action,'items':item})
