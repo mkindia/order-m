@@ -29,9 +29,9 @@
                         </div>
                 </div>
         </td>
-        <td colspan="2">
+        <td colspan="4">
                 <div class="row g-1">
-                        <div class="col-6 g-1">
+                        <div class="col-3 g-1">
                                 <form method="GET" action="{% url 'addorder' 'edit' %}" id='eoform'>
                                         <select name="oid" style="display: none;" ><option value="{{ orders.id }}"></option></select>
                                         <input class="form-control btn-outline-success rounded-pill btn-sm" id='eoid'
@@ -40,17 +40,15 @@
                                 </form>
 
                         </div>
-                        <div class="col-6 g-1">
+                        <div class="col-3 g-1">
                                 <form action="" method="GET">
                                         <input class="form-control btn-outline-danger rounded-pill btn-sm "
                                                 type="submit" value="Delete">
                                 </form>
                         </div>
-                </div>
-        </td>
-        <td colspan="2">
-                <div class="row g-1">
-                        <div class="col-6 g-1">
+               
+        
+                        <div class="col-3 g-1">
                                 <form>
                                         <input type="button" {% if orders.sent_cancel == 0 %} disabled=true {% endif %}
                                                 class="form-control btn-outline-success rounded-pill btn-sm"
@@ -59,7 +57,7 @@
                                 </form>
 
                         </div>
-                        <div class="col-6 g-1">
+                        <div class="col-3 g-1">
                                 <form action="{% url 'addsent' orders.id %}" method="GET">
                                         <input class="form-control btn-outline-primary rounded-pill btn-sm"
                                                 type="submit" {% if orders.qty == orders.sent_cancel %} disabled=true {% endif %} value="Send">

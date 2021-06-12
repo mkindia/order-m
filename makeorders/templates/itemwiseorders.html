@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} itemwiseorders {% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+
+<div class="row g-2 mt-1">
+    <h6 class="alert alert-primary text-center">Item Wise Orders </h6>
+    <form method="POST">
+        {% csrf_token %}
+    <div class="col-md-12">
+        <label for="consid">Select Item:</label>
+        <select id="select_item" class="form-select " name='item_id' Required=true>
+          <option value="Select Item">Select Item</option>
+          {% for items in item %}
+          <option value="{{ items.id }} "> {{ items.item_name }}</option>
+          {% endfor %}
+        </select>
+    </div>
+    </form>
+   
+    <div class="col-md-12 mt-3" id="from_itemwise_data">        
+ 
+    </div>
+    <div class="col-sm-12 p-1">
+        <a class="form-control btn-primary mt-3 text-center text-decoration-none" href="{% url 'home' %}">Home</a>
+    </div>
+</div>
+
+{% endblock content %}

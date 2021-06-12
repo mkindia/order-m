@@ -1,0 +1,64 @@
+<table class="table table-sm" id="ordertableid">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">Date </th>
+            <th scope="col">Item</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Status</th>
+            <th scope="col">Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for orders in order %}
+        
+           
+            <tr>
+                <td colspan="5" class="table-active">
+                    <div class="row">
+                        <div class="col-12">
+                            {% for it in consignees %}
+                            {% if it.id == orders.consignees_id %}
+                            {% for party in partys %}
+                            {% if party.id == it.party_id %}
+                         <h class="badge  alert-primary" > <strong>{{ party.party }} </strong> </h>
+                            {% endif %}
+                            {% endfor%}
+                            {% endif %}
+                            {% endfor %}
+                       
+                            {% for it in consignees %}
+                            {% if it.id == orders.consignees_id %}
+                            <h class="badge  alert-success" > {{ it.consignee }} </h>
+                            {% endif %}
+                            {% endfor %}
+                            <h class="badge alert-dark">Price {{orders.item_price}}</h>
+                        </div>
+
+                    </div>
+                </td>
+               
+            </tr>
+    <tr class="text-center">
+        <td>
+            {{ orders.orderdate}}
+        </td>
+        <td>
+            {% for it in item %}
+            {% if it.id == orders.item_id %}
+            {{ it.item_name }}
+            {% endif %}
+            {% endfor %}
+        </td>
+        <td>
+            {{ orders.qty }} / {{orders.unit}}
+        </td>
+        <td>
+            {{ orders.sent_cancel }} / {{orders.unit}}
+        </td>
+        <td>
+            {{orders.balance}} / {{orders.unit}}
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -39,13 +39,7 @@
     {% endif %}
   </div>
 
-  <div class="row g-3">
-
-
-    {% for fm in orderform %}
-    <div class="col-md-4"> {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} </div>
-    {% endfor %}
-
+  <div class="row g-2">
     <div class="col-md-4">
       <label for="item_name">Select Item:</label>
       <select class="form-select text-capitalize" name="item_id" id="item_name">
@@ -56,17 +50,17 @@
         <option value="{{item.id}}">{{item}}</option>
         {% endif %}
         {% endfor %}
-      </select>
-           
+      </select>           
     </div>
-    <br>
 
-  
+    {% for fm in orderform %}
+    <div class="col-md-4"> {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} </div>
+    {% endfor %}
   </div>
-  </br>
-  <div class="row g-2">
+  
+  <div class="row g-2 mt-3">
     <div class="col-md-6">
-      <input class="form-control btn-success" type="submit" name="submit_button">
+      <input class="form-control btn-success" type="submit" value="Submit" name="submit_button">
     </div>
     <div class="col-md-6">
       <a class="form-control btn-primary text-center text-decoration-none" href="{% url 'home' %}" >Home</a>

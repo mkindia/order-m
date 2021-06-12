@@ -337,8 +337,35 @@ if(window.location.pathname=='/items/add/'){
 
 }
 
-if(window.location.pathname=='/order/add/'){
+if(window.location.pathname=='/itemwiseorders/'){
+
+    $("#select_item").change(function(){
+    
+        var selectvalue= $(this).val();
+        alert(selectvalue)
+        $.ajax({
+    
+            type : "POST", 
+            url: '/itemwise_data/',
+            data: {
+                item_id:selectvalue,                         
+                dataType: "json",
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function (data) {    
+                      
+                $("#from_itemwise_data").html(data);
+                alert('success')
+            }
+        })
+    })
+
 
 }
+
+
+
+
 
 });

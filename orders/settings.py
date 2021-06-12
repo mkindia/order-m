@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -127,4 +127,4 @@ STATIC_URL = '/static/'
 # by me
 STATICFILES_DIRS =[os.path.join(BASE_DIR,'static'),]
 # By me For session time out
-#SESSION_COOKIE_AGE = 360
+SESSION_COOKIE_AGE = 240

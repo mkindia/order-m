@@ -13,12 +13,15 @@
         {% for fm in sentform %}
         <div class="col-md-6">
             {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
-        </div>
-        <br>
+        </div>    
         {% endfor %}
-
-        </br>
-        <input class="btn btn-info" type="submit" vlaue="submit" name="submit_button">
+        <div class="col-md-6">
+        <input class="form-control btn-success mt-3" type="submit" value="Submit" name="submit_button">
+        </div>
+        <div class="col-md-6">
+        <a class="form-control btn-primary mt-3 text-center text-decoration-none" href="/" >Home</a>
+        </div>
     </div>
 </form>
+
 {% endblock content %}

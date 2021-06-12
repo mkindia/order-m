@@ -17,6 +17,7 @@ def user_login(request):
                 vuser=authenticate(username=uname, password=upass)
                 if vuser is not None:
                     login(request, vuser)
+                    request.session['accesskey'] = 'accesskey'
                     #messages.success(request,'Success')
                     return HttpResponseRedirect('/')
 
@@ -24,24 +25,28 @@ def user_login(request):
             fm=Userauthform()
         return render(request,'userlogin.html',{'form':fm})
     else:
+        request.session.flush()
+        request.session.clear_expired()
         return HttpResponseRedirect('/')    
 
 #Logout user
-def user_logout(request):
+def user_logout(request):  
     logout(request)
+    request.session.flush()
+    request.session.clear_expired()
     return HttpResponseRedirect('/userlogin/')   
 
 # Create your views here.
 def home(request):
     if request.user.is_authenticated:
-    
+      request.session.modified=True
       party=Clients.objects.all()   
       return render(request, "index.html", {'partys':party,'username':request.user,})
     else:
      return HttpResponseRedirect('/userlogin/')
 
 def con_id(request):
-    
+    request.session.modified=True
     id = request.GET.get('cons1')
     cons1 = Consignees.objects.filter(party_id=id)
     return render(request, 'con_data.html', {'consi' : cons1,}) 
@@ -122,7 +127,7 @@ def edit_consignee(request, atri):
     return render(request,'editconsignee.html', {'partys':client})
    
 def order_data(request):
-    
+    request.session.modified=True
     if request.GET.get('conid'):
         items=Items.objects.all()     
         Consignee_id=request.GET.get('conid')          
@@ -192,14 +197,15 @@ def addsent(request, ordid):
     if request.user.is_authenticated:
         
             sento = Orders.objects.filter(id=ordid)
-            sentform=Sentorderform(request.POST)            
+            sentform=Sentorderform()            
             ordercarton=0            
             for c in sento :
                 Ordersid=c.id
                 sent_cancel=c.sent_cancel
                 ordercarton=c.qty     
             
-            if request.method =='POST':            
+            if request.method =='POST':
+                sentform=Sentorderform(request.POST)         
                 if sentform.is_valid():
                     date=sentform.cleaned_data['date']          
                     cartons=sentform.cleaned_data['qty']
@@ -384,6 +390,7 @@ def edit_party(request, atri):
     return render(request,'editparty.html', {'partys':party})
 
 def form_data(request, atri):
+
      if atri == 'party_editform':
         pk=Clients.objects.get(pk=int(request.GET.get('partyid')))
         dataform=Clientform(instance=pk)
@@ -415,6 +422,24 @@ def form_data(request, atri):
          else:
              dataform=Itemsform()        
      if atri == 'item_addform':        
-           dataform=Itemsform()      
+           dataform=Itemsform()
+             
      
      return render(request, 'form_data.html',{'form':dataform,'atri':atri})
+
+def item_wise(request):
+    if request.user.is_authenticated:      
+        items=Items.objects.all()
+    else:    
+        return HttpResponseRedirect('/')    
+    return render(request,'itemwiseorders.html',{'item':items})
+
+def itemwise_data(request):
+    if request.method=='POST':
+        item1=request.POST.get('item_id')
+        items=Items.objects.filter(pk=int(item1))
+        orders=Orders.objects.filter(item_id=item1)
+        con=Consignees.objects.all()
+        party=Clients.objects.all()
+        data={'order':orders,'item':items,'consignees':con,'partys':party}
+    return render(request,'itemwise_data.html',data)

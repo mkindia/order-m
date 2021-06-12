@@ -33,6 +33,8 @@ urlpatterns = [
     path('addparty/',views.add_party, name='addparty'),
     path('editparty/<atri>/',views.edit_party, name='edit_party'),
     path('form_data/<atri>',views.form_data, name='form_data'),
+    path('itemwiseorders/',views.item_wise, name='item_wise'),
+    path('itemwise_data/',views.itemwise_data, name='itemwise_data'),
     
    
     
