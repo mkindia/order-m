@@ -361,6 +361,8 @@ if(window.location.pathname=='/itemwiseorders/'){
         })
 
     })
+   
+
     $(function() {
         var TotalValue = 0;
        
@@ -371,7 +373,7 @@ if(window.location.pathname=='/itemwiseorders/'){
  
         document.getElementById('total').innerHTML = TotalValue;
     
- });
+         });
 
 
 }
