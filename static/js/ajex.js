@@ -342,7 +342,7 @@ if(window.location.pathname=='/itemwiseorders/'){
     $("#select_item").change(function(){
     
         var selectvalue= $(this).val();
-        alert(selectvalue)
+       
         $.ajax({
     
             type : "POST", 
@@ -356,10 +356,22 @@ if(window.location.pathname=='/itemwiseorders/'){
             success: function (data) {    
                       
                 $("#from_itemwise_data").html(data);
-                alert('success')
+               
             }
         })
+
     })
+    $(function() {
+        var TotalValue = 0;
+       
+        $("tr #obal").each(function(index,value){
+          currentRow = parseFloat($(this).text());
+          TotalValue += currentRow
+        });
+ 
+        document.getElementById('total').innerHTML = TotalValue;
+    
+ });
 
 
 }

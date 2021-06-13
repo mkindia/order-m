@@ -1,4 +1,8 @@
-<table class="table table-sm" id="ordertableid">
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table class="table table-sm table-dark" id="ordertableid">
     <thead>
         <tr class="text-center">
             <th scope="col">Date </th>
@@ -10,34 +14,6 @@
     </thead>
     <tbody>
         {% for orders in order %}
-        
-           
-            <tr>
-                <td colspan="5" class="table-active">
-                    <div class="row">
-                        <div class="col-12">
-                            {% for it in consignees %}
-                            {% if it.id == orders.consignees_id %}
-                            {% for party in partys %}
-                            {% if party.id == it.party_id %}
-                         <h class="badge  alert-primary" > <strong>{{ party.party }} </strong> </h>
-                            {% endif %}
-                            {% endfor%}
-                            {% endif %}
-                            {% endfor %}
-                       
-                            {% for it in consignees %}
-                            {% if it.id == orders.consignees_id %}
-                            <h class="badge  alert-success" > {{ it.consignee }} </h>
-                            {% endif %}
-                            {% endfor %}
-                            <h class="badge alert-dark">Price {{orders.item_price}}</h>
-                        </div>
-
-                    </div>
-                </td>
-               
-            </tr>
     <tr class="text-center">
         <td>
             {{ orders.orderdate}}
@@ -55,10 +31,51 @@
         <td>
             {{ orders.sent_cancel }} / {{orders.unit}}
         </td>
-        <td>
+        <td id="obal">
             {{orders.balance}} / {{orders.unit}}
         </td>
         </tr>
-        {% endfor %}
+        <tr>
+            <td colspan="5" class="table-active">
+                <div class="row">
+                    <div class="col-12">
+                        {% for it in consignees %}
+                        {% if it.id == orders.consignees_id %}
+                        {% for party in partys %}
+                        {% if party.id == it.party_id %}
+                     <h class="badge  alert-primary" > <strong>{{ party.party }} </strong> </h>
+                        {% endif %}
+                        {% endfor%}
+                        {% endif %}
+                        {% endfor %}
+                   
+                        {% for it in consignees %}
+                        {% if it.id == orders.consignees_id %}
+                        <h class="badge  alert-danger" > {{ it.consignee }} </h>
+                        {% endif %}
+                        {% endfor %}
+                        <h class="badge alert-dark">Price {{orders.item_price}}</h>
+                    </div>
+
+                </div>
+            </td>
+           
+        </tr>
+        {% endfor %}        
     </tbody>
+    <tbody class="table-light">
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td class="text-end">Balance</td>
+           <td id="total" class="text-center bg-dark text-light">
+               
+                   
+            
+        </td>
+        </tr>
+        
+        </tbody>
 </table>
+{% endblock content %}
