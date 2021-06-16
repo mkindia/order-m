@@ -363,21 +363,31 @@ if(window.location.pathname=='/itemwiseorders/'){
     })
    
 
-    $(function() {
-        var TotalValue = 0;
-       
-        $("tr #obal").each(function(index,value){
-          currentRow = parseFloat($(this).text());
-          TotalValue += currentRow
-        });
- 
-        document.getElementById('total').innerHTML = TotalValue;
-    
-         });
-
-
 }
 
+if(window.location.pathname=='/addsent/add/'){
+    $('#scon').hide()
+    //document.getElementById('select_Consignee').disabled=true;
+    $("#id_status").change(function(){
+       
+        var selectvalue= $(this).val();
+        if (selectvalue == 'Transfer To Consignee')
+        {
+            $('#select_Consignee').attr('required',true);
+            
+            $('#scon').show()
+         //document.getElementById('select_Consignee').disabled=false;           
+        }
+        else
+        {
+            $('#select_Consignee').attr('required',false);
+            $('#scon').hide()
+            //document.getElementById('select_Consignee').disabled=true;
+        }
+        
+    })    
+
+}
 
 
 

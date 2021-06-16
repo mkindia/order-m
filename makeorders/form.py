@@ -56,7 +56,7 @@ class Sentorderform(forms.ModelForm):
     class Meta:
         model = Sentorder
         fields=['date','qty','status','by',] 
-        labels={'qty':'Cartons'}       
+        labels={'qty':'Qty'}       
         widgets = {'date':forms.DateInput(attrs={'class':'form-control','type':'date'}),
         'qty':forms.TextInput(attrs={'class':'form-control','type':'number'}),
         'status':forms.Select(attrs={'class':'form-select'}),

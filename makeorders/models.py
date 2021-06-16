@@ -44,11 +44,11 @@ class Orders(models.Model):
     consignees = models.ForeignKey(Consignees, on_delete=models.CASCADE)
     orderdate = models.DateField()
     item_id = models.PositiveIntegerField()
-    item_price = models.FloatField(default=0.00)
+    item_price = models.FloatField()
     qty = models.FloatField(default=1)
     unit = models.CharField(max_length=30,choices=units,default='Carton',)
-    sent_cancel = models.FloatField(default=0.00, blank=True, null=True)
-    balance = models.FloatField(default=0.00, blank=True, null=True)
+    sent_cancel = models.FloatField(default=0, blank=True, null=True)
+    balance = models.FloatField(default=0, blank=True, null=True)
         
 
     # renames the instances of the model

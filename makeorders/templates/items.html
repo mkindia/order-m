@@ -16,7 +16,7 @@
 {% endfor %}
 {% endif %}
 <div class="col-sm-10 col-md-8 col-lg-5 mx-auto">
-<h6 class="alert alert-primary text-center mt-2"> New Items </h6>
+<h6 class="form-control badge alert-primary text-center mt-2"> New Items </h6>
 <form class="form" method="POST">
     {% csrf_token %}
     <div class="row g-0">
@@ -34,15 +34,7 @@
        
         <div class="col-md-12 mt-2" id='form_data'>
             
-        </div>
-        <br>
-        
-
-        </br>
-        
-        <div class="col-sm-12 p-1">
-            <a class="form-control btn-primary mt-3 text-center text-decoration-none" href="{% url 'home' %}">Home</a>
-        </div>
+        </div>        
 </form>
 </div>
 

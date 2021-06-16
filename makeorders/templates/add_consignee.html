@@ -15,7 +15,7 @@
 {% endif %}
 
 
-<h5 class="alert alert-danger text-center"> New Consinees </h5>
+<h5 class="form-control badge alert-danger text-center"> New Consinees </h5>
 
 <form method="POST">
   {% csrf_token %}
@@ -28,23 +28,18 @@
         <option value="{{ party.id }} "> {{ party.party }}</option>
         {% endfor %}
       </select>
-
     </div>
+
     {% for fm in form %}
     <div class="col-md-6">
       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
     </div>
-    <br>
     {% endfor %}
-    </br>
-  
-  <div class="col-md-6">
+    
+  <div class="col-md-12">
   <input class="form-control btn-success mt-2" type="submit" value="submit">
  </div>
-<div class="col-md-6">
-    <a class="form-control btn-primary mt-2 text-center text-decoration-none" href="/" >Home </a>
-    </div>
-  </div>
+
 </form>
 
 

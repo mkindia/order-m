@@ -20,7 +20,7 @@
 <form method="POST" class="mt-1">
       {% csrf_token %}
       <div class="row g-2">
-            <h5 class="alert alert-danger text-center">Edit Consignee</h5>
+            <h5 class="form-control badge alert-danger text-center">Edit Consignee</h5>
             <div class="form-floating ps-1 pt-1 p-1 col-md-6">
                   <select id="partylist" class="form-select " name='party_id' required>
                         <option value="selectparty"> Select Party</option>
@@ -41,10 +41,6 @@
       
       <div id="form_data" class="row g-1">
 
-      </div>
-      
-      <div class="col-md-12 mt-3">
-            <a class="form-control btn-primary text-center text-decoration-none" href="{% url 'home' %}" >Home</a>
       </div>
       
 </form>

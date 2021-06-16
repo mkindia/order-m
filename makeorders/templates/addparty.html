@@ -14,7 +14,7 @@
 </div>
 {% endif %}
 
-<h5 class="alert alert-danger text-center text-capitalize"> New Party </h5>
+<h5 class="form-control badge alert-danger text-center"> New Party </h5>
 <form method="POST">
   {% csrf_token %}
 
@@ -25,12 +25,10 @@
     </div>
     {% endfor %}
     </br>
-    <div class="col-md-6">
+    <div class="col-md-12">
     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="submit">
     </div>
-    <div class="col-md-6">
-    <a class="form-control btn-primary mt-2 text-center text-decoration-none" href="/" >Home </a>
-    </div>
+    
   </div>
 
   

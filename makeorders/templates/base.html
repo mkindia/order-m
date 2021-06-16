@@ -21,15 +21,91 @@
 </head>
 
 <body>
+<nav class="navbar navbar-expand-sm navbar-dark rounded m-2" style="background-color: #033e68;">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+    aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 
-  {% block homepage%}
-  <!-- for home page onlys -->
-  {% endblock homepage%}
+      <ul class="navbar-nav" id="navid">
+         
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Party
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+           
+            <li><a class="dropdown-item" href="{% url 'addparty'  %}">Add Party</a></li>
 
-{% block only%}
+            <li>
+              <a class="dropdown-item" href="{% url 'edit_party' 'edit' %}">Edit Party</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item text-danger" href="{% url 'edit_party' 'delete' %}">Delete Party</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" id="navconsignee" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Consignee
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'add_consignee' %}">Add Consignee</a></li>
+            <li><a class="dropdown-item"  href="{% url 'edit_consignee' 'edit' %}">Edit Consignee</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item text-danger" id='navdeleteconsignee' href="{% url 'edit_consignee' 'delete' %}">Delete Consignee</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" id="navitems" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Items
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'items' 'add' %}">Add Items</a></li>
+            <li><a class="dropdown-item" href="{% url 'items' 'edit' %}">Edit items</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item text-danger" href="{% url 'items' 'delete' %}">Delete items</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" id="navitems" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Orders
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'addorder' 'add' %}">Add Orders</a></li>
+            <li><a class="dropdown-item" href="{% url 'item_wise' %}" diabled=true>Show Items Order</a></li>
+            
+          </ul>
+        </li>
+      
+      </ul>
+      
+     
+    </div>
+     <div class="d-flex">
+      <a class="text-decoration-none text-warning me-2" href="{% url 'user_logout' %}">Logout</a>
+    </div>
+
+  </div>
   
-  {% endblock only%}
-
+</nav>
+  
   <div class="container-fluid">
     {% block content %}
     <!-- this is block content -->

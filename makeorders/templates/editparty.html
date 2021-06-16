@@ -24,7 +24,7 @@
   {% csrf_token %}
 
   <div class="row g-2">
-    <h5 class="alert alert-danger text-center">Edit Party</h5>
+    <h5 class="form-control badge alert-danger text-center">Edit Party</h5>
     <div class="form-floating">
       <select id="partylist" class="form-select" name='party_id' required>
         <option></option>
@@ -37,10 +37,6 @@
 
     <div class="row g-1" id="form_data">
 
-    </div>
-
-    <div class="col-md-12 g-1 mt-2">
-      <a class="form-control btn-primary text-center text-decoration-none" href="{% url 'home'%}" >Home</a>
     </div>
 
   </div>

@@ -12,7 +12,7 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endif %}
-<h6 class="alert alert-primary text-center mt-1">
+<h6 class="form-control badge alert-primary text-center">
   {% if sitem == 'None' %} New Order {% endif %}
   {% if sitem != 'None' %} Edit Order {% endif %}
 </h6>
@@ -59,12 +59,10 @@
   </div>
   
   <div class="row g-2 mt-3">
-    <div class="col-md-6">
+    <div class="col-md-12">
       <input class="form-control btn-success" type="submit" value="Submit" name="submit_button">
     </div>
-    <div class="col-md-6">
-      <a class="form-control btn-primary text-center text-decoration-none" href="{% url 'home' %}" >Home</a>
-    </div>
+   
   </div>
 
 </form>

@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
 
-{% block only %}
 
 <table class="table table-sm table-dark" id="ordertableid">
     <thead>
@@ -78,4 +76,17 @@
         
         </tbody>
 </table>
-{% endblock only %}
+
+<script>
+$(function() {
+        var TotalValue = 0;
+       
+        $("tr #obal").each(function(index,value){
+          currentRow = parseFloat($(this).text());
+          TotalValue += currentRow
+        });
+ 
+        document.getElementById('total').innerHTML = TotalValue;
+    
+         });
+</script>
