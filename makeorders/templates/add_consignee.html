@@ -13,10 +13,11 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endif %}
-
-
-<h5 class="form-control badge alert-danger text-center"> New Consinees </h5>
-
+<div class="row g-1">
+  <div class="col-12">
+    <h5 class="form-control badge alert-danger text-center"> New Consinees </h5>
+  </div>
+</div>
 <form method="POST">
   {% csrf_token %}
   <div class="row g-2">
@@ -35,11 +36,13 @@
       {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
     </div>
     {% endfor %}
-    
-  <div class="col-md-12">
-  <input class="form-control btn-success mt-2" type="submit" value="submit">
- </div>
 
+    <div class="col-9">
+      <input class="form-control btn-success btn-sm mt-2" type="submit" value="Submit">
+    </div>
+    <div class="col-3">
+      <button class="form-control btn-dark btn-sm mt-2" onclick="history.back(-1)">Back</button>
+    </div>
 </form>
 
 

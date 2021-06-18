@@ -22,10 +22,15 @@
            
            <div id="scon" class="col-md-4">
             <label for="consid">Select Consignee:</label>
-            <select id="select_Consignee" class="form-select" name="Con_id" >           
+            <select id="select_Consignee" class="form-select" name="Con_id" >
+            
               <option></option>
               {% for con in transferto %}
+              {% if sentform.consignee_id.value == con.id %}
+                <option value="{{con.id}}" selected>{{con.consignee}}</option>
+                 {% else %}        
               <option value="{{ con.id }}"> {{ con.consignee }}</option>
+              {% endif %}
               {% endfor %}
             </select>
            </div>
@@ -38,8 +43,11 @@
             
         </div> 
              
-        <div class="col-md-12">
-        <input class="form-control btn-success mt-3" type="submit" value="Submit" name="submit_button">
+        <div class="col-8 mt-3">
+        <input class="form-control btn-success btn-sm" type="submit" value="Submit" name="submit_button">
+        </div>
+        <div class="col-4 mt-3">
+            <a class="form-control btn-sm btn-dark text-decoration-none text-center" href="{% url 'home' %}" >Home</a>
         </div>
 
     </div>

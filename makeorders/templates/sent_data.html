@@ -1,39 +1,43 @@
-                        {% for details in sent_details %}
-                            <tr class="text-center">
+{% for details in sent_details %}
+<tr class="text-center">
 
 
-                                <td>
-                                    {{details.date }}
-                                </td>
-                                <td>
-                                    {{ details.qty }}
-                                </td>
-                                
-                                <td>
-                                    {{ details.status }}
-                                </td>
-                                <td>
-                                    {{ details.by }}
-                                </td>
-                              
-                                <tr>
-                                 <td colspan="2" >  </td>   
-                                 <td colspan="2">
-                                  <div class="row g-1">
-                                    <div class="col-6 g-1">                       
-                                    <form action="#" method="POST" class="d-inline" > 
-                                     {% csrf_token %}                                    
-                                        <input class="form-control btn-outline-success rounded-pill btn-sm" type="submit" value="Edit">
-                                    </form>
-                                     </div>
-                                     <div class="col-6 g-1">
-                                     <form action="#" method="POST" class="d-inline" >
-                                      {% csrf_token %}                                  
-                                        <input class="form-control btn-outline-danger rounded-pill btn-sm" type="submit" value="Delete">
-                                    </form>
-                                      </div>
-                                </div>
-                                </td>
-                                </tr>
-                            </tr>
-                        {% endfor %}
+    <td>
+        {{details.date }}
+    </td>
+    <td>
+        {{ details.qty }}
+    </td>
+
+    <td>
+        {{ details.status }}
+        {% if details.status == 'Transfer To Consignee' %}
+        {% for con in consignees %}
+        {% if details.consignee_id == con.id %} ->> {{con.consignee}} {% endif %}
+        {% endfor %}
+        {% endif %}
+    </td>
+    <td>
+        {{ details.by }}
+    </td>
+
+<tr>
+    <td colspan="2"> </td>
+    <td colspan="2">
+        <div class="row g-1">
+            <div class="col-6 g-1">
+                <form action="{% url 'addsent' 'edit' %}" method="GET" class="d-inline">
+                    <input type="hidden" name="sid" value={{ details.id }}>
+                    <input class="form-control btn-outline-success rounded-pill btn-sm" type="submit" value="Edit">
+                </form>
+            </div>
+            <div class="col-6 g-1">
+                <form action="#" method="GET" class="d-inline">
+                    <input class="form-control btn-outline-danger rounded-pill btn-sm" type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    </td>
+</tr>
+</tr>
+{% endfor %}

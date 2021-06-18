@@ -195,9 +195,9 @@ def add_order(request, atri):
 
 def addsent(request, atri):
     if request.user.is_authenticated:
+        action=atri
         con=Consignees.objects.all()
         if atri=='add':
-            action='add' 
             sento = Orders.objects.filter(id= request.GET.get('oid'))            
             sentform=Sentorderform()            
             ordercarton=0               
@@ -209,18 +209,20 @@ def addsent(request, atri):
                 findconsignee=c.consignees_id
             fclient=Consignees.objects.get(pk=findconsignee) # for Client Id
             trsferto=Consignees.objects.filter(party_id=fclient.party_id) # for consignee id
-            #print(fclient.party_id)
-            print(ordercarton)
+           
             if request.method =='POST':
                 sentform=Sentorderform(request.POST)         
-                if sentform.is_valid():                   
+                if sentform.is_valid():                  
                     date=sentform.cleaned_data['date']          
                     cartons=sentform.cleaned_data['qty']
                     status=sentform.cleaned_data['status']
                     by=sentform.cleaned_data['by']
+                    if request.POST.get('Con_id'):
+                        findconsignee=request.POST.get('Con_id')
                     sev=Sentorder(orders_id=request.GET.get('oid'),date=date,
-                    qty=cartons,status=status,consignee_id=request.POST.get('Con_id'),by=by)
+                    qty=cartons,status=status,consignee_id=findconsignee,by=by)
                     sentcancel=sent_cancel+cartons
+                    
                     if ordercarton>=sentcancel :
                         sev.save()
                         Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons),
@@ -239,17 +241,65 @@ def addsent(request, atri):
                 else:  
                 
                     sentform=Sentorderform()
+
+        if atri=='edit':
+            sq=Sentorder.objects.get(pk=request.GET.get('sid'))                          
+            sentform=Sentorderform(instance=sq)
+            seqty=0
+            oid=0
+            seid=0
+            sdetail=Sentorder.objects.filter(pk=request.GET.get('sid'))
+            for sde in sdetail:
+                seqty=sde.qty
+                oid=sde.orders_id
+                seid=sde.id
+            sento = Orders.objects.filter(pk=oid)                   
+            ordercarton=0               
+            findconsignee=0
+            obal=0
+            for c in sento :
+                Ordersid=c.id
+                sent_cancel=c.sent_cancel
+                ordercarton=c.qty 
+                findconsignee=c.consignees_id
+                obal=c.balance
+            totalbal=obal+seqty         
+            fclient=Consignees.objects.get(pk=findconsignee) # for Client Id
+            trsferto=Consignees.objects.filter(party_id=fclient.party_id) # for consignee id 
+            
+            if request.method =='POST':
+                sentform=Sentorderform(request.POST)
+                if sentform.is_valid():                  
+                    date=sentform.cleaned_data['date']          
+                    cartons=sentform.cleaned_data['qty']
+                    status=sentform.cleaned_data['status']
+                    by=sentform.cleaned_data['by']
+                    sentcancel=sent_cancel+cartons-seqty
+                    if request.POST.get('Con_id'):
+                        findconsignee=request.POST.get('Con_id')
+                    if ordercarton>=sentcancel :
+                        Sentorder.objects.filter(pk=seid).update(date=date,qty=cartons,
+                        status=status,consignee_id=findconsignee,by=by)
+
+                        Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons)-float(seqty),
+                        balance=ordercarton-sentcancel)
+
+                        return HttpResponseRedirect('/')
+                    else:                     
+                        messages.warning(request,'Order Balance is Less then Sent Order please add First')
+                            
     else:
         return HttpResponseRedirect('/')
     return render(request,'addsent.html',{'sentform':sentform,'action':action,'con':con,'transferto':trsferto})   
 
-def sent_data(request):  
+def sent_data(request):
     if request.user.is_authenticated:  
+        con=Consignees.objects.all()
         order_id = request.GET.get('orderid')        
         sentdetails = Sentorder.objects.filter(orders_id=order_id)               
     else:
         return HttpResponseRedirect('/')
-    return render(request, 'sent_data.html', {'sent_details' : sentdetails,})
+    return render(request, 'sent_data.html', {'sent_details' : sentdetails,'consignees':con})
 
 def items(request, atri):
     if request.user.is_authenticated:
