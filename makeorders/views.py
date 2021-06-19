@@ -283,11 +283,34 @@ def addsent(request, atri):
 
                         Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons)-float(seqty),
                         balance=ordercarton-sentcancel)
-
+                       
+                        messages.success(request,'Update Success')
                         return HttpResponseRedirect('/')
                     else:                     
                         messages.warning(request,'Order Balance is Less then Sent Order please add First')
-                            
+
+        if atri=='delete':
+                sdetail=Sentorder.objects.filter(pk=request.POST.get('sid'))
+                for sde in sdetail:
+                    seqty=sde.qty
+                    oid=sde.orders_id                
+                sento = Orders.objects.filter(pk=oid)               
+                for c in sento :
+                    Ordersid=c.id
+                    sent_cancel=c.sent_cancel                
+                    obal=c.balance             
+                   
+                Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel-float(seqty),
+                balance=obal+float(seqty))
+
+                rsent=Sentorder.objects.get(pk=request.POST.get('sid'))                
+                rsent.delete()
+
+                #messages.success(request,'Update Success')
+                return HttpResponseRedirect('/')
+                
+
+
     else:
         return HttpResponseRedirect('/')
     return render(request,'addsent.html',{'sentform':sentform,'action':action,'con':con,'transferto':trsferto})   

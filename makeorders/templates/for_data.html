@@ -1,12 +1,11 @@
 {% for orders in order %}
-<tr class="text-center" {% if orders.ordered_cartons == orders.sent_cancel %} style="background-color:#e0fbea;" {% else %}
-        style="background-color: #FFFFFF;" {% endif %}>
+<tr class="text-center" {% if orders.qty == orders.sent_cancel %} style="background-color: rgb(14, 70, 26);" {% endif %} >
         <td>
                 {{ orders.orderdate}}
         </td>
         <td>
                 {% for it in item %}
-                {% if it.id == orders.item_id  %}
+                {% if it.id == orders.item_id %}
                 {{ it.item_name }}
                 {% endif %}
                 {% endfor %}
@@ -32,22 +31,25 @@
         <td colspan="4">
                 <div class="row g-1">
                         <div class="col-3 g-1">
-                                <form method="GET" action="{% url 'addorder' 'edit' %}" id='eoform'>
-                                        <select name="oid" style="display: none;" ><option value="{{ orders.id }}"></option></select>
+                                <form method="GET" action="{% url 'addorder' 'edit' %}" id='eoform'>                                        
+                                        <input type="hidden" name="oid" value={{ orders.id }}>
                                         <input class="form-control btn-outline-success rounded-pill btn-sm" id='eoid'
-                                        oid={{ orders.id }}  type="submit" {% if orders.sent_cancel > 0 %} disabled=true {% endif %}
+                                                oid={{ orders.id }} type="submit" {% if orders.sent_cancel >= 0 %}
+                                        disabled=true {% endif %}
                                         value="Edit">
                                 </form>
 
                         </div>
                         <div class="col-3 g-1">
                                 <form action="" method="GET">
+                                        <input type="hidden" name="oid" value={{ orders.id }}>
                                         <input class="form-control btn-outline-danger rounded-pill btn-sm "
-                                                type="submit" value="Delete">
+                                                type="submit" {% if orders.sent_cancel >= 0 %} disabled=true 
+                                                {% endif %} value="Delete" >
                                 </form>
                         </div>
-               
-        
+
+
                         <div class="col-3 g-1">
                                 <form>
                                         <input type="button" {% if orders.sent_cancel == 0 %} disabled=true {% endif %}
@@ -58,13 +60,14 @@
 
                         </div>
                         <div class="col-3 g-1">
-                                <form action="{% url 'addsent' 'add' %}" method="GET">                                        
+                                <form action="{% url 'addsent' 'add' %}" method="GET">
                                         <input type="hidden" name="oid" value={{ orders.id }}>
                                         <input type="hidden" name="item_id" value={{ orders.item_id }}>
                                         <input type="hidden" name="unit" value={{ orders.unit }}>
-                                        <input type="hidden" name="item_price" value={{ orders.item_price }}>                                        
+                                        <input type="hidden" name="item_price" value={{ orders.item_price }}>
                                         <input class="form-control btn-outline-primary rounded-pill btn-sm"
-                                        type="submit" {% if orders.qty == orders.sent_cancel %} disabled=true {% endif %} value="Send">
+                                                type="submit" {% if orders.qty == orders.sent_cancel %} 
+                                                disabled=true {% endif %} value="Send">
                                 </form>
                         </div>
                 </div>

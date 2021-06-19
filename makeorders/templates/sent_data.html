@@ -32,8 +32,9 @@
                 </form>
             </div>
             <div class="col-6 g-1">
-                <form action="#" method="GET" class="d-inline">
-                    <input class="form-control btn-outline-danger rounded-pill btn-sm" type="submit" value="Delete">
+                <form method="POST" class="d-inline">
+                     {% csrf_token %}                    
+                    <input class="form-control btn-outline-danger rounded-pill btn-sm" seid={{details.id}} type="submit" value="Delete" id='sedelete'>
                 </form>
             </div>
         </div>

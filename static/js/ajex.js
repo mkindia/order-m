@@ -111,6 +111,35 @@ $(document).ready(function(){
             });
 
         });
+      
+        // For Delete sent data
+        $("#sentdetailtable tbody").on('click', '#sedelete', function () {
+
+           if ( confirm("Are you sure to Delete this record ?"))
+           {
+
+            var id = $(this).attr("seid");
+
+            $.ajax({
+    
+                type : "POST", 
+                url: '/addsent/delete/',
+                data: {
+                    sid:id,                         
+                    dataType: "json",
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'post'
+                },
+                success: function (data) {    
+                          alert('Delete Success')
+                    
+                   
+                }
+            })
+        }
+          
+
+        });
              
  }
  
@@ -197,7 +226,6 @@ if(window.location.pathname=='/editconsignee/edit/'){
 
 
 }
-
 // For Delete Consignee
 if(window.location.pathname=='/editconsignee/delete/'){
 

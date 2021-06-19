@@ -42,7 +42,7 @@
 </form>
 <div class="row g-0">
   <h3 class="form-control badge alert-success text-center">Consignee Orders</h3>
-  <div class="col-md-12">          
+  <div class="table-responsive">          
     <table class="table table-success table-sm table-striped" id="ordertableid">
       <thead>
         <tr class="text-center">
@@ -94,6 +94,13 @@
   </div>
 
 </div>
+
+{% if messages %}{% for message in messages %}
+<script type="text/javascript">  
+    alert('{{ message }}');
+</script>
+{% endfor %}{% endif %}
+
 
 
 {% endblock content %}

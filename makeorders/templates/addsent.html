@@ -44,7 +44,15 @@
         </div> 
              
         <div class="col-8 mt-3">
-        <input class="form-control btn-success btn-sm" type="submit" value="Submit" name="submit_button">
+        {% if action == 'add' %}
+        <input class="form-control btn-success btn-sm" type="submit" value="Save" name="Save">
+        {% endif %}
+        {% if action == 'edit' %}
+        <input class="form-control btn-primary btn-sm" type="submit" value="Update" name="Update">
+        {% endif %}        
+        {% if action == 'delete' %}
+        <input class="form-control btn-danger btn-sm" type="submit" value="Delete" name="delete">
+        {% endif %}
         </div>
         <div class="col-4 mt-3">
             <a class="form-control btn-sm btn-dark text-decoration-none text-center" href="{% url 'home' %}" >Home</a>
