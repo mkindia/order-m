@@ -10,17 +10,17 @@
 <form class="form" id="test_form" method="POST">
     {% csrf_token %}
     <div class="row g-2">
-        <div class="col-md-4">
+        <div class="col-sm-4 col-6">
          Date:{{sentform.date}}
         </div>
-            <div class="col-md-4">
+            <div class="col-sm-4 col-6">
             Qty:{{sentform.qty}}
            </div>
-           <div class="col-md-4">
+           <div class="col-sm-4 col-6">
             Status:{{sentform.status}}
            </div>
            
-           <div id="scon" class="col-md-4">
+           <div id="scon" class="col-sm-4 col-6">
             <label for="consid">Select Consignee:</label>
             <select id="select_Consignee" class="form-select" name="Con_id" >
             
@@ -35,11 +35,11 @@
             </select>
            </div>
         
-           <div class="col-md-4">
+           <div class="col-sm-4 col-6">
             By:{{sentform.by}}
            </div>
         
-        <div class="col-md-6" id="newRow">
+        <div class="col-sm-4 col-6" id="newRow">
             
         </div> 
              

@@ -34,7 +34,7 @@
                                 <form method="GET" action="{% url 'addorder' 'edit' %}" id='eoform'>                                        
                                         <input type="hidden" name="oid" value={{ orders.id }}>
                                         <input class="form-control btn-outline-success rounded-pill btn-sm" id='eoid'
-                                                oid={{ orders.id }} type="submit" {% if orders.sent_cancel >= 0 %}
+                                                oid={{ orders.id }} type="submit" {% if orders.sent_cancel > 0 %}
                                         disabled=true {% endif %}
                                         value="Edit">
                                 </form>
@@ -44,7 +44,7 @@
                                 <form action="" method="GET">
                                         <input type="hidden" name="oid" value={{ orders.id }}>
                                         <input class="form-control btn-outline-danger rounded-pill btn-sm "
-                                                type="submit" {% if orders.sent_cancel >= 0 %} disabled=true 
+                                                type="submit" {% if orders.sent_cancel > 0 %} disabled=true 
                                                 {% endif %} value="Delete" >
                                 </form>
                         </div>

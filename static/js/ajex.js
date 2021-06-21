@@ -128,7 +128,7 @@ $(document).ready(function(){
                     sid:id,                         
                     dataType: "json",
                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                    action: 'post'
+                    action: 'POST'
                 },
                 success: function (data) {    
                           alert('Delete Success')
@@ -420,7 +420,7 @@ if(window.location.pathname=='/addsent/add/'){
 if(window.location.pathname=='/addsent/edit/'){
 
     var status =$('#id_status').val()    
-    if (status == 'Transfer To Consignee')
+    if (status == 'Transfer To')
     {
         $('#select_Consignee').attr('required',true);        
         $('#scon').show()            
@@ -434,7 +434,7 @@ if(window.location.pathname=='/addsent/edit/'){
         $("#id_status").change(function(){
        
             var selectvalue= $(this).val();
-            if (selectvalue == 'Transfer To Consignee')
+            if (selectvalue == 'Transfer To')
             {
                 $('#select_Consignee').attr('required',true);                
                 $('#scon').show()                    

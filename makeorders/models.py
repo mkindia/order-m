@@ -62,7 +62,7 @@ class Sentorder(models.Model):
     
     sent_cancel=[('Cancelled','Cancelled'),
                 ('Delivered','Delivered'),
-                ('Transfer To Consignee','Transfer To Consignee'),]
+                ('Transfer To','Transfer To Consignee'),]
 
     by = [('ByUs','ByUs'),
     ('ByParty','ByParty'),]            

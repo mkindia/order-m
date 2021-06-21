@@ -4,11 +4,11 @@
 
 {% load static %}
 
+
 {% block content %}
 
-
-<div class="row g-1">
-    <h6 class="badge alert-primary text-center">Item Wise Orders </h6>
+ <h6 class=" form-control badge alert-dark text-center">Item Wise Orders </h6>
+<div class="row g-0">   
     <form method="POST">
         {% csrf_token %}
     <div class="col-md-12">
@@ -21,13 +21,13 @@
         </select>
     </div>
     </form>
-   
-    <div class="table-responsive mt-3" id="from_itemwise_data">        
+</div>
+<div class="row  mt-1">
+    <div class="table-responsive" id="from_itemwise_data">        
  
     </div>
     
 </div>
-
 
 
 {% endblock content %}

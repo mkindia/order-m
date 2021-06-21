@@ -10,6 +10,7 @@
   </title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
+   <meta http-equiv="refresh" content="180">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -21,9 +22,11 @@
 </head>
 
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark rounded m-2" style="background-color: #033e68;">
+<div class="container-fluid sticky-top">
+<nav class="navbar navbar-expand-sm navbar-dark rounded mt-1" style="background-color: #033e68;">
   <div class="container-fluid">
     <a class="navbar-brand active" aria-current="page" href="{% url 'home' %}">Home</a>
+      
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
     aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -95,8 +98,9 @@
       
       </ul>
       
-      <div class="btn btn-outline-danger ">
-        <a class="text-decoration-none text-light me-2" href="{% url 'user_logout' %}">Logout</a>
+      <div>
+        
+        <a class="btn btn-outline-danger text-decoration-none text-light me-2" href="{% url 'user_logout' %}">Logout</a>
       </div>
      
     </div>
@@ -105,7 +109,8 @@
   </div>
   
 </nav>
-  
+
+</div>
   <div class="container-fluid">
     {% block content %}
     <!-- this is block content -->

@@ -19,12 +19,11 @@
 {% endfor %}
 {% endif %}
 
-
+<h5 class="form-control badge alert-danger text-center">Edit Party</h5>
 <form method="POST">
   {% csrf_token %}
 
-  <div class="row g-2">
-    <h5 class="form-control badge alert-danger text-center">Edit Party</h5>
+  <div class="row g-1 mb-1">    
     <div class="form-floating">
       <select id="partylist" class="form-select" name='party_id' required>
         <option></option>
@@ -34,12 +33,12 @@
       </select>
       <label for="confind ">Select Party</label>
     </div>
-
+</div>
     <div class="row g-1" id="form_data">
 
     </div>
 
-  </div>
+  
 </form>
 
 {% endblock content%}

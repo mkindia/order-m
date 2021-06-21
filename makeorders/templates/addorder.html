@@ -54,15 +54,17 @@
     </div>
 
     {% for fm in orderform %}
-    <div class="col-md-4"> {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} </div>
+    <div class="col-sm-4 col-6"> {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} </div>
     {% endfor %}
   </div>
   
   <div class="row g-2 mt-3">
-    <div class="col-md-12">
-      <input class="form-control btn-success" type="submit" value="Submit" name="submit_button">
+    <div class="col-8">
+      <input class="form-control btn-sm btn-success" type="submit" value="Submit" name="submit_button">
     </div>
-   
+     <div class="col-4">
+      <button class="form-control btn-dark btn-sm" onclick="history.back(-1)">Back</button>
+    </div>
   </div>
 
 </form>

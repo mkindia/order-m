@@ -7,9 +7,16 @@
        </div>                          
      {% endfor %}
      <br>
-     <input class="form-control btn-success mt-2" id="btnaction" type="submit" value="Update"> 
+    
+     <div class="col-8">
+     <input class="form-control btn-success btn-sm mt-2" id="btnaction" type="submit" value="Update">
+     </div>
+       <div class="col-4">
+      <button class="form-control btn-dark btn-sm mt-2" onclick="history.back(-1)">Back</button>
+    </div>
+    </div>
     {% endif %}
-
+     
     {% if atri == 'party_deleteform' %}
      {% for fm in form %}
       <div class="col-md-4">
@@ -22,15 +29,18 @@
    
    {% if atri == 'consignee_editform' %}
      {% for fm in form %} 
-      <div class="col-md-6">
-        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} 
-       </div>                                
+      <div class="col-sm-4">
+      {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+       </div>                       
      {% endfor %}
-     <br>
-     
-     <div class="col-md-12 mt-3">
-     <input class="form-control btn-success" id="btnaction" type="submit" value="Update">
+    
+      
+     <div class="col-8 mt-3 ">
+     <input class="form-control btn-success btn-sm" id="btnaction" type="submit" value="Update">
      </div>
+      <div class="col-4 mt-3">
+            <a class="form-control btn-sm btn-dark text-decoration-none text-center" href="{% url 'home' %}" >Home</a>
+        </div>
      
    {% endif %}  
   
