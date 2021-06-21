@@ -18,15 +18,15 @@
 <form method="POST">
   {% csrf_token %}
 
-  <div class="row g-2">
+  <div class="row g-2 mb-1">
     {% for fm in clients %}
     <div class="col-md-4">
       {{fm.label_tag}} {{fm|capfirst}} {{fm.errors|striptags}}
     </div>
     {% endfor %}
-    </br>
-    <div class="col-md-8">
-    <input class="form-control btn-success btn-sm mt-2" id="btnaction" type="submit" value="submit">
+    
+    <div class="col-8">
+    <input class="form-control btn-success btn-sm mt-2" id="btnaction" type="submit" value="Submit">
     </div>
       <div class="col-4">
       <button class="form-control btn-dark btn-sm mt-2" onclick="history.back(-1)">Back</button>

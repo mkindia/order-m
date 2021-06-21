@@ -104,8 +104,7 @@ def edit_consignee(request, atri):
                             noofcon+=1                        
                     if noofcon >= 1:
                         messages.warning(request,'Consignee Already Exist  '+ consignee1)                            
-                    else :        
-                        print(request.POST.get('consigneeid'))
+                    else :                        
                         pi=Consignees.objects.get(pk=request.POST.get('consigneeid').title())
                         pid= int(pi.party_id)
                         sht=confom.cleaned_data['consignee'].title()
@@ -139,18 +138,10 @@ def add_order(request, atri):
         party=Clients.objects.all()
         items = Items.objects.all()
         item='None'   
-        if atri == 'edit':            
-            #if request.is_ajax():
-             
-                oid=request.GET.get('oid', None)
-                print(oid)
-             
-                #response = {'msg':'Ajex return '} # response message
-                #return JsonResponse(response) # return response as JSON
-             
+        if atri == 'edit':
+                oid=request.GET.get('oid', None)                             
                 ordfom=Orders.objects.all()
-                adfom=Orders.objects.get(pk=int(oid))
-                
+                adfom=Orders.objects.get(pk=int(oid))                
                 ordfom=ordesform(instance=adfom)
                 ordfom1=Orders.objects.filter(pk=int(oid))
                 for it in ordfom1 :
@@ -187,8 +178,11 @@ def add_order(request, atri):
                     messages.success(request,'Order added successed')
                     return HttpResponseRedirect('/addorder/add/')
                     
-            else:
-                ordfom=ordesform()       
+        if atri == 'delete':
+            if request.method =='POST':                
+                orderid=Orders.objects.get(pk=request.POST.get('oid'))
+                orderid.delete()
+                return HttpResponseRedirect('/')
      else:
          return HttpResponseRedirect('/')       
      return render(request,'addorder.html', {'orderform':ordfom,'partys':party,'sitem':item,'items':items})

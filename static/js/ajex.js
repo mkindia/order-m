@@ -92,8 +92,7 @@ $(document).ready(function(){
 
  // For home
  if(window.location.pathname=='/'){
-           
-     
+                
         // For show sent item
         $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
 
@@ -131,16 +130,39 @@ $(document).ready(function(){
                     action: 'POST'
                 },
                 success: function (data) {    
-                          alert('Delete Success')
-                    
+                          alert('Delete Success')                   
                    
                 }
             })
-        }
-          
+            }         
 
         });
-             
+
+        // For Delete Consignee Order
+        $("#ordertableid tbody").on('click', '#ordelete', function () {
+
+            if ( confirm("Are you sure to Delete this Order ?"))
+            {
+ 
+                var id = $(this).attr("oid");                
+                $.ajax({        
+                    type : "POST", 
+                    url: '/addorder/delete/',
+                    data: {
+                        oid:id,                         
+                        dataType: "json",
+                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                        action: 'POST'
+                    },
+                    success: function (data) {    
+                            alert('Delete Success')                   
+                        
+                    }
+                })
+             }         
+ 
+         });
+        
  }
  
  // For edit party

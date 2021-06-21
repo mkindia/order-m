@@ -6,15 +6,16 @@
        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
        </div>                          
      {% endfor %}
-     <br>
+     
     
      <div class="col-8">
      <input class="form-control btn-success btn-sm mt-2" id="btnaction" type="submit" value="Update">
      </div>
+
        <div class="col-4">
-      <button class="form-control btn-dark btn-sm mt-2" onclick="history.back(-1)">Back</button>
-    </div>
-    </div>
+      <a class="form-control btn-sm btn-dark text-decoration-none text-center mt-2" href="{% url 'home' %}" >Home</a>
+    </div>    
+    
     {% endif %}
      
     {% if atri == 'party_deleteform' %}

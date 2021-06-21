@@ -46,8 +46,8 @@ class ordesform(forms.ModelForm):
         fields = ['orderdate','item_price','qty','unit']
         labels={'qty':'Qty'}
         widgets ={'orderdate':forms.DateInput(attrs={'class':'form-control','type':'Date'}),
-            'item_price':forms.TextInput(attrs={'class':'form-control','type':'number','step':'0.01'}),           
-            'qty':forms.TextInput(attrs={'class':'form-control','type':'number'}),
+            'item_price':forms.TextInput(attrs={'class':'form-control','type':'number','step':'0.1'}),           
+            'qty':forms.TextInput(attrs={'class':'form-control','step':'0.1','min':'0.1','type':'number'}),
             'unit':forms.Select(attrs={'class':'form-select'}),           
         }
 
@@ -58,7 +58,7 @@ class Sentorderform(forms.ModelForm):
         fields=['date','qty','status','consignee_id','by',] 
         labels={'qty':'Qty'}       
         widgets = {'date':forms.DateInput(attrs={'class':'form-control','type':'date'}),
-        'qty':forms.TextInput(attrs={'class':'form-control','type':'number'}),
+        'qty':forms.TextInput(attrs={'class':'form-control','step':'0.1','min':"0.1",'type':'number'}),
         'status':forms.Select(attrs={'class':'form-select'}),
         'consignee_id':forms.Select(attrs={'class':'form-select'}),
         'by':forms.Select(attrs={'class':'form-select'}),
