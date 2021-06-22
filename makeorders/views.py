@@ -160,8 +160,7 @@ def add_order(request, atri):
                         item_id=item_id,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
                         sev.save()
                         messages.success(request,'Order update successed')
-                        return HttpResponseRedirect('/')
-        
+                        return HttpResponseRedirect('/')        
         if atri == 'add':        
             if request.method =='POST':
                 ordfom=ordesform(request.POST)
@@ -177,7 +176,8 @@ def add_order(request, atri):
                     #print(ordfom.cleaned_data['item_name'])
                     messages.success(request,'Order added successed')
                     return HttpResponseRedirect('/addorder/add/')
-                    
+            else:
+                ordfom=ordesform()        
         if atri == 'delete':
             if request.method =='POST':                
                 orderid=Orders.objects.get(pk=request.POST.get('oid'))
