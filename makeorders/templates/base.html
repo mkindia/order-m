@@ -10,7 +10,7 @@
   </title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-   <meta http-equiv="refresh" content="300">
+   <meta http-equiv="refresh" content="360">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -22,8 +22,8 @@
 </head>
 
 <body>
-<div class="container-fluid sticky-top">
-<nav class="navbar navbar-expand-sm navbar-dark rounded mt-1" style="background-color: #033e68;">
+<div class="me-1 ms-1">
+<nav class="navbar sticky-top navbar-expand-sm navbar-dark rounded" style="background-color: #033e68;">
   <div class="container-fluid">
     <a class="navbar-brand active" aria-current="page" href="{% url 'home' %}">Home</a>
       
@@ -43,7 +43,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
            
-            <li><a class="dropdown-item" href="{% url 'addparty'  %}">Add Party</a></li>
+            <li><a class="dropdown-item" href="{% url 'addparty' 'addparty' %}">Add Party</a></li>
 
             <li>
               <a class="dropdown-item" href="{% url 'edit_party' 'edit' %}">Edit Party</a>
@@ -62,7 +62,7 @@
             Consignee
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'add_consignee' %}">Add Consignee</a></li>
+            <li><a class="dropdown-item" href="{% url 'add_consignee' 'addcon' %}">Add Consignee</a></li>
             <li><a class="dropdown-item"  href="{% url 'edit_consignee' 'edit' %}">Edit Consignee</a></li>
             <li>
               <hr class="dropdown-divider">
@@ -76,12 +76,12 @@
             Items
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'items' 'add' %}">Add Items</a></li>
-            <li><a class="dropdown-item" href="{% url 'items' 'edit' %}">Edit items</a></li>
+            <li><a class="dropdown-item" href="{% url 'items' 'add' 'additem' %}">Add Items</a></li>
+            <li><a class="dropdown-item" href="{% url 'items' 'edit' 'edititem' %}">Edit items</a></li>
             <li>
               <hr class="dropdown-divider">
             </li>
-            <li><a class="dropdown-item text-danger" href="{% url 'items' 'delete' %}">Delete items</a></li>
+            <li><a class="dropdown-item text-danger" href="{% url 'items' 'delete' 'deleteitem' %}">Delete items</a></li>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -91,7 +91,8 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{% url 'addorder' 'add' %}">Add Orders</a></li>
-            <li><a class="dropdown-item" href="{% url 'item_wise' %}" diabled=true>Show Items Order</a></li>
+            <li><a class="dropdown-item" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Items Wise Order</a></li>
+            <li><a class="dropdown-item" href="{% url 'item_wise' 'date_wise' %}" diabled=true>Show Date Wise Order</a></li>
             
           </ul>
         </li>
@@ -109,14 +110,14 @@
   </div>
   
 </nav>
-
 </div>
-  <div class="container-fluid">
+
+  <div class="me-1 ms-1">
     {% block content %}
     <!-- this is block content -->
     {% endblock content %}
-
   </div>
+  
 
   <!-- Option 1: Bootstrap Bundle with Popper -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"

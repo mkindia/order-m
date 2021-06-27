@@ -13,7 +13,7 @@
      </div>
 
        <div class="col-4">
-      <a class="form-control btn-sm btn-dark text-decoration-none text-center mt-2" href="{% url 'home' %}" >Home</a>
+      <button class="form-control btn-dark btn-sm" type="button" onclick="history.back(-1)">Back</button>
     </div>    
     
     {% endif %}
@@ -40,7 +40,7 @@
      <input class="form-control btn-success btn-sm" id="btnaction" type="submit" value="Update">
      </div>
       <div class="col-4 mt-3">
-            <a class="form-control btn-sm btn-dark text-decoration-none text-center" href="{% url 'home' %}" >Home</a>
+            <button class="form-control btn-dark btn-sm" type="button" onclick="history.back(-1)">Back</button>
         </div>
      
    {% endif %}  

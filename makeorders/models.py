@@ -42,6 +42,7 @@ class Orders(models.Model):
     ('Carton','Carton'),]
 
     consignees = models.ForeignKey(Consignees, on_delete=models.CASCADE)
+    party_id = models.PositiveIntegerField()
     orderdate = models.DateField()
     item_id = models.PositiveIntegerField()
     item_price = models.FloatField()

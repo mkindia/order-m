@@ -18,23 +18,34 @@
 </h6>
 <form class="form" id="test_form" method="POST">
   {% csrf_token %}
-  <div class="row g-2">
+  <div class="row g-1">
     {% if sitem == 'None' %}
-    <div class="form-floating  col-md-6">
-      <select id="consid" class="form-select " name='party_id' Required=true>
+    <div class="col-md-6">
+    <label for="consid">Party</label>
+    <div class="input-group">
+      
+     
+      <select id="consid" class="form-select "  name='party_id' Required=true>
         <option></option>
         {% for party in partys %}
         <option value="{{ party.id }} "> {{ party.party }}</option>
         {% endfor %}
       </select>
-      <label for="confind ">Party</label>
+     
+     
+     <a class="btn btn-outline-secondary btn-md" href="/addparty/order/">Add New Party</a>
+    
     </div>
-
-    <div class="form-floating col-md-6">
+    </div>
+    <div class="col-md-6">
+      <label for="consign">Consignee</label>
+      <div class="input-group">      
+         
       <select id="consign" class="form-select" name='consignee_id' Required=true>
-        <option></option>
+        <option></option>       
       </select>
-      <label for="consigneeselect ">Consignee</label>
+      <a class="btn btn-outline-secondary btn-md" href="/addconsignee/order/">Add New Consignee</a>
+      </div>
     </div>
     {% endif %}
   </div>
@@ -42,6 +53,7 @@
   <div class="row g-2">
     <div class="col-md-4">
       <label for="item_name">Select Item:</label>
+      <div class="input-group">
       <select class="form-select text-capitalize" name="item_id" id="item_name">
         {% for item in items %}
         {% if item.id == sitem %}
@@ -50,11 +62,13 @@
         <option value="{{item.id}}">{{item}}</option>
         {% endif %}
         {% endfor %}
-      </select>           
+      </select>
+      <a class="btn btn-outline-secondary btn-md" href="/items/add/order/">Add New Item</a>
+      </div>   
     </div>
 
     {% for fm in orderform %}
-    <div class="col-sm-4 col-6"> {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} </div>
+    <div class="col-sm-4 col-6">{{fm.label_tag}} {{fm}} {{fm.errors|striptags}} </div>
     {% endfor %}
   </div>
   
@@ -63,7 +77,7 @@
       <input class="form-control btn-sm btn-success" type="submit" value="Submit" name="submit_button">
     </div>
      <div class="col-4">
-      <button class="form-control btn-dark btn-sm" onclick="history.back(-1)">Back</button>
+      <button class="form-control btn-dark btn-sm" type="button" onclick="history.back(-1)">Back</button>
     </div>
   </div>
 

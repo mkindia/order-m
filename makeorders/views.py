@@ -1,3 +1,5 @@
+
+from datetime import datetime
 from django.shortcuts import redirect, render, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
@@ -51,7 +53,7 @@ def con_id(request):
     cons1 = Consignees.objects.filter(party_id=id)
     return render(request, 'con_data.html', {'consi' : cons1,}) 
 
-def add_consignee(request):
+def add_consignee(request,pr):
    if request.user.is_authenticated:
 
             if request.method == 'POST':       
@@ -71,8 +73,11 @@ def add_consignee(request):
                         sta=confom.cleaned_data['station'].title()           
                         tr=confom.cleaned_data['transport'].title()
                         sev=Consignees(party_id=int(request.POST.get('party_id')), consignee=sht, station=sta, transport=tr)
-                        sev.save()                        
-                        return HttpResponseRedirect('/')
+                        sev.save()
+                        if pr == 'order':              
+                            return HttpResponseRedirect('/addorder/add/')
+                        else:
+                            return HttpResponseRedirect('/')   
             
             else:
              party=Clients.objects.all()       
@@ -125,13 +130,24 @@ def edit_consignee(request, atri):
      
     return render(request,'editconsignee.html', {'partys':client})
    
-def order_data(request):
+def for_data(request):
     request.session.modified=True
+    items=Items.objects.all()
+    if request.GET.get('pid'):
+        pid=request.GET.get('pid')
+        orders = Orders.objects.filter(party_id=pid)
+        partyq=Clients.objects.get(pk=pid)
+        party=partyq.party
+        conq=Consignees.objects.filter(party_id=pid)
+               
+
     if request.GET.get('conid'):
-        items=Items.objects.all()     
-        Consignee_id=request.GET.get('conid')          
-        orders = Orders.objects.filter(consignees_id=Consignee_id)     
-    return render(request, 'for_data.html', {'order' : orders,'item':items})
+        conid=request.GET.get('conid')
+        orders = Orders.objects.filter(consignees_id=conid)
+        partyq=Consignees.objects.get(pk=conid)
+        party=partyq.party
+        conq=Consignees.objects.filter(pk=conid)
+    return render(request, 'for_data.html', {'order' : orders,'item':items,'party':party,'con':conq})
 
 def add_order(request, atri):
      if request.user.is_authenticated:
@@ -147,6 +163,7 @@ def add_order(request, atri):
                 for it in ordfom1 :
                     item=it.item_id
                     con_id=it.consignees_id
+                    party_id=it.party_id
                     #print(it.item_name)
                 if request.method =='POST':
                     ordfom=ordesform(request.POST)
@@ -156,7 +173,7 @@ def add_order(request, atri):
                         item_price=ordfom.cleaned_data['item_price']
                         cartons=ordfom.cleaned_data['qty']
                         unit=ordfom.cleaned_data['unit']     
-                        sev=Orders(id=oid,consignees_id=con_id,orderdate=date,
+                        sev=Orders(id=oid,consignees_id=con_id,party_id=party_id,orderdate=date,
                         item_id=item_id,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
                         sev.save()
                         messages.success(request,'Order update successed')
@@ -170,7 +187,7 @@ def add_order(request, atri):
                     item_price=ordfom.cleaned_data['item_price']
                     cartons=ordfom.cleaned_data['qty']
                     unit=ordfom.cleaned_data['unit']     
-                    sev=Orders(consignees_id=request.POST.get('consignee_id'),orderdate=date,
+                    sev=Orders(consignees_id=request.POST.get('consignee_id'),party_id=request.POST.get('party_id'),orderdate=date,
                     item_id=item_id,item_price=item_price,qty=cartons,unit=unit,balance=cartons)
                     sev.save()
                     #print(ordfom.cleaned_data['item_name'])
@@ -318,7 +335,7 @@ def sent_data(request):
         return HttpResponseRedirect('/')
     return render(request, 'sent_data.html', {'sent_details' : sentdetails,'consignees':con})
 
-def items(request, atri):
+def items(request, atri, pr):
     if request.user.is_authenticated:
         item=Items.objects.all()
         if atri=='add':
@@ -337,8 +354,11 @@ def items(request, atri):
                     if itemForms.is_valid():
                         item_name=itemForms.cleaned_data['item_name'].title()
                         sev=Items(item_name=item_name)
-                        sev.save()        
-                        return HttpResponseRedirect('/items/add/')
+                        sev.save()
+                        if pr == 'order':
+                            return HttpResponseRedirect('/addorder/add/')
+                        else:
+                            return HttpResponseRedirect('/items/add/')
            
         if atri=='edit':
             action='edit'
@@ -388,9 +408,9 @@ def items(request, atri):
         return HttpResponseRedirect('/')
     return render(request,'items.html',{'action':action,'items':item})
 
-def add_party(request):
+def add_party(request,pr):
     if request.user.is_authenticated:  
-            if request.method=='POST':
+            if request.method=='POST':                
                 party=''       
                 n=Clients.objects.filter(party=request.POST.get('party'))
                 for c in n :
@@ -412,8 +432,13 @@ def add_party(request):
                         for id in i:
                             pid=id.id
                         consev=Consignees(party_id=int(pid),consignee=name,station=station,transport=transport)
-                        consev.save()               
-                        return HttpResponseRedirect('/')
+                        consev.save()
+                        if pr == 'order':    
+                            return HttpResponseRedirect('/addorder/add/')
+                        else:
+                            return HttpResponseRedirect('/')
+                            
+
             else:
                clients=Clientform()
     else:
@@ -507,19 +532,39 @@ def form_data(request, atri):
      
      return render(request, 'form_data.html',{'form':dataform,'atri':atri})
 
-def item_wise(request):
-    if request.user.is_authenticated:      
-        items=Items.objects.all()
+def item_wise(request,filter):    
+    if request.user.is_authenticated:
+        if filter == 'item_wise':
+            items=Items.objects.all()
+            orders=Orders.objects.all()
+            con=Consignees.objects.all()
+            party=Clients.objects.all()
+            data={'order':orders,'item':items,'consignees':con,'partys':party,'filter':filter}
+        if filter == 'date_wise':
+            orders=Orders.objects.all().order_by('orderdate')
+            items=Items.objects.all()
+            con=Consignees.objects.all()
+            party=Clients.objects.all()
+            data={'order':orders,'item':items,'consignees':con,'partys':party,'filter':filter}
     else:    
-        return HttpResponseRedirect('/')    
-    return render(request,'itemwiseorders.html',{'item':items})
+        return HttpResponseRedirect('/')
 
-def itemwise_data(request):
+    return render(request,'itemwiseorders.html',data)
+
+def itemwise_data(request,filter):
     if request.method=='POST':
-        item1=request.POST.get('item_id')
-        items=Items.objects.filter(pk=int(item1))
-        orders=Orders.objects.filter(item_id=item1)
-        con=Consignees.objects.all()
-        party=Clients.objects.all()
-        data={'order':orders,'item':items,'consignees':con,'partys':party}
+        if filter == 'item':
+            item1=request.POST.get('item_id')
+            items=Items.objects.filter(pk=int(item1))
+            orders=Orders.objects.filter(item_id=item1)
+            con=Consignees.objects.all()
+            party=Clients.objects.all()
+            data={'order':orders,'item':items,'consignees':con,'partys':party}
+        if filter == 'date_wise':
+            items=Items.objects.all()
+            orders=Orders.objects.all().order_by('orderdate')
+            con=Consignees.objects.all()
+            party=Clients.objects.all()
+            data={'order':orders,'item':items,'consignees':con,'partys':party}
+
     return render(request,'itemwise_data.html',data)

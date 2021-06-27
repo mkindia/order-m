@@ -6,9 +6,10 @@
 
 
 {% block content %}
-
- <h6 class=" form-control badge alert-dark text-center">Item Wise Orders </h6>
-<div class="row g-0">   
+{% if filter == 'item_wise' %}
+<h6 class=" form-control badge alert-dark text-center">Item Wise Orders </h6>
+<div class="row g-0">
+ 
     <form method="POST">
         {% csrf_token %}
     <div class="col-md-12">
@@ -22,12 +23,83 @@
     </div>
     </form>
 </div>
-<div class="row  mt-1">
+<div class="row g-0 mt-1">
     <div class="table-responsive" id="from_itemwise_data">        
  
     </div>
     
 </div>
+{% endif %}
+{% if filter == 'date_wise' %}
+    <h6 class="form-control badge alert-dark text-center ">Date Wise Orders </h6>
+    <div>
+    <table class="table table-sm table-dark" id="ordertableid">
+    <thead>
+        <tr class="text-center">
+            <th scope="col">Date </th>
+            <th scope="col">Item</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Status</th>
+            <th scope="col">Balance</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for orders in order %}
+     <tr class="text-center">
+        <td>
+            {{ orders.orderdate}}
+        </td>
+        <td>
+            {% for it in item %}
+            {% if it.id == orders.item_id %}
+            {{ it.item_name }}
+            {% endif %}
+            {% endfor %}
+        </td>
+        <td>
+            {{ orders.qty }} / {{orders.unit}}
+        </td>
+        <td>
+            {{ orders.sent_cancel }} / {{orders.unit}}
+        </td>
+         <td id="unit" style="display:none;">
+            {{orders.unit}}
+        </td>
+        <td id="obal">
+            {{orders.balance}} / {{orders.unit}}
+        </td>
+        </tr>
+        <tr>
+            <td colspan="5" class="table-active">
+                <div class="row">
+                    <div class="col-12">
+                        {% for it in consignees %}
+                        {% if it.id == orders.consignees_id %}
+                        {% for party in partys %}
+                        {% if party.id == it.party_id %}
+                     <h class="badge  alert-primary" > <strong>{{ party.party }} </strong> </h>
+                        {% endif %}
+                        {% endfor%}
+                        {% endif %}
+                        {% endfor %}
+                   
+                        {% for it in consignees %}
+                        {% if it.id == orders.consignees_id %}
+                        <h class="badge  alert-danger" > {{ it.consignee }} </h>
+                        {% endif %}
+                        {% endfor %}
+                        <h class="badge alert-dark">Price {{orders.item_price}}</h>
+                    </div>
 
+                </div>
+            </td>
+           
+        </tr>
+        {% endfor %}        
+    </tbody>
+    
+</div>
+
+{% endif %}
 
 {% endblock content %}

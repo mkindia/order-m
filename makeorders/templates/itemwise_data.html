@@ -29,13 +29,16 @@
         <td>
             {{ orders.sent_cancel }} / {{orders.unit}}
         </td>
+         <td id="unit" style="display:none;">
+            {{orders.unit}}
+        </td>
         <td id="obal">
             {{orders.balance}} / {{orders.unit}}
         </td>
         </tr>
         <tr>
             <td colspan="5" class="table-active">
-                <div class="row">
+                <div class="row g-0">
                     <div class="col-12">
                         {% for it in consignees %}
                         {% if it.id == orders.consignees_id %}
@@ -78,13 +81,28 @@
 <script>
 $(function() {
         var TotalValue = 0;
-       
-        $("tr #obal").each(function(index,value){
+        var unit='None'
+        var row=document.getElementById("ordertableid");
+        var tt=row.rows[1].getElementsByTagName("td");
+
+           $('tr #unit').each(function() {
+            unit = $(this).text();    
+            });
+
+            $("tr #obal").each(function(index,value){
+           
           currentRow = parseFloat($(this).text());
           TotalValue += currentRow
         });
- 
-        document.getElementById('total').innerHTML = TotalValue;
-    
-         });
+
+        
+        
+            document.getElementById('total').innerHTML = TotalValue + " / " + row.rows.length ;
+        
+        
+        
+        
+
+      
+ });
 </script>

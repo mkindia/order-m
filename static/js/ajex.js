@@ -15,44 +15,51 @@ $(document).ready(function(){
        // For select party
        $("#consid").change(function()
        {
-           var programingId= $(this).val();
-           var orderid = 0;
-       // alert(url)
-           if(programingId == "selectparty")
-           { programingId=0; }
+           if(document.getElementById("consid").value != "selectparty")
+           {
+                    var programingId= $(this).val();
+                    var orderid = 0;
+                // alert(url)
+                    if(programingId == "selectparty")
+                    { programingId=0; }
 
-       
-           // for clear orders
-           url2="/for_data/";   
-       
-           $.ajax({
+                
+                    // for clear orders
+                    url2="/for_data/";   
+                
+                    $.ajax({
 
-               url: url2,
-               data: {
-                   'conid': orderid
-               },
-               success: function (data) {    
-                       
-                   $("#orders").html(data);
-               }
+                        url: url2,
+                        data: {
+                            'pid': programingId
+                        },
+                        success: function (data) {    
+                                
+                            $("#orders").html(data);
+                        }
 
-           });
+                    });
 
-       // for connsignees
+                // for featch connsignees
+                    
+                    $.ajax({
+                            
+                        url: '/con_data/',
+                        data:{
+                            'cons1':programingId
+                        },
+                        success:function(data) {
+                        
+                            $("#consign").html(data);
+
+                        }
+
+                    });
+        }
+        else
+        {
            
-           $.ajax({
-                   
-               url: '/con_data/',
-               data:{
-                   'cons1':programingId
-               },
-               success:function(data) {
-               
-                   $("#consign").html(data);
-
-               }
-
-           });
+        }
 
        });  
        
@@ -61,18 +68,33 @@ $(document).ready(function(){
        $("#consign").change(function () {   
            
            var currow =  $(this).val();
-           
-           if(currow != "Select Consignee")
+          
+           if(currow != "All Consignee")
            {
-               
+             
            //  document.getElementById("navconsignee").disabled=false;
            }
            else
            {
-           //  document.getElementById('navconsignee').disabled=true;
-               currow=0;
+           //  document.getElementById('navconsignee').disabled=true;              
+               var pid= document.getElementById("consid").value;
+               url2="/for_data/";   
+       
+           $.ajax({
+
+               url: url2,
+               data: {
+                   'pid': pid
+               },
+               success: function (data) {    
+                       
+                   $("#orders").html(data);
+               }
+
+           });
+               
            }
-           
+         
            $.ajax({
 
                url: '/for_data/',
@@ -292,7 +314,7 @@ if(window.location.pathname=='/editconsignee/delete/'){
 
 }
 // For Edit Items
-if(window.location.pathname=='/items/edit/'){
+if(window.location.pathname=='/items/edit/edititem/'){
     
     $("#select_item").change(function(){
        
@@ -313,7 +335,7 @@ if(window.location.pathname=='/items/edit/'){
 
 }
 // For Delete Items
-if(window.location.pathname=='/items/delete/'){
+if(window.location.pathname=='/items/delete/deleteitem/'){
     
     $("#select_item").change(function(){
        
@@ -371,7 +393,7 @@ if(window.location.pathname=='/items/delete/'){
 
 }
 // For item add
-if(window.location.pathname=='/items/add/'){
+if(window.location.pathname=='/items/add/additem/' || window.location.pathname == '/items/add/order/'){
     
     $.ajax({
     
@@ -387,7 +409,7 @@ if(window.location.pathname=='/items/add/'){
 
 }
 
-if(window.location.pathname=='/itemwiseorders/'){
+if(window.location.pathname=='/itemwiseorders/item_wise/'){
 
     $("#select_item").change(function(){
     
@@ -396,7 +418,7 @@ if(window.location.pathname=='/itemwiseorders/'){
         $.ajax({
     
             type : "POST", 
-            url: '/itemwise_data/',
+            url: '/itemwise_data/item/',
             data: {
                 item_id:selectvalue,                         
                 dataType: "json",
@@ -415,13 +437,38 @@ if(window.location.pathname=='/itemwiseorders/'){
 
 }
 
+if(window.location.pathname=='/itemwiseorders/date_wise/'){
+
+   
+        $.ajax({
+    
+            type : "POST", 
+            url: '/itemwise_data/date_wise/',
+            data: {
+                item_id:selectvalue,                         
+                dataType: "json",
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function (data) {    
+                      alert('success')
+                $("#from_itemwise_data").html(data);
+               
+            }
+        })
+
+
+   
+
+}
+
 if(window.location.pathname=='/addsent/add/'){
     $('#scon').hide()
     //document.getElementById('select_Consignee').disabled=true;
     $("#id_status").change(function(){
        
         var selectvalue= $(this).val();
-        if (selectvalue == 'Transfer To Consignee')
+        if (selectvalue == 'Transfer To')
         {
             $('#select_Consignee').attr('required',true);
             
@@ -469,6 +516,33 @@ if(window.location.pathname=='/addsent/edit/'){
             
         })    
 
+
+}
+
+if(window.location.pathname=='/addorder/add/'){
+    // For select party
+    $("#consid").change(function()
+    {
+        var oparty_id= $(this).val();
+    if(oparty_id == 'addparty'){
+        $.ajax({        
+            type : "POST", 
+            url: '/addparty/',
+            data: {
+                oparty_id:oparty_id,                         
+                dataType: "json",
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'POST'
+            },
+            success: function (data) {    
+                    alert('Success')                   
+                
+            }
+        })
+       //window.location.replace("/addparty/")
+    }
+
+    })
 
 }
 
