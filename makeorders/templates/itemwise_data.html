@@ -1,7 +1,7 @@
 
 
 <table class="table table-sm table-dark" id="ordertableid">
-    <thead>
+    <thead class="table-danger">
         <tr class="text-center">
             <th scope="col">Date </th>
             <th scope="col">Item</th>
@@ -44,7 +44,7 @@
                         {% if it.id == orders.consignees_id %}
                         {% for party in partys %}
                         {% if party.id == it.party_id %}
-                     <h class="badge  alert-primary" > <strong>{{ party.party }} </strong> </h>
+                     <h class="badge  alert-primary" > {{ party.party }} /
                         {% endif %}
                         {% endfor%}
                         {% endif %}
@@ -52,7 +52,7 @@
                    
                         {% for it in consignees %}
                         {% if it.id == orders.consignees_id %}
-                        <h class="badge  alert-danger" > {{ it.consignee }} </h>
+                        {{ it.consignee }} </h>
                         {% endif %}
                         {% endfor %}
                         <h class="badge alert-dark">Price {{orders.item_price}}</h>
@@ -64,6 +64,7 @@
         </tr>
         {% endfor %}        
     </tbody>
+    {% if filter == 'item_wise' %}
     <tbody class="table-light">
         <tr>
             <td></td>
@@ -76,9 +77,7 @@
         </tr>
         
     </tbody>
-</table>
-
-<script>
+    <script>
 $(function() {
         var TotalValue = 0;
         var unit='None'
@@ -94,15 +93,10 @@ $(function() {
           currentRow = parseFloat($(this).text());
           TotalValue += currentRow
         });
-
-        
-        
-            document.getElementById('total').innerHTML = TotalValue + " / " + row.rows.length ;
-        
-        
-        
-        
-
-      
+         document.getElementById('total').innerHTML = TotalValue + " / " + row.rows.length ;
  });
 </script>
+    {% endif %}
+</table>
+
+

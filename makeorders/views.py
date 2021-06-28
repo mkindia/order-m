@@ -135,7 +135,7 @@ def for_data(request):
     items=Items.objects.all()
     if request.GET.get('pid'):
         pid=request.GET.get('pid')
-        orders = Orders.objects.filter(party_id=pid)
+        orders = Orders.objects.filter(party_id=pid).order_by('orderdate')
         partyq=Clients.objects.get(pk=pid)
         party=partyq.party
         conq=Consignees.objects.filter(party_id=pid)
@@ -143,7 +143,7 @@ def for_data(request):
 
     if request.GET.get('conid'):
         conid=request.GET.get('conid')
-        orders = Orders.objects.filter(consignees_id=conid)
+        orders = Orders.objects.filter(consignees_id=conid).order_by('orderdate')
         partyq=Consignees.objects.get(pk=conid)
         party=partyq.party
         conq=Consignees.objects.filter(pk=conid)
@@ -535,17 +535,11 @@ def form_data(request, atri):
 def item_wise(request,filter):    
     if request.user.is_authenticated:
         if filter == 'item_wise':
-            items=Items.objects.all()
-            orders=Orders.objects.all()
-            con=Consignees.objects.all()
-            party=Clients.objects.all()
-            data={'order':orders,'item':items,'consignees':con,'partys':party,'filter':filter}
-        if filter == 'date_wise':
-            orders=Orders.objects.all().order_by('orderdate')
-            items=Items.objects.all()
-            con=Consignees.objects.all()
-            party=Clients.objects.all()
-            data={'order':orders,'item':items,'consignees':con,'partys':party,'filter':filter}
+            items=Items.objects.all()            
+            data={'item':items,'filter':filter}
+        if filter == 'date_wise':            
+            items=Items.objects.all()            
+            data={'item':items,'filter':filter}
     else:    
         return HttpResponseRedirect('/')
 
@@ -553,18 +547,18 @@ def item_wise(request,filter):
 
 def itemwise_data(request,filter):
     if request.method=='POST':
-        if filter == 'item':
+        if filter == 'item_wise':
             item1=request.POST.get('item_id')
             items=Items.objects.filter(pk=int(item1))
-            orders=Orders.objects.filter(item_id=item1)
+            orders=Orders.objects.filter(item_id=item1).order_by('orderdate')
             con=Consignees.objects.all()
             party=Clients.objects.all()
-            data={'order':orders,'item':items,'consignees':con,'partys':party}
+            data={'order':orders,'item':items,'consignees':con,'partys':party,'filter':filter}
         if filter == 'date_wise':
             items=Items.objects.all()
-            orders=Orders.objects.all().order_by('orderdate')
+            orders=Orders.objects.all().order_by('orderdate').order_by('orderdate')
             con=Consignees.objects.all()
             party=Clients.objects.all()
-            data={'order':orders,'item':items,'consignees':con,'partys':party}
+            data={'order':orders,'item':items,'consignees':con,'partys':party,'filter':filter}
 
     return render(request,'itemwise_data.html',data)

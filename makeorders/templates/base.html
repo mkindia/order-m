@@ -22,8 +22,8 @@
 </head>
 
 <body>
-<div class="me-1 ms-1">
-<nav class="navbar sticky-top navbar-expand-sm navbar-dark rounded" style="background-color: #033e68;">
+<div class="sticky-top me-1 ms-1 pt-1">
+<nav class="navbar navbar-expand-sm navbar-dark rounded" style="background-color: #033e68;">
   <div class="container-fluid">
     <a class="navbar-brand active" aria-current="page" href="{% url 'home' %}">Home</a>
       
@@ -31,6 +31,7 @@
     aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
+  
   
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
       
@@ -84,19 +85,10 @@
             <li><a class="dropdown-item text-danger" href="{% url 'items' 'delete' 'deleteitem' %}">Delete items</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" id="navitems" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Orders
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'addorder' 'add' %}">Add Orders</a></li>
-            <li><a class="dropdown-item" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Items Wise Order</a></li>
-            <li><a class="dropdown-item" href="{% url 'item_wise' 'date_wise' %}" diabled=true>Show Date Wise Order</a></li>
-            
-          </ul>
-        </li>
-      
+        
+            <li><a class="nav-link" href="{% url 'addorder' 'add' %}">Add Orders</a></li>
+            <li><a class="nav-link" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Order</a></li>
+         
       </ul>
       
       <div>

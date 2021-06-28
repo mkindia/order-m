@@ -414,11 +414,12 @@ if(window.location.pathname=='/itemwiseorders/item_wise/'){
     $("#select_item").change(function(){
     
         var selectvalue= $(this).val();
-       
+       if (selectvalue=="sdwo")
+       {
         $.ajax({
     
             type : "POST", 
-            url: '/itemwise_data/item/',
+            url: '/itemwise_data/date_wise/',
             data: {
                 item_id:selectvalue,                         
                 dataType: "json",
@@ -431,6 +432,27 @@ if(window.location.pathname=='/itemwiseorders/item_wise/'){
                
             }
         })
+       
+    }
+    else if (selectvalue != "so") 
+    {
+        $.ajax({
+    
+            type : "POST", 
+            url: '/itemwise_data/item_wise/',
+            data: {
+                item_id:selectvalue,                         
+                dataType: "json",
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                action: 'post'
+            },
+            success: function (data) {    
+                      
+                $("#from_itemwise_data").html(data);
+               
+            }
+        })
+    }
 
     })
    
