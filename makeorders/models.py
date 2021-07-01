@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 
 # Create your models here.
@@ -16,6 +17,7 @@ class Clients(models.Model):
 class Consignees(models.Model):
     party = models.ForeignKey(Clients, on_delete=models.CASCADE)
     consignee = models.CharField(max_length=30)
+    party_consignee = models.PositiveIntegerField(blank=True,null=True)
     station = models.CharField(max_length=30)    
     transport = models.CharField(max_length=30)
 
@@ -50,8 +52,9 @@ class Orders(models.Model):
     unit = models.CharField(max_length=30,choices=units,default='Carton',)
     sent_cancel = models.FloatField(default=0, blank=True, null=True)
     balance = models.FloatField(default=0, blank=True, null=True)
-        
-
+    sent_trs_id =models.PositiveIntegerField(blank=True,null=True)    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, editable=True)
     # renames the instances of the model
     # with their title name
     def __str__(self):
@@ -74,7 +77,9 @@ class Sentorder(models.Model):
     status = models.CharField(max_length=30,blank=True, null=True, choices=sent_cancel,default='Delivered',)
     consignee_id=models.PositiveIntegerField(blank=True, null=True,)
     by = models.CharField(max_length=30, blank=True, null=True, choices=by,default='ByUs',)
-   
+    order_trs_id =models.PositiveIntegerField(blank=True,null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True,editable=True)
     
 
     # renames the instances of the model

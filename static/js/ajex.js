@@ -146,8 +146,7 @@ $(document).ready(function(){
                 type : "POST", 
                 url: '/addsent/delete/',
                 data: {
-                    sid:id,                         
-                    dataType: "json",
+                    sid:id,
                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                     action: 'POST'
                 },

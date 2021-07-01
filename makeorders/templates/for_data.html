@@ -58,7 +58,7 @@
                                                 <form>
                                                         <input type="hidden" name="oid" value={{ orders.id }}>
                                                         <input class="form-control btn-outline-primary btn-sm" id='eoid'
-                                                                oid={{ orders.id }} formmethod="GET" type="submit" {% if orders.sent_cancel > 0 %}
+                                                                oid={{ orders.id }} formmethod="GET" type="submit" {% if orders.sent_cancel > 0 or orders.sent_trs_id != NULL %}
                                                         disabled=true style="background-color: rgb(232, 232, 232);" {% endif %} formaction="{% url 'addorder' 'edit' %}"
                                                         value="Edit">
                                                 </form>
@@ -67,7 +67,7 @@
                                                 <form>
                                                         {% csrf_token %}
                                                         <input class="form-control btn-outline-danger btn-sm "
-                                                                id="ordelete" type="submit" formmethod="POST" oid={{ orders.id }} {% if orders.sent_cancel > 0 %} 
+                                                                id="ordelete" type="submit" formmethod="POST" oid={{ orders.id }} {% if orders.sent_cancel > 0 or orders.sent_trs_id != NULL %} 
                                                                 disabled=true style="background-color: rgb(232, 232, 232);"
                                                         {% endif %} value="Delete" >
                                                 </form>

@@ -24,7 +24,7 @@
     <label for="consid">Party</label>
     <div class="input-group">
       
-     
+     <a class="btn btn-outline-secondary btn-md" href="/addparty/order/">+</a>
       <select id="consid" class="form-select "  name='party_id' Required=true>
         <option></option>
         {% for party in partys %}
@@ -33,18 +33,18 @@
       </select>
      
      
-     <a class="btn btn-outline-secondary btn-md" href="/addparty/order/">Add New Party</a>
+     
     
     </div>
     </div>
     <div class="col-md-6">
       <label for="consign">Consignee</label>
       <div class="input-group">      
-         
+      <a class="btn btn-outline-secondary btn-md" href="/addconsignee/order/">+</a>
       <select id="consign" class="form-select" name='consignee_id' Required=true>
-        <option></option>       
+        <option ></option>          
       </select>
-      <a class="btn btn-outline-secondary btn-md" href="/addconsignee/order/">Add New Consignee</a>
+     
       </div>
     </div>
     {% endif %}
@@ -54,6 +54,7 @@
     <div class="col-md-4">
       <label for="item_name">Select Item:</label>
       <div class="input-group">
+      <a class="btn btn-outline-secondary btn-md" href="/items/add/order/">+</a>
       <select class="form-select text-capitalize" name="item_id" id="item_name">
         {% for item in items %}
         {% if item.id == sitem %}
@@ -63,7 +64,7 @@
         {% endif %}
         {% endfor %}
       </select>
-      <a class="btn btn-outline-secondary btn-md" href="/items/add/order/">Add New Item</a>
+      
       </div>   
     </div>
 
