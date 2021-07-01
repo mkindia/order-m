@@ -6,15 +6,11 @@
        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}  
        </div>                          
      {% endfor %}
-     
-    
-     <div class="col-8">
-     <input class="form-control btn-success btn-sm mt-2" id="btnaction" type="submit" value="Update">
+
+     <div class="row justify-content-end g-1">
+     <input class="col-sm-2 btn-success btn-sm mt-3" id="btnaction" type="submit" value="Update">
      </div>
 
-       <div class="col-4">
-      <button class="form-control btn-dark btn-sm" type="button" onclick="history.back(-1)">Back</button>
-    </div>    
     
     {% endif %}
      

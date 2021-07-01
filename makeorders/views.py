@@ -198,7 +198,7 @@ def add_order(request, atri):
                     sev.save()
                     #print(ordfom.cleaned_data['item_name'])
                     messages.success(request,'Order added successed')
-                    return HttpResponseRedirect('/addorder/add/')
+                    return HttpResponseRedirect('/')
             else:
                 ordfom=ordesform()        
         if atri == 'delete':
@@ -316,14 +316,14 @@ def addsent(request, atri):
                         findconsignee=request.POST.get('Con_id')
                     if ordercarton>=sentcancel :
                        
-                        Orders.objects.get(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons)-float(seqty),
+                        Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons)-float(seqty),
                         balance=ordercarton-sentcancel)
                         if order_trs_id != None and status != 'Transfer To' :                            
                                 ortid=None
-                                ord=Orders.objects.get(pk=order_trs_id)
+                                ord=Orders.objects.filter(pk=order_trs_id)
                                 ord.delete()
 
-                                Sentorder.objects.get(pk=seid).update(date=date,qty=cartons,
+                                Sentorder.objects.filter(pk=seid).update(date=date,qty=cartons,
                         status=status,consignee_id=findconsignee,by=by)
                         elif order_trs_id == None and status == 'Transfer To':
                             transferorder=Orders(party_id=fclient.party_id,consignees_id=request.POST.get('Con_id'),orderdate=date,
@@ -332,14 +332,14 @@ def addsent(request, atri):
                             transferorder.save()
 
                             latestsent=Orders.objects.latest('updated_at')
-                            Sentorder.objects.get(pk=seid).update(date=date,qty=cartons,
+                            Sentorder.objects.filter(pk=seid).update(date=date,qty=cartons,
                              status=status,consignee_id=findconsignee,by=by,order_trs_id=latestsent.id)
 
                         else:
                                 trsid=seid
-                                Orders.objects.get(pk=trsid).update(orderdate=date,qty=cartons,consignees_id=findconsignee,
+                                Orders.objects.filter(pk=trsid).update(orderdate=date,qty=cartons,consignees_id=findconsignee,
                                 balance=cartons-ts,sent_trs_id=ortid)
-                                Sentorder.objects.get(pk=seid).update(date=date,qty=cartons,
+                                Sentorder.objects.filter(pk=seid).update(date=date,qty=cartons,
                                  status=status,consignee_id=findconsignee,by=by)
                        
                         messages.success(request,'Update Success')
@@ -362,19 +362,15 @@ def addsent(request, atri):
                     sent_cancel=c.sent_cancel                
                     obal=c.balance             
                     sent_trs_id=c.sent_trs_id
-                print (sid)
+               
                 Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel-float(seqty),
                 balance=obal+float(seqty))
                 if sent_trs_id != None:
-                    rco=Orders.objects.get(sent_trs_id=sid)
+                    rco=Orders.objects.filter(sent_trs_id=sid)
                     rco.delete()
-                rsent=Sentorder.objects.get(pk=sid)                
+                rsent=Sentorder.objects.filter(pk=sid)                
                 rsent.delete()
 
-                #if status == 'Transfer To':
-                #print(timezone.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'))
-                #print(timezone.now())
-                #messages.success(request,'Update Success')
                 return HttpResponseRedirect('/')
                 
 
