@@ -16,9 +16,7 @@
 </div>
 
 {% endfor %}{% endif %}
-{% block homepage %}
 
-{% endblock homepage %}
 {% block content %}
 <form>
 <div class="row g-1 mt-auto mb-2">
@@ -31,7 +29,7 @@
     </select>
     <label for="confind">Party</label>
   </div>
-  <div class="form-floating col-md-6">
+  <div class="form-floating col-md-6" id="index_consignee">
     <select id="consign" class="form-select" name='id'>
       <option value="Select Consignee" selected> All Consignee</option>
     </select>
@@ -41,7 +39,14 @@
 </div>
 </form>
 <div class="row g-0">
-  <h3 class="form-control badge alert-light text-center Bold sticky-top sticky-offset">Consignee Orders</h3>
+  <div class="row g-1 mt-0">
+  <div class="col-8">
+  <h6 class="sticky-top text-success sticky-offset p-1 ">Consignee Orders</h6>
+  </div>
+  <div class="col-4"> 
+  <h6 class="text-center  bg-secondary sticky-top sticky-offset p-1 rounded-3"><a class="text-decoration-none text-light" href="{% url 'addorder' 'add' %}">Add Orders</a></h6>
+  </div>
+  </div>
   <div class="table-responsive">          
     <table class="table table-sm" id="ordertableid">
       <thead class="table-light">

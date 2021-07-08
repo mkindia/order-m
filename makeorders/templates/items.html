@@ -24,7 +24,7 @@
         <div class="col-md-12">
             <label for="consid">Select Item:</label>
             <select id="select_item" class="form-select " name='item_id' Required=true>
-              <option></option>
+               <option value="" disabled selected hidden>Choose item...</option>
               {% for item in items %}
               <option value="{{ item.id }} "> {{ item.item_name }}</option>
               {% endfor %}

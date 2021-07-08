@@ -12,11 +12,31 @@ $(document).ready(function(){
         }
     });
 
-       // For select party
+    function tempAlert(msg,duration)
+    {
+     var el = document.createElement("div");
+     
+      el.setAttribute("style","border-radius:20px;padding-left:20px;padding-right:15px;margin-right:auto;color:white; position:absolute;z-index:10000;top:90px;width:100%;line-height: 40px; background-color:#006bb3;text-align:center;");
+    
+     el.innerHTML = msg;
+     setTimeout(function(){
+      el.parentNode.removeChild(el);
+         },duration);
+     document.body.appendChild(el);
+    }
+      
+       
+ // For home
+ if(window.location.pathname=='/'){
+
+        document.getElementById("consign").disabled=true;
+
+         // For select party
        $("#consid").change(function()
        {
            if(document.getElementById("consid").value != "selectparty")
            {
+            document.getElementById("consign").disabled=false;
                     var programingId= $(this).val();
                     var orderid = 0;
                 // alert(url)
@@ -44,7 +64,7 @@ $(document).ready(function(){
                     
                     $.ajax({
                             
-                        url: '/con_data/',
+                        url: '/con_data/forhome/',
                         data:{
                             'cons1':programingId
                         },
@@ -58,7 +78,7 @@ $(document).ready(function(){
         }
         else
         {
-           
+            document.getElementById("consign").disabled=true;
         }
 
        });  
@@ -68,52 +88,50 @@ $(document).ready(function(){
        $("#consign").change(function () {   
            
            var currow =  $(this).val();
-          
-           if(currow != "All Consignee")
+           var pid= document.getElementById("consid").value;
+           if(currow == "All Consignee" && pid != "selectparty"  )
            {
              
            //  document.getElementById("navconsignee").disabled=false;
+           
+           url2="/for_data/";   
+   
+       $.ajax({
+
+           url: url2,
+           data: {
+               'pid': pid
+           },
+           success: function (data) {    
+                   
+               $("#orders").html(data);
+           }
+
+       });
            }
            else
            {
            //  document.getElementById('navconsignee').disabled=true;              
-               var pid= document.getElementById("consid").value;
-               url2="/for_data/";   
-       
            $.ajax({
 
-               url: url2,
-               data: {
-                   'pid': pid
-               },
-               success: function (data) {    
-                       
-                   $("#orders").html(data);
-               }
+            url: '/for_data/',
+            data: {
+                'conid': currow
+            },
+            success: function (data) {
+                $("#orders").html(data);
+            }
 
-           });
+        });
+
                
            }
          
-           $.ajax({
-
-               url: '/for_data/',
-               data: {
-                   'conid': currow
-               },
-               success: function (data) {
-                   $("#orders").html(data);
-               }
-
-           });
-
+         
 
            
        });
 
-
- // For home
- if(window.location.pathname=='/'){
                 
         // For show sent item
         $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
@@ -234,7 +252,7 @@ if(window.location.pathname=='/editconsignee/edit/'){
         }
         $.ajax({
             
-            url: '/con_data/',
+            url: '/con_data/foreditcon/',
             data:{
                 'cons1':partyid
             },
@@ -313,7 +331,7 @@ if(window.location.pathname=='/editconsignee/delete/'){
 
 }
 // For Edit Items
-if(window.location.pathname=='/items/edit/edititem/'){
+if(window.location.pathname=='/items/edit/'){
     
     $("#select_item").change(function(){
        
@@ -334,7 +352,7 @@ if(window.location.pathname=='/items/edit/edititem/'){
 
 }
 // For Delete Items
-if(window.location.pathname=='/items/delete/deleteitem/'){
+if(window.location.pathname=='/items/delete/'){
     
     $("#select_item").change(function(){
        
@@ -392,7 +410,7 @@ if(window.location.pathname=='/items/delete/deleteitem/'){
 
 }
 // For item add
-if(window.location.pathname=='/items/add/additem/' || window.location.pathname == '/items/add/order/'){
+if(window.location.pathname=='/items/add/'){
     
     $.ajax({
     
@@ -541,29 +559,166 @@ if(window.location.pathname=='/addsent/edit/'){
 }
 
 if(window.location.pathname=='/addorder/add/'){
-    // For select party
+    
+   
+    // For select party and get consignee
     $("#consid").change(function()
     {
-        var oparty_id= $(this).val();
-    if(oparty_id == 'addparty'){
+     
+             var programingId= $(this).val();
+            
+             $.ajax({
+                            
+                url: '/con_data/fororder/',
+                data:{
+                    'cons1':programingId
+                },
+                success:function(data) {
+                
+                    $("#consign").html(data);
+        
+                }
+        
+            });
+    });
+   
+   
+    // for add table row dynamicaly
+    var count=0
+    $("#addorder").on('click', function () {
+        var valid = 0
+        var iw = document.getElementById("item_name");
+        var item_id=iw.value;
+        var item=iw.options[iw.selectedIndex].text;
+
+        var item_des = $("#id_item_des").val();
+        var qty = $("#id_qty").val();
+        var unit = $("#id_unit").val();
+        var price = $("#id_item_price").val();
+
+        if(item != "Select Item"){ valid=valid+1}
+         if(qty != ""){ valid=valid+1}
+         if(unit != ""){ valid=valid+1}
+         if(price != ""){ valid=valid+1}
+         if(item_des != ""){item_des="("+item_des+")" }
+        if(valid==4)
+        {
+         if (count !=10) // add row
+        {
+        $("#items").append('<tr><td style="display:none;">'+item_id+'</td><td>'+ item + item_des +'</td><td style="display:none;">'+ item_des +'</td><td>'+ qty +'</td><td>'+unit+'</td><td>'+price+'</td><td><button class="btn-close" id="delrow" type="button"  > </button></td></tr>');
+        count = count+1
+        }else{alert("Only 10 Items add")}
+         }
+         else{alert("Enter item , Qty , Price")}
+         
+        var x=document.getElementById("item_name");       
+        x.selectedIndex=0;
+
+        var qtyval=document.getElementById("id_qty");
+        qtyval.value=null
+
+        var priceval=document.getElementById("id_item_price");
+        priceval.value=null
+        
+      
+
+    });
+    //Remove table row
+    $('#ordertableid').on('click', '#delrow', function () {
+        $(this).closest('tr').remove();
+        count=count-1
+    })
+    // For Save item to database
+    $("#saveorders").on('click', function () {
+        var n1 = document.getElementById("ordertableid").rows.length;
+        var party_id=document.getElementById('consid').value
+        var con_id=document.getElementById('consign').value;
+        var id_orderdate=document.getElementById('id_orderdate').value;
+        if(party_id != "" && con_id != "" && id_orderdate != "")
+        {
+            if(item != "Select Item" && qty != "" && unit != "" && price != "")
+       {
+        for(i=1; i<n1;i++){
+            var item_id=document.getElementById("ordertableid").rows[i].cells.item(0).innerHTML;
+            var item=document.getElementById("ordertableid").rows[i].cells.item(1).innerHTML;
+            var item_des=document.getElementById("ordertableid").rows[i].cells.item(2).innerHTML;
+            var qty=document.getElementById("ordertableid").rows[i].cells.item(3).innerHTML;
+            var unit=document.getElementById("ordertableid").rows[i].cells.item(4).innerHTML;
+            var price=document.getElementById("ordertableid").rows[i].cells.item(5).innerHTML;
+            //alert(item_id)  
+          
+            //your code to be executed after 1 second
+            (function(){
+            $.ajax({        
+                type : "POST", 
+                url: '/addorder/add/',
+                data: {
+                    consignees_id:con_id,
+                    party_id:party_id,
+                    orderdate:id_orderdate,               
+                    item_id:item_id,
+                    item_des:item_des,
+                    qty:qty,
+                    unit:unit,
+                    price:price,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                    action: 'POST'
+                   
+                },
+                success: function (data) {    
+                      // alert(item_id)                   
+                    
+                }
+            });
+                
+        })(i);
+
+        }
+        
+        location.reload(true);
+        tempAlert("Order Added Success",2000);
+        //window.setTimeout('alert("Order ADDED Success");location.reload(true); window.close();' , 1000);
+       
+    }
+    else{alert('Plese add Order Frist')}
+    }
+    else{ alert('Please Select Party, Consignee, and Date') }
+        
+    })
+
+    $("#additem").on('click', function () {
+        var itemname = document.getElementById("add_item")
+        
         $.ajax({        
             type : "POST", 
-            url: '/addparty/',
+            url: '/items/add/',
             data: {
-                oparty_id:oparty_id,                         
-                dataType: "json",
+                         
+                item_name:itemname.value,               
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 action: 'POST'
-            },
-            success: function (data) {    
-                    alert('Success')                   
                 
-            }
-        })
-       //window.location.replace("/addparty/")
-    }
-
+            },
+            success: function (data) { 
+                $.ajax({
+    
+                    url: '/items_data/',
+                    data: {
+                        'item_id': null
+                    },
+                    success: function (data) {    
+                              
+                        $("#item_name").html(data);
+                        
+                    }
+                })             
+                 
+                
+            }            
+        });
+        
     })
+   
 
 }
 

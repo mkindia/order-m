@@ -24,7 +24,7 @@
         <td>
                 {% for it in item %}
                 {% if it.id == orders.item_id %}
-                {{ it.item_name }}
+                {{ it.item_name }} {{ orders.item_des }}
                 {% endif %}
                 {% endfor %}
         </td>
