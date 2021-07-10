@@ -12,15 +12,16 @@
  
     <form method="POST">
         {% csrf_token %}
-    <div class="col-md-12">
-        <label for="consid">Select Item:</label>
-        <select id="select_item" class="form-select " name='item_id' Required=true>
+    <div class="form-floating col-md-12">
+       
+        <select id="select_item" class="form-select" name='item_id' Required=true>
           <option value="so">Select Orders</option>
           <option value="sdwo">Show Date Wise Orders</option>
           {% for items in item %}
           <option value="{{ items.id }} "> {{ items.item_name }}</option>
           {% endfor %}
         </select>
+         <label for="consid">Select Item:</label>
     </div>
     </form>
 </div>

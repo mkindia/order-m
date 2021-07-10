@@ -7,7 +7,7 @@
 {% if messages %}
 <div class="alert alert-success alert-dismissible fade show mt-1" role="alert">
   {% for message in messages %}
-  <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} --> {{message}}
+  {{message}}
   {% endfor %}
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -21,7 +21,7 @@
   <div class="row g-1">
     {% if sitem == 'None' %}
     <div class="col-sm-6">
-    <div class="input-group input-group p-1">
+      <div class="input-group input-group p-1">
         <select id="consid" class="form-select" name='party_id' Required=true>
           <option value="" disabled selected hidden>Choose Party...</option>
           {% for party in partys %}
@@ -29,10 +29,10 @@
           {% endfor %}
         </select>
         <a class="btn btn-outline-secondary btn-md" href="/addparty/order/">Add New party</a>
-    </div>
+      </div>
     </div>
     <div class="col-sm-6">
-        <div class="input-group input-group p-1">
+      <div class="input-group input-group p-1">
         <select id="consign" class="form-select" name='consignee_id' Required=true>
           <option value="" disabled selected hidden>Choose Con...</option>
         </select>
@@ -42,26 +42,14 @@
     {% endif %}
   </div>
 
-  <div class="row g-1 m-1">
-    <div class="col-8 ">
-      <div class="input-group input-group">
-      <a class="text-decoration-none text-center pt-1 pe-1 text-dark">Enter date</a>
-         {{orderform.orderdate}}
-    </div>
-    </div>
-    {% if atri == 'add' %}
-  <button class="col-4 rounded-2 btn-outline-secondary"  data-bs-toggle="modal" data-bs-target="#additemorder" type="button" id="addorder2">Add item order</button>
-  {% endif %}
-  </div>
-  
- <!-- <div class="row mt-1 m-1">
-    <hr class="mb-1 mt-2 " >
+  {% if atri == 'edit' %} <div class="row mt-1 m-1">
+    <hr class="mb-1 mt-2 ">
     <div class="input-group input-group justify-content-end rounded-3 p-0">
 
       <div class="col-12 p-0">
         <div class=" input-group input-group p-1">
-          <a class="btn btn-outline-secondary"  data-bs-toggle="modal" data-bs-target="#additemmodel">+</a>
-          <select class="form-select" name="item_id" id="item_name">           
+          <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#additemmodel">+</a>
+          <select class="form-select" name="item_id" id="item_name">
             <option>Select Item</option>
             {% for item in items %}
             {% if item.id == sitem %}
@@ -71,48 +59,59 @@
             {% endif %}
             {% endfor %}
           </select>
-         {{orderform.item_des}}
+          {{orderform.item_des}}
         </div>
-       
+
         <div class="input-group input-group p-1">
-          {{orderform.qty}} {{orderform.unit}}  {{orderform.item_price}}
+          {{orderform.qty}} {{orderform.unit}} {{orderform.item_price}}
         </div>
       </div>
-      </div>
-      <hr class="mb-1 mt-2">
-      
-      
-      
-      
-  </div> -->
- 
-  <div class="row g-1 p-1 justify-content-end">
-   
-    <input class=" col-sm-4 btn btn-success" {% if atri == 'add'%} type="button" {% else %} type="submit" {% endif %}  value="Submit" id="saveorders" name="submit_button">
-  </div>
-
-    <div class="table-responsive mt-2">
-      <table class="table table-sm" id="ordertableid">
-        <thead>
-          <tr class="text-center">
-            <th scope="col">Item</th>
-            <th scope="col">Qty.</th>
-            <th scope="col">Unit</th>
-            <th scope="col">Price</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody id="items" class="text-center">
-
-        </tbody>
-      </table>
     </div>
-  
+    <hr class="mb-1 mt-2">
+  </div>
+  {% endif %}
+  <div class="row g-1 m-1">
+    <div class="col-7">
+      <div class="input-group input-group">
+        <a class="text-decoration-none text-center pt-1 pe-1 text-dark">Date</a>
+        {{orderform.orderdate}}
+      </div>
+    </div>
+    <div class="col-5">
+      <div class="row g-1">
+        {% if atri == 'add' %}
+        <input class="form-control col-sm-6 btn btn-outline-secondary" data-bs-toggle="modal"
+          data-bs-target="#additemorder" type="button" id="addorder2" value="Add item order">
+        {% endif %}
+        <input class="form-control col-sm-6 btn btn-success" {% if atri == 'add' %} type="button" {% else %} type="submit"
+          {% endif %} value="Submit" id="saveorders" name="submit_button">
+      </div>
+    </div>
+  </div>
+  {% if atri == 'add' %}
+  <div class="table-responsive mt-2">
+    <table class="table table-sm" id="ordertableid">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">Item</th>
+          <th scope="col">Qty.</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Price</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody id="items" class="text-center">
+
+      </tbody>
+    </table>
+  </div>
+  {% endif %}
 </form>
 
 
 
-<div class="modal fade" id="additemorder" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true" tabindex="-1">
+<div class="modal fade" id="additemorder" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true"
+  tabindex="-1">
   <div class="modal-dialog modal-dialog-top">
     <div class="modal-content">
       <div class="modal-header">
@@ -121,46 +120,47 @@
       </div>
       <div class="modal-body">
 
-                   <div class=" input-group input-group ">
-                <select class="form-select" name="item_id" id="item_name">           
-                  <option>Select Item</option>
-                  {% for item in items %}
-                  {% if item.id == sitem %}
-                  <option value="{{item.id}}" selected>{{item}}</option>
-                  {% else %}
-                  <option value="{{item.id}}">{{item}}</option>
-                  {% endif %}
-                  {% endfor %}
-                </select>
-                <a class="btn btn-outline-secondary"  data-bs-toggle="modal"  data-bs-target="#additemmodel">new item</a>
-              </div>
-            
-              <div class="mt-1">
-               <div class=" input-group input-group ">
-                {{orderform.item_des}}
-                 {{orderform.item_price}}
-                 </div>
-              </div>
-              
-             <div class="mt-1">
-            <div class=" input-group input-group ">
-                {{orderform.qty}}
-              
-                {{orderform.unit}}
-              </div>
-              </div>
-             
-          
-              <div class="row justify-content-end mt-2">
-            <button type="button" id="addorder" class="col-5 btn btn-primary me-3">Add item order</button>
-                </div>
+        <div class=" input-group input-group ">
+          <select class="form-select" name="item_id" id="item_name">
+            <option>Select Item</option>
+            {% for item in items %}
+            {% if item.id == sitem %}
+            <option value="{{item.id}}" selected>{{item}}</option>
+            {% else %}
+            <option value="{{item.id}}">{{item}}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+          <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#additemmodel">new item</a>
+        </div>
+
+        <div class="mt-1">
+          <div class=" input-group input-group ">
+            {{orderform.item_des}}
+            {{orderform.item_price}}
+          </div>
+        </div>
+
+        <div class="mt-1">
+          <div class=" input-group input-group ">
+            {{orderform.qty}}
+
+            {{orderform.unit}}
+          </div>
+        </div>
+
+
+        <div class="row justify-content-end mt-2">
+          <button type="button" id="addorder" class="col-5 btn btn-primary me-3">Add item order</button>
+        </div>
       </div>
-      
+
     </div>
   </div>
 </div>
 
-<div class="modal fade bg-light" id="additemmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" tabindex="-1">
+<div class="modal fade bg-light" id="additemmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true"
+  tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -172,13 +172,13 @@
           {% csrf_token %}
           <label>Enter Item name
             <input class="form-floatformat text-capitalize" maxlength="30" id="add_item" type="text">
-            
+
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" id="additem" class="btn btn-primary" data-bs-dismiss="modal">Add item</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        
+
       </div>
     </div>
   </div>
