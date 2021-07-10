@@ -1,7 +1,7 @@
 
 from django.utils import timezone
 from django.db.models.fields import BLANK_CHOICE_DASH, DateTimeField, IntegerField, NullBooleanField
-from django.forms.widgets import DateTimeBaseInput, NullBooleanSelect
+from django.forms.widgets import DateInput, DateTimeBaseInput, NullBooleanSelect
 from django.shortcuts import redirect, render, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.forms import AuthenticationForm
@@ -189,17 +189,35 @@ def add_order(request, atri):
                         messages.success(request,'Order update successed')
                         return HttpResponseRedirect('/')        
         if atri == 'add':        
-            if request.method =='POST':              
-                conid=request.POST.get('consignees_id') 
-                date=request.POST.get('orderdate')
-                item_id=request.POST.get('item_id')
-                item_des=request.POST.get('item_des')
-                item_price=request.POST.get('price')
-                cartons=request.POST.get('qty')
-                unit=request.POST.get('unit')    
-                sev=Orders(consignees_id=conid,party_id=request.POST.get('party_id'),orderdate=date,
-                item_id=item_id,item_des=item_des,item_price=item_price,qty=cartons,unit=unit,balance=cartons)                
-                sev.save()
+            if request.method =='POST':
+                data=request.POST.getlist('info[]')
+                datarow=int(len(data)/8)
+                for i in range(datarow):
+                   k=(i+1)
+                   j=i*8
+                   d=[]       
+                   for t in range(j, k*8):
+                       
+                      d.append(data[t])
+               
+                   party_id=d[0]
+                   conid=d[1]
+                   date=d[2]
+                   item_id=d[3]
+                   item_des=d[4]
+                   cartons=d[5]
+                   unit=d[6]
+                   item_price=d[7]
+                   sev=Orders(consignees_id=conid,party_id=party_id,orderdate=date,
+                   item_id=item_id,item_des=item_des,item_price=item_price,qty=cartons,unit=unit,balance=cartons)                
+                   sev.save()
+                  
+                    
+                    
+                #array_data = request.POST['info']
+                #data = json.loads(array_data)
+                
+                #print(data[0])
                 return HttpResponseRedirect('/addorder/add/')
                                    
             else:

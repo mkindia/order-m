@@ -11,7 +11,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   
-   <meta http-equiv="refresh" content="360">
+   <meta http-equiv="refresh" content="2360">
   <meta name="viewport" content="width=device-width, initial-scale=1">
  <script src="{% static 'js/jQuery.js' %}"></script>
 
@@ -47,7 +47,7 @@
 
 <body class="bg-light">
 
-<nav class="navbar navbar-expand-md fixed-top navbar-dark rounded ms-1 me-1" style="background-color: #033e68;">
+<nav class="navbar navbar-expand-md fixed-top navbar-dark rounded ms-1 me-1 mt-1" style="background-color: #033e68;">
   <div class="container-fluid">
     <a class="navbar-brand active" aria-current="page" href="{% url 'home' %}">Home</a>
       
@@ -129,7 +129,7 @@
 
 
 
-  <div class="me-1 ms-1">
+  <div class="me-1 ms-1 mt-1">
     {% block content %}
     <!-- this is block content -->
     {% endblock content %}

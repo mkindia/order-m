@@ -42,9 +42,12 @@
     {% endif %}
   </div>
 
-  <div class="row g-1 p-1 mt-2">
+  <div class="row g-1 m-1">
     <div class="col-8 ">
-    {{orderform.orderdate}}
+      <div class="input-group input-group">
+      <a class="text-decoration-none text-center pt-1 pe-1 text-dark">Enter date</a>
+         {{orderform.orderdate}}
+    </div>
     </div>
     {% if atri == 'add' %}
   <button class="col-4 rounded-2 btn-outline-secondary"  data-bs-toggle="modal" data-bs-target="#additemorder" type="button" id="addorder2">Add item order</button>
@@ -110,20 +113,15 @@
 
 
 <div class="modal fade" id="additemorder" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-dialog-top">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel2">Add orders item</h5>
+        <h6 class="modal-title" id="exampleModalLabel2">Add orders item</h6>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
-          <hr class="mb-1 mt-2 " >
-          
-      
-            <div class="m-2">
-              <div class=" input-group input-group ">
-              
+
+                   <div class=" input-group input-group ">
                 <select class="form-select" name="item_id" id="item_name">           
                   <option>Select Item</option>
                   {% for item in items %}
@@ -136,30 +134,28 @@
                 </select>
                 <a class="btn btn-outline-secondary"  data-bs-toggle="modal"  data-bs-target="#additemmodel">new item</a>
               </div>
-            </div>
-              <div class="m-2">
+            
+              <div class="mt-1">
+               <div class=" input-group input-group ">
                 {{orderform.item_des}}
+                 {{orderform.item_price}}
+                 </div>
               </div>
-             <div class="m-2">
-             
+              
+             <div class="mt-1">
+            <div class=" input-group input-group ">
                 {{orderform.qty}}
-              </div>
-              <div class="m-2">
+              
                 {{orderform.unit}}
               </div>
-              <div class="m-2">
-                {{orderform.item_price}}
               </div>
-         
-            <hr class="mb-2 mt-1">
-              <div class="row justify-content-end me-2 mt-3">
-            <button type="button" id="addorder" class="col-5 btn btn-primary">Add item order</button>
+             
+          
+              <div class="row justify-content-end mt-2">
+            <button type="button" id="addorder" class="col-5 btn btn-primary me-3">Add item order</button>
                 </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Close</button>
-        
-      </div>
+      
     </div>
   </div>
 </div>

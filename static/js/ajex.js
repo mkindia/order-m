@@ -595,17 +595,18 @@ if(window.location.pathname=='/addorder/add/'){
         var qty = $("#id_qty").val();
         var unit = $("#id_unit").val();
         var price = $("#id_item_price").val();
-
+        var item_des1=""
         if(item != "Select Item"){ valid=valid+1}
          if(qty != ""){ valid=valid+1}
          if(unit != ""){ valid=valid+1}
          if(price != ""){ valid=valid+1}
-         if(item_des != ""){item_des="("+item_des+")" }
+         if(item_des != ""){item_des= item_des,item_des1="("+item_des+")" }
+         
         if(valid==4)
         {
          if (count !=10) // add row
         {
-        $("#items").append('<tr><td style="display:none;">'+item_id+'</td><td>'+ item + item_des +'</td><td style="display:none;">'+ item_des +'</td><td>'+ qty +'</td><td>'+unit+'</td><td>'+price+'</td><td><button class="btn-close" id="delrow" type="button"  > </button></td></tr>');
+        $("#items").append('<tr><td style="display:none;">'+item_id+'</td><td>'+ item + item_des1 +'</td><td style="display:none;">'+ item_des +'</td><td>'+ qty +'</td><td>'+unit+'</td><td>'+price+'</td><td><button class="btn-close" id="delrow" type="button"  > </button></td></tr>');
         count = count+1
         }else{alert("Only 10 Items add")}
          }
@@ -614,13 +615,16 @@ if(window.location.pathname=='/addorder/add/'){
         var x=document.getElementById("item_name");       
         x.selectedIndex=0;
 
+        var x=document.getElementById("id_item_des");       
+        x.value=null
+
         var qtyval=document.getElementById("id_qty");
         qtyval.value=null
 
         var priceval=document.getElementById("id_item_price");
         priceval.value=null
         
-      
+        
 
     });
     //Remove table row
@@ -628,61 +632,57 @@ if(window.location.pathname=='/addorder/add/'){
         $(this).closest('tr').remove();
         count=count-1
     })
+
+    
     // For Save item to database
     $("#saveorders").on('click', function () {
+        info=[];
+        d=[];
         var n1 = document.getElementById("ordertableid").rows.length;
         var party_id=document.getElementById('consid').value
         var con_id=document.getElementById('consign').value;
         var id_orderdate=document.getElementById('id_orderdate').value;
+        
         if(party_id != "" && con_id != "" && id_orderdate != "")
         {
-            if(item != "Select Item" && qty != "" && unit != "" && price != "")
+            if(n1 >1)
        {
         for(i=1; i<n1;i++){
+         
             var item_id=document.getElementById("ordertableid").rows[i].cells.item(0).innerHTML;
             var item=document.getElementById("ordertableid").rows[i].cells.item(1).innerHTML;
             var item_des=document.getElementById("ordertableid").rows[i].cells.item(2).innerHTML;
             var qty=document.getElementById("ordertableid").rows[i].cells.item(3).innerHTML;
             var unit=document.getElementById("ordertableid").rows[i].cells.item(4).innerHTML;
             var price=document.getElementById("ordertableid").rows[i].cells.item(5).innerHTML;
-            //alert(item_id)  
-          
-            //your code to be executed after 1 second
-            (function(){
-            $.ajax({        
-                type : "POST", 
-                url: '/addorder/add/',
-                data: {
-                    consignees_id:con_id,
-                    party_id:party_id,
-                    orderdate:id_orderdate,               
-                    item_id:item_id,
-                    item_des:item_des,
-                    qty:qty,
-                    unit:unit,
-                    price:price,
-                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                    action: 'POST'
-                   
-                },
-                success: function (data) {    
-                      // alert(item_id)                   
-                    
-                }
-            });
-                
-        })(i);
-
+           
+            info.push(party_id,con_id,id_orderdate,item_id,item_des,qty,unit,price);
         }
-        
-        location.reload(true);
-        tempAlert("Order Added Success",2000);
-        //window.setTimeout('alert("Order ADDED Success");location.reload(true); window.close();' , 1000);
+        $.ajax({        
+            type : "POST",
+            url: '/addorder/add/',
+            data: {'info[]':info,
+               
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+               // action: 'POST'
+               
+            },
+            success: function (database) {    
+                    window.setTimeout('alert("Order Item Success");location.reload(true); window.close();' , 100);              
+                   
+            }
+        });
        
-    }
-    else{alert('Plese add Order Frist')}
-    }
-    else{ alert('Please Select Party, Consignee, and Date') }
+       // alert(info[0][3])
+       // tempAlert("Order Added Success",2000);
+        //w
+       
+        }
+        else{alert('Plese add Order Frist')}
+        }
+        else{ alert('Please Select Party, Consignee, and Date') }
+        
+        
         
     })
 
