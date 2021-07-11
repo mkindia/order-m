@@ -455,11 +455,10 @@ def items(request, atri):
     action=atri
     if request.user.is_authenticated:
         item=Items.objects.all()
-        if atri=='add':
-            print(request.POST.get('item_name'))
+        if atri=='add':            
             if request.method=='POST':
                 item=''
-                itemname=request.POST.get('item_name')              
+                itemname=request.POST.get('item_name').title()            
                 for item1 in Items.objects.filter(item_name=itemname) :
                     item=item1
                     
@@ -472,7 +471,7 @@ def items(request, atri):
                         item_name=itemForms.cleaned_data['item_name'].title()
                         sev=Items(item_name=item_name)
                         sev.save()
-                        return HttpResponseRedirect('/items_data/')
+                        #return HttpResponseRedirect('/items_data/')
                        
            
         if atri=='edit':
