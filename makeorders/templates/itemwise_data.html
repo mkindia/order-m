@@ -5,38 +5,15 @@
         <tr class="text-center">
             <th scope="col">Date </th>
             <th scope="col">Item</th>
-            <th scope="col">Unit</th>
-            <th scope="col">Status</th>
+            <th scope="col">Order</th>
+            <th scope="col">Sent</th>
             <th scope="col">Balance</th>
         </tr>
     </thead>
     <tbody>
         {% for orders in order %}
-     <tr class="text-center">
-        <td>
-            {{ orders.orderdate}}
-        </td>
-        <td>
-            {% for it in item %}
-            {% if it.id == orders.item_id %}
-            {{ it.item_name }}
-            {% endif %}
-            {% endfor %}
-        </td>
-        <td>
-            {{ orders.qty }} / {{orders.unit}}
-        </td>
-        <td>
-            {{ orders.sent_cancel }} / {{orders.unit}}
-        </td>
-         <td id="unit" style="display:none;">
-            {{orders.unit}}
-        </td>
-        <td id="obal">
-            {{orders.balance}} / {{orders.unit}}
-        </td>
-        </tr>
-        <tr>
+        
+         <tr>
             <td colspan="5" class="table-active">
                 <div class="row g-0">
                     <div class="col-12">
@@ -62,6 +39,31 @@
             </td>
            
         </tr>
+     <tr class="text-center">
+        <td>
+            {{ orders.orderdate}}
+        </td>
+        <td>
+            {% for it in item %}
+            {% if it.id == orders.item_id %}
+            {{ it.item_name }} {% if orders.item_des != "" %} ( {{ orders.item_des }} ) {% endif %}
+            {% endif %}
+            {% endfor %}
+        </td>
+        <td>
+            {{ orders.qty }} / {{orders.unit}}
+        </td>
+        <td>
+            {{ orders.sent_cancel }} / {{orders.unit}}
+        </td>
+         <td id="unit" style="display:none;">
+            {{orders.unit}}
+        </td>
+        <td id="obal">
+            {{orders.balance}} / {{orders.unit}}
+        </td>
+        </tr>
+       
         {% endfor %}        
     </tbody>
     {% if filter == 'item_wise' %}
@@ -79,21 +81,27 @@
     </tbody>
     <script>
 $(function() {
+    var n1 = document.getElementById("ordertableid").rows.length;
+         n1=n1-2
         var TotalValue = 0;
+        
         var unit='None'
-        var row=document.getElementById("ordertableid");
-        var tt=row.rows[1].getElementsByTagName("td");
+       
 
            $('tr #unit').each(function() {
-            unit = $(this).text();    
+            unit = $(this).text();
+            
             });
-
+          
             $("tr #obal").each(function(index,value){
-           
-          currentRow = parseFloat($(this).text());
+                 currentRow = parseFloat($(this).text());
+                
+            
+         
           TotalValue += currentRow
+            
         });
-         document.getElementById('total').innerHTML = TotalValue + " / " + row.rows.length ;
+         document.getElementById('total').innerHTML = TotalValue + " / " + unit + n1;
  });
 </script>
     {% endif %}

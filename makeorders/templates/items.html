@@ -8,13 +8,15 @@
 {% if messages %}
 {% for message in messages %}
 <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
-<div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-1" {% endif %} 
-     {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-1" {% endif %} role="alert">
+<div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-2" {% endif %} 
+     {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-2" {% endif %} >
       <strog>{{message}}</strog>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
+
 {% endfor %}
 {% endif %}
+
 <h6 class="form-control badge alert-primary text-center"> New Items </h6>
 <div class="col-sm-10 col-md-8 col-lg-5 mx-auto">
 <form class="form" method="POST">
@@ -36,6 +38,7 @@
             
         </div>        
 </form>
+
 </div>
 
 {% endblock content %}

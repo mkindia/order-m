@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 from django.utils import timezone
 
 
@@ -28,7 +29,18 @@ class Consignees(models.Model):
     def __str__(self):
         return str( self.consignee )
 
+class Item_Groups(models.Model):
+    group_id = models.PositiveIntegerField(primary_key=True)
+    group_name = models.CharField(max_length=30)
+    group_des = models.CharField(max_length=100)
+    group_type = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return str (self.group_name)
+
+
 class Items(models.Model):
+    item_group = models.ForeignKey(Item_Groups, on_delete=models.CASCADE)
     item_name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, editable=True)

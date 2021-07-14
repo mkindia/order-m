@@ -154,12 +154,12 @@ def for_data(request):
 def add_order(request, atri):
      if request.user.is_authenticated:
         party=Clients.objects.all()
-        items = Items.objects.all()
+        items = Items.objects.all().order_by('item_name')
         item='None'   
         if atri == 'edit':
                 oid=request.GET.get('oid', None)                             
                 ordfom=Orders.objects.all()
-                adfom=Orders.objects.get(pk=int(oid))                
+                adfom=Orders.objects.get(pk=int(oid))
                 ordfom=ordesform(instance=adfom)
                 ordfom1=Orders.objects.filter(pk=int(oid))
                 for it in ordfom1 :
@@ -454,7 +454,7 @@ def sent_data(request):
 def items(request, atri):    
     action=atri
     if request.user.is_authenticated:
-        item=Items.objects.all()
+        item=Items.objects.all().order_by('item_name')
         if atri=='add':            
             if request.method=='POST':
                 item=''
@@ -469,8 +469,9 @@ def items(request, atri):
                     itemForms=Itemsform(request.POST)
                     if itemForms.is_valid():
                         item_name=itemForms.cleaned_data['item_name'].title()
-                        sev=Items(item_name=item_name)
+                        sev=Items(item_name=item_name,item_group_id=int(1))
                         sev.save()
+                        messages.success(request,'Item Save Success  '+ item_name)
                         #return HttpResponseRedirect('/items_data/')
                        
            

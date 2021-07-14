@@ -15,17 +15,23 @@ $(document).ready(function(){
     function tempAlert(msg,duration)
     {
      var el = document.createElement("div");
+      
+     el.setAttribute("style","border-radius:10px;margin-left:10%;color:white; position:absolute;z-index:10000;top:45%;width:80%;line-height: 80px; background-color:#262626; text-align:center;");
      
-      el.setAttribute("style","border-radius:20px;padding-left:20px;padding-right:15px;margin-right:auto;color:white; position:absolute;z-index:10000;top:90px;width:100%;line-height: 40px; background-color:#006bb3;text-align:center;");
-    
-     el.innerHTML = msg;
+     el.innerHTML = msg
      setTimeout(function(){
       el.parentNode.removeChild(el);
          },duration);
      document.body.appendChild(el);
     }
+
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+        });
+    }, 1000);
       
-       
+  //  tempAlert("Order Added Success",2000);
  // For home
  if(window.location.pathname=='/'){
 
@@ -411,7 +417,7 @@ if(window.location.pathname=='/items/delete/'){
 }
 // For item add
 if(window.location.pathname=='/items/add/'){
-    
+        
     $.ajax({
     
         url: '/form_data/item_addform',
