@@ -28,15 +28,15 @@
           <option value="{{ party.id }} "> {{ party.party }}</option>
           {% endfor %}
         </select>
-        <a class="btn btn-outline-secondary btn-md" href="/addparty/order/">Add New party</a>
+        <a class="btn btn-outline-secondary btn-md" href="/addparty/order/">Add New</a>
       </div>
     </div>
     <div class="col-sm-6">
       <div class="input-group input-group p-1">
         <select id="consign" class="form-select" name='consignee_id' Required=true>
-          <option value="" disabled selected hidden>Choose Con...</option>
+          <option value="" disabled selected hidden>Choose Consignee...</option>
         </select>
-        <a class="btn btn-outline-secondary btn-md" href="/addconsignee/order/">Add New Consignee</a>
+        <a class="btn btn-outline-secondary btn-md" href="/addconsignee/order/">Add New</a>
       </div>
     </div>
     {% endif %}
@@ -78,7 +78,7 @@
       </div>
     </div>
     <div class="col-5">
-      <div class="row g-1">
+      <div class="row g-2">
         {% if atri == 'add' %}
         <input class="form-control col-sm-6 btn btn-outline-secondary" data-bs-toggle="modal"
           data-bs-target="#additemorder" type="button" id="addorder2" value="Add item order">

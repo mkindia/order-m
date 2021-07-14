@@ -12,7 +12,7 @@
     </thead>
     <tbody>
         {% for orders in order %}
-        
+
          <tr>
             <td colspan="5" class="table-active">
                 <div class="row g-0">
@@ -59,7 +59,10 @@
          <td id="unit" style="display:none;">
             {{orders.unit}}
         </td>
-        <td id="obal">
+         <td id="obal" style="display:none;">
+            {{orders.balance}}
+        </td>
+        <td>
             {{orders.balance}} / {{orders.unit}}
         </td>
         </tr>
@@ -82,26 +85,39 @@
     <script>
 $(function() {
     var n1 = document.getElementById("ordertableid").rows.length;
-         n1=n1-2
-        var TotalValue = 0;
+        let Pcs=0,Carton=0,Box=0,Bag=0,Dozen=0,Gms=0,Kgs=0,Meter=0,Roll=0,Liter=0;
         
-        var unit='None'
-       
+         for(i=2;i<n1;i+=2)
+         {
+            var ounit= document.getElementById("ordertableid").rows[i].cells.item(4).innerHTML;
+            var bal=document.getElementById("ordertableid").rows[i].cells.item(5).innerHTML;
+           
+        if(ounit.trim() == "Pcs."){Pcs += parseFloat(bal);}
+        if(ounit.trim() == "Carton"){Carton += parseFloat(bal);}
+        if(ounit.trim() == "Box"){Box += parseFloat(bal);}
+        if(ounit.trim() == "Bag"){Bag += parseFloat(bal);}
+        if(ounit.trim() == "Dozen"){Dozen += parseFloat(bal);}
+        if(ounit.trim() == "Gms."){Gms += parseFloat(bal);}
+        if(ounit.trim() == "Kgs."){Kgs += parseFloat(bal);}
+        if(ounit.trim() == "Meter"){Meter += parseFloat(bal);}
+        if(ounit.trim() == "Roll"){Roll += parseFloat(bal);}
+        if(ounit.trim() == "Liter"){Liter += parseFloat(bal);}
+        
+         }
+        var  balance = "";
+        if(Carton !=0 ){balance = balance + " , " + Carton + " / Carton"};
+        if(Pcs !=0 ){balance =balance + " , " + Pcs + " / Pcs."};
+        if(Box !=0 ){balance =balance + " , " + Box + " / Box"};
+        if(Bag !=0 ){balance =balance + " , " + Bag + " / Bag"};
+        if(Dozen !=0 ){balance =balance + " , " + Dozen + " / Dozen"};
+        if(Gms !=0 ){balance =balance + " , " + Gms + " / Gms."};
+        if(Kgs !=0 ){balance =balance + " , " + Kgs + " / Kgs."};
+        if(Meter !=0 ){balance =balance + " , " + Meter + " / Meter"};
+        if(Roll !=0 ){balance =balance + " , " + Roll + " / Roll"};
+        if(Liter !=0 ){balance =balance + " , " + Liter + " / Liter"};
 
-           $('tr #unit').each(function() {
-            unit = $(this).text();
-            
-            });
-          
-            $("tr #obal").each(function(index,value){
-                 currentRow = parseFloat($(this).text());
-                
-            
-         
-          TotalValue += currentRow
-            
-        });
-         document.getElementById('total').innerHTML = TotalValue + " / " + unit + n1;
+        balance = balance.substring(2);
+        document.getElementById('total').innerHTML = balance.bold().fontcolor("#ffff00") ;
  });
 </script>
     {% endif %}

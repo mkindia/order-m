@@ -656,7 +656,7 @@ def form_data(request, atri):
 def item_wise(request,filter):    
     if request.user.is_authenticated:
         if filter == 'item_wise':
-            items=Items.objects.all()            
+            items=Items.objects.all().order_by('item_name')           
             data={'item':items,'filter':filter}
         if filter == 'date_wise':            
             items=Items.objects.all()            
