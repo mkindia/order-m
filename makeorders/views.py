@@ -132,7 +132,11 @@ def edit_consignee(request, atri):
         return HttpResponseRedirect('/')
      
     return render(request,'editconsignee.html', {'partys':client})
-   
+
+def consigneeDetails(request):
+    allconsignee = Consignees.objects.all()
+    return render(request,"consigneedetails.html",{'allcon':allconsignee})
+
 def for_data(request):
     request.session.modified=True
     items=Items.objects.all()

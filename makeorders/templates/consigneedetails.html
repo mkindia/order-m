@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}party{% endblock title %}
+
+{% load static %}
+
+{% block content %}
+
+<h5 class="form-control badge alert-danger text-center">Consignee Details</h5>
+
+
+<div class="">
+<input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Consignee.." title="Type in a name">
+ 
+</div>
+<table class="table table-sm mt-3" id="myTable">
+<thead class="table-danger">
+        <tr class="text-center">
+            <th scope="col">Consignee</th>
+            <th scope="col">Station</th>
+            <th scope="col">Transport</th>          
+        </tr>
+    </thead>
+    <tbody>
+       
+        
+          {% for con in allcon %}
+         
+     <tr class="text-center">
+        <td>
+            {{ con.consignee }}
+        </td>
+        <td>
+            {{ con.station }}
+        </td>
+        <td>
+            {{ con.transport }}
+        </td>
+       
+        {% endfor %}
+            
+    </tbody>
+   
+
+</table>
+<script>
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+
+
+{% endblock content%}

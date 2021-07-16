@@ -25,6 +25,7 @@ urlpatterns = [
     path('for_data/',views.for_data, name='for_data'),
     path('addconsignee/<pr>/',views.add_consignee, name='add_consignee'),
     path('editconsignee/<atri>/',views.edit_consignee, name='edit_consignee'),
+    path('consigneedetails/',views.consigneeDetails,name='consigneedetails'),    
     path('con_data/<atri>/',views.con_id, name='con_id'),
     path('addorder/<atri>/',views.add_order, name='addorder'),
     path('addsent/<atri>/',views.addsent, name='addsent'),
