@@ -71,12 +71,9 @@
     </tbody>
     {% if filter == 'item_wise' %}
     <tbody class="table-light">
-        <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="text-end">Balance</td>
-           <td id="total" class="text-center bg-dark text-light">                
+        <tr>           
+            
+           <td colspan="5" id="total" class="text-end bg-light text-dark">                
             
         </td>
         </tr>
@@ -104,7 +101,7 @@ $(function() {
         if(ounit.trim() == "Liter"){Liter += parseFloat(bal);}
         
          }
-        var  balance = "";
+        var  balance = "";       
         if(Carton !=0 ){balance = balance + " , " + Carton + " / Carton"};
         if(Pcs !=0 ){balance =balance + " , " + Pcs + " / Pcs."};
         if(Box !=0 ){balance =balance + " , " + Box + " / Box"};
@@ -117,7 +114,8 @@ $(function() {
         if(Liter !=0 ){balance =balance + " , " + Liter + " / Liter"};
 
         balance = balance.substring(2);
-        document.getElementById('total').innerHTML = balance.bold().fontcolor("#ffff00") ;
+                
+        document.getElementById('total').innerHTML = "<span style=\"color:#000000\">Balance : </span>" + "<span style=\"color:#e60000;font-weight:bold;margin-right:2%\">"+balance+"</span>";
  });
 </script>
     {% endif %}

@@ -17,3 +17,11 @@
 <option value="{{ con.id }} "> {{con.consignee}}</option>
 {% endfor %}
 {% endif %}
+
+{% if atri == "fordeletecon"  %}
+ <option value="" disabled selected hidden>Choose Consignee...</option>
+{% for con in consi %}
+<option value="{{ con.id }} "> {{con.consignee}}</option>
+{% endfor %}
+{% endif %}
+

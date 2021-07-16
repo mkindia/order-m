@@ -295,8 +295,9 @@ if(window.location.pathname=='/editconsignee/edit/'){
 }
 // For Delete Consignee
 if(window.location.pathname=='/editconsignee/delete/'){
-
+        
     $("#partylist").change(function(){
+      
         var partyid= $(this).val();
        
         if(partyid=="selectparty")
@@ -305,7 +306,7 @@ if(window.location.pathname=='/editconsignee/delete/'){
         }
         $.ajax({
             
-            url: '/con_data/',
+            url: '/con_data/fordeletecon/',
             data:{
                 'cons1':partyid
             },

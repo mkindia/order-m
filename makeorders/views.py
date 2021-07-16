@@ -126,6 +126,7 @@ def edit_consignee(request, atri):
                 if request.POST.get('consigneeid'):
                     pid=Consignees.objects.get(pk=request.POST.get('consigneeid').title())
                     pid.delete()
+                    messages.warning(request,'Consignee Delete Success')
                     return HttpResponseRedirect('/')
     else:
         return HttpResponseRedirect('/')
@@ -479,6 +480,7 @@ def items(request, atri):
             
             if request.POST.get('item_id'):
                 pid=request.POST.get('item_id')
+                
                 itemform=Itemsform(request.POST)
                 if itemform.is_valid():
                     name=itemform.cleaned_data['item_name'].title()
@@ -494,7 +496,8 @@ def items(request, atri):
                         messages.warning(request,'Item Already Exist  '+ name)
                         return HttpResponseRedirect('/items/edit/')                   
                     else :
-                        sev=Items(id=int(pid),item_name=name)
+                        sev=Items.objects.get(id=int(pid))
+                        sev.item_name=name
                         sev.save()
                         messages.success(request,'Item Update Success  '+ name)
                         return HttpResponseRedirect('/items/edit/')
