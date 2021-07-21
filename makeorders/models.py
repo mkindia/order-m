@@ -10,7 +10,7 @@ class Clients(models.Model):
     transport = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, editable=True)
-
+    comment = models.CharField(max_length=100,blank=True,null=True)
     # renames the instances of the model
     # with their title name
     def __str__(self):
@@ -25,14 +25,14 @@ class Consignees(models.Model):
     transport = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, editable=True)
-
+    comment = models.CharField(max_length=100,blank=True,null=True)
     def __str__(self):
         return str( self.consignee )
 
 class Item_Groups(models.Model):
     group_id = models.PositiveIntegerField(primary_key=True)
     group_name = models.CharField(max_length=30)
-    group_des = models.CharField(max_length=100)
+    group_des = models.CharField(max_length=100,blank=True,null=True)
     group_type = models.PositiveIntegerField(default=1)
 
     def __str__(self):
@@ -44,6 +44,7 @@ class Items(models.Model):
     item_name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True, editable=True)
+    comment = models.CharField(max_length=100,blank=True,null=True)
 
     def __str__(self):
         return str (self.item_name )
@@ -73,7 +74,8 @@ class Orders(models.Model):
     balance = models.FloatField(default=0, blank=True, null=True)
     sent_trs_id =models.PositiveIntegerField(blank=True,null=True)    
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True, editable=True)
+    updated_at = models.DateTimeField(auto_now=True, editable=True),
+    comment = models.CharField(max_length=100,blank=True,null=True)
     # renames the instances of the model
     # with their title name
     def __str__(self):
@@ -99,7 +101,8 @@ class Sentorder(models.Model):
     order_trs_id =models.PositiveIntegerField(blank=True,null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True,editable=True)
-    
+    docket_number = models.CharField(max_length=50,blank=True,null=True)
+    comment = models.CharField(max_length=100,blank=True,null=True)
 
     # renames the instances of the model
     # with their title name

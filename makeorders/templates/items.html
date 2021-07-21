@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
 
-{% block title %} Add Items {% endblock title %}
+
 
 {% load static %}
+
+{% block title %}items {% endblock title %}
+
+
+
+
 {% block content %}
 
+  
 {% if messages %}
-{% for message in messages %}
-<!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
+{% for message in messages %} {% if message.tags %} class="{{message.tags}}" {% endif %} 
 <div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-2" {% endif %} 
      {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-2" {% endif %} >
+     
       <strog>{{message}}</strog>
        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -23,15 +30,18 @@
     {% csrf_token %}
     <div class="row g-0">
         {% if action == 'edit' or action == 'delete' %}
-        <div class="col-md-12">
-            <label for="consid">Select Item:</label>
-            <select id="select_item" class="form-select " name='item_id' Required=true>
+        
+        <div class="col-md-12" >
+            
+            <Select id="select_item" name='item_id' class="form-control">
                <option value="" disabled selected hidden>Choose item...</option>
               {% for item in items %}
-              <option value="{{ item.id }} "> {{ item.item_name }}</option>
+              <option value="{{item.id}}">{{item.item_name}}</option>
               {% endfor %}
             </select>
+           
         </div>
+       </div>
         {% endif %}
        
         <div class="col-md-12 mt-2" id='form_data'>
@@ -40,5 +50,15 @@
 </form>
 
 </div>
+
+<script>
+ $(document).ready(function(){
+   $('select').select2({     // .chosen-select is class name(from your dropdown)
+            placeholder: "Choose item ...",
+            
+        });
+  });
+  </script>
+
 
 {% endblock content %}

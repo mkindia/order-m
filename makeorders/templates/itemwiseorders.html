@@ -8,20 +8,20 @@
 {% block content %}
 
 <h6 class=" form-control badge alert-dark text-center sticky-top sticky-offset">Show Orders </h6>
-<div class="row g-0">
+<div class="row g-1">
  
     <form method="POST">
         {% csrf_token %}
     <div class="form-floating col-md-12">
        
         <select id="select_item" class="form-select" name='item_id' Required=true>
-          <option value="so">Select Orders</option>
-          <option value="sdwo">Show Date Wise Orders</option>
+          <option value="" disabled selected hidden>Choose Item...</option>
+          <option value="sdwo">Show Date Wise Item Orders</option>
           {% for items in item %}
           <option value="{{ items.id }} "> {{ items.item_name }}</option>
           {% endfor %}
         </select>
-         <label for="consid">Select Item:</label>
+         <label for="select_item">Select Item:</label>
     </div>
     </form>
 </div>

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %} Home {% endblock title %}
+{% block title %} home {% endblock title %}
 
 {% load static %}
 
@@ -20,7 +20,7 @@
 {% block content %}
 
 <form>
-  <div class="row g-1 mt-auto mb-2">
+  <div class="row g-2 mt-auto mb-2 p-1">
     <div class="form-floating col-md-6">
       <select id="consid" class="form-select " name='id'>
         <option value="selectparty" selected> Select Party</option>
@@ -49,9 +49,9 @@
         href="{% url 'addorder' 'add' %}">Add Orders</a>
     </div>
   </div>
-  <div class="table-responsive">
+  <div class="table-responsive mt-2">
     <table class="table table-sm" id="ordertableid">
-      <thead class="table-light">
+      <thead class="table-secondary">
         <tr class="text-center">
           <th scope="col">Date </th>
           <th scope="col">Item</th>

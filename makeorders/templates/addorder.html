@@ -18,10 +18,10 @@
 </h6>
 <form class="form" id="test_form" method="POST">
   {% csrf_token %}
-  <div class="row g-1">
+  <div class="row g-2 m-1">
     {% if sitem == 'None' %}
     <div class="col-sm-6">
-      <div class="input-group input-group p-1">
+      <div class="input-group input-group">
         <select id="consid" class="form-select" name='party_id' Required=true>
           <option value="" disabled selected hidden>Choose Party...</option>
           {% for party in partys %}
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="col-sm-6">
-      <div class="input-group input-group p-1">
+      <div class="input-group input-group">
         <select id="consign" class="form-select" name='consignee_id' Required=true>
           <option value="" disabled selected hidden>Choose Consignee...</option>
         </select>
@@ -42,13 +42,12 @@
     {% endif %}
   </div>
 
-  {% if atri == 'edit' %} <div class="row mt-1 m-1">
-    <hr class="mb-1 mt-2 ">
-    <div class="input-group input-group justify-content-end rounded-3 p-0">
-
-      <div class="col-12 p-0">
-        <div class=" input-group input-group p-1">
-          <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#additemmodel">+</a>
+  {% if atri == 'edit' %} <div class="row g-2 mt-1 m-1">
+  
+    
+      <div class="col-sm-6">
+        <div class=" input-group input-group">
+          <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#additemmodel">add item</a>
           <select class="form-select" name="item_id" id="item_name">
             <option>Select Item</option>
             {% for item in items %}
@@ -58,37 +57,73 @@
             <option value="{{item.id}}">{{item}}</option>
             {% endif %}
             {% endfor %}
-          </select>
-          {{orderform.item_des}}
-        </div>
-
-        <div class="input-group input-group p-1">
-          {{orderform.qty}} {{orderform.unit}} {{orderform.item_price}}
+          </select>         
         </div>
       </div>
-    </div>
+        <div class="col-sm-6">
+          <div class=" input-group">
+          <span class="input-group-text text-center ">enter des.</span>
+          {{orderform.item_des}}
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class=" input-group">
+          <span class="input-group-text text-center ">enter Qty</span>
+          {{orderform.qty}}
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class=" input-group">
+          <span class="input-group-text text-center ">select unit</span>
+          {{orderform.unit}}
+          </div>
+        </div>
+        <div class="col-sm-6">
+        <div class="input-group">
+          <span class="input-group-text text-center ">enter price</span>
+           {{orderform.item_price}}
+        </div>
+        </div>
+      </div>
+        
     <hr class="mb-1 mt-2">
   </div>
   {% endif %}
-  <div class="row g-1 m-1">
-    <div class="col-7">
-      <div class="input-group input-group">
-        <a class="text-decoration-none text-center pt-1 pe-1 text-dark">Date</a>
+  <div class="row g-2 mt-2 m-1">
+    <div class="col-sm-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+        <span class="input-group-text text-center ">enter date</span>
+        </div>
         {{orderform.orderdate}}
       </div>
     </div>
-    <div class="col-5">
-      <div class="row g-2">
-        {% if atri == 'add' %}
-        <input class="form-control col-sm-6 btn btn-outline-secondary" data-bs-toggle="modal"
-          data-bs-target="#additemorder" type="button" id="addorder2" value="Add item order">
-        {% endif %}
-        <input class="form-control col-sm-6 btn btn-success" {% if atri == 'add' %} type="button" {% else %} type="submit"
-          {% endif %} value="Submit" id="saveorders" name="submit_button">
+
+    <div class="col-sm-6">
+      <div class="input-group">
+        <div class="input-group-prepend">
+        <span class="input-group-text text-center ">enter comment</span>
+        </div>
+        {{orderform.comment}}
       </div>
     </div>
   </div>
-  {% if atri == 'add' %}
+
+   
+      <div class="row g-2 justify-content-end mt-4 m-1">
+        {% if atri == 'add' %}
+     
+        <input class="col-sm-6 btn btn-secondary" data-bs-toggle="modal"
+          data-bs-target="#additemorder" type="button" id="addorder2" value="Add item order">
+        {% endif %}
+        {% if atri == 'edit' %}
+        <input class="col-sm-6 btn btn-success" {% if atri == 'add' %} type="button" {% else %} type="submit"
+          {% endif %} value="Submit" id="saveorders" name="submit_button">
+          {% endif %}
+      </div>
+   
+  
+ <!-- {% if atri == 'add' %}
   <div class="table-responsive mt-2">
     <table class="table table-sm" id="ordertableid">
       <thead>
@@ -105,7 +140,7 @@
       </tbody>
     </table>
   </div>
-  {% endif %}
+  {% endif %} -->
 </form>
 
 
@@ -116,7 +151,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h6 class="modal-title" id="exampleModalLabel2">Add orders item</h6>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>        
       </div>
       <div class="modal-body">
 
@@ -134,25 +169,49 @@
           <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#additemmodel">new item</a>
         </div>
 
-        <div class="mt-1">
+        <div class="mt-3">
           <div class=" input-group input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text text-center ">item varient</span>
+              </div>
             {{orderform.item_des}}
+           
+          </div>
+        </div>
+        <div class="mt-3">
+          <div class=" input-group input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text text-center ">enter price</span>
+              </div>
             {{orderform.item_price}}
           </div>
         </div>
 
-        <div class="mt-1">
+        <div class="mt-3">
           <div class=" input-group input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text text-center ">enter Qty.</span>
+              </div>
             {{orderform.qty}}
+
+           
+          </div>
+        </div>
+        <div class="mt-3">
+          
+          <div class=" input-group input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text text-center ">select unit</span>
+              </div>
 
             {{orderform.unit}}
           </div>
         </div>
 
-
-        <div class="row justify-content-end mt-2">
-          <button type="button" id="addorder" class="col-5 btn btn-primary me-3">Add item order</button>
-        </div>
+       
+        
+          <button type="button" id="addorder" style="width: 100%;height: 40px; border-radius: 8px; margin-top: 15px; background-color: aqua;">Submit</button>
+       
       </div>
 
     </div>
@@ -170,13 +229,17 @@
       <div class="modal-body">
         <form class="form" action="/items/add/" method="POST">
           {% csrf_token %}
+          <div class="row">
           <label>Enter Item name
-            <input class="form-floatformat text-capitalize" maxlength="30" id="add_item" type="text">
-
+            <input class="form-control text-capitalize" maxlength="30" id="add_item" type="text" required>
+          </div>
+          <div class="row g-1 mt-3 justify-content-end">
+          <button type="button" id="additem" class="btn btn-primary" data-bs-dismiss="modal">Add item</button>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" id="additem" class="btn btn-primary" data-bs-dismiss="modal">Add item</button>
+       
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
 
       </div>

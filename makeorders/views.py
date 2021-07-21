@@ -180,7 +180,8 @@ def add_order(request, atri):
                         item_des=request.POST.get('item_des')
                         item_price=ordfom.cleaned_data['item_price']
                         cartons=ordfom.cleaned_data['qty']
-                        unit=ordfom.cleaned_data['unit']     
+                        unit=ordfom.cleaned_data['unit']
+                        comment=ordfom.cleaned_data['comment'] 
                         oupdate=Orders.objects.get(pk=oid)
                         oupdate.orderdate=date
                         oupdate.item_id=item_id
@@ -190,21 +191,22 @@ def add_order(request, atri):
                         oupdate.qty=cartons
                         oupdate.unit=unit
                         oupdate.updated_at=timezone.now()
+                        oupdate.comment=comment
                         oupdate.save()                        
                         messages.success(request,'Order update successed')
                         return HttpResponseRedirect('/')        
         if atri == 'add':        
             if request.method =='POST':
-                data=request.POST.getlist('info[]')
-                datarow=int(len(data)/8)
+                data=request.POST.getlist('info[]')             
+                datarow=int(len(data)/9) #where 9 is 9 record in data 0 to 8
                 for i in range(datarow):
                    k=(i+1)
-                   j=i*8
+                   j=i*9
                    d=[]       
-                   for t in range(j, k*8):
-                       
+                   for t in range(j, k*9):                       
                       d.append(data[t])
-               
+                     
+                   print(data[8])
                    party_id=d[0]
                    conid=d[1]
                    date=d[2]
@@ -213,11 +215,11 @@ def add_order(request, atri):
                    cartons=d[5]
                    unit=d[6]
                    item_price=d[7]
+                   comment=d[8]
                    sev=Orders(consignees_id=conid,party_id=party_id,orderdate=date,
-                   item_id=item_id,item_des=item_des,item_price=item_price,qty=cartons,unit=unit,balance=cartons)                
+                   item_id=item_id,item_des=item_des,item_price=item_price,qty=cartons,unit=unit,balance=cartons,comment=comment)                
                    sev.save()
-                  
-                    
+                                     
                     
                 #array_data = request.POST['info']
                 #data = json.loads(array_data)

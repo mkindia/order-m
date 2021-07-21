@@ -10,17 +10,17 @@
 <form class="form" id="test_form" method="POST">
     {% csrf_token %}
     <div class="row g-2">
-        <div class="col-sm-4 col-6">
+        <div class="col-sm-6 col-6">
          Date:{{sentform.date}}
         </div>
-            <div class="col-sm-4 col-6">
+            <div class="col-sm-6 col-6">
             Qty:{{sentform.qty}}
            </div>
-           <div class="col-sm-4 col-6">
+           <div class="col-sm-6 col-6">
             Status:{{sentform.status}}
            </div>
            
-           <div id="scon" class="col-sm-4 col-6">
+           <div id="scon" class="col-sm-6 col-6">
             <label for="consid">Select Consignee:</label>
             <select id="select_Consignee" class="form-select" name="Con_id" >
             
@@ -35,27 +35,30 @@
             </select>
            </div>
         
-           <div class="col-sm-4 col-6">
+           <div class="col-sm-6 col-6">
             By:{{sentform.by}}
            </div>
+         <!-- <div id="docket_number" class="col-sm-6 col-6">
+            docket no:{{sentform.docket_number}}
+           </div> -->
         
-        <div class="col-sm-4 col-6" id="newRow">
+        <div class="col-sm-6 col-6" id="newRow">
             
         </div> 
              
         <div class="col-8 mt-3">
         {% if action == 'add' %}
-        <input class="form-control btn-success btn-sm" type="submit" value="Save" name="Save">
+        <input class="form-control btn-success" type="submit" value="Save" name="Save">
         {% endif %}
         {% if action == 'edit' %}
-        <input class="form-control btn-primary btn-sm" type="submit" value="Update" name="Update">
+        <input class="form-control btn-primary" type="submit" value="Update" name="Update">
         {% endif %}        
         {% if action == 'delete' %}
-        <input class="form-control btn-danger btn-sm" type="submit" value="Delete" name="delete">
+        <input class="form-control btn-danger" type="submit" value="Delete" name="delete">
         {% endif %}
         </div>
         <div class="col-4 mt-3">
-            <button class="form-control btn-dark btn-sm" type="button" onclick="history.back(-1)">Back</button>
+            <button class="form-control btn-dark " type="button" onclick="history.back(-1)">Back</button>
         </div>
 
     </div>
