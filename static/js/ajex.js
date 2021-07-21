@@ -16,7 +16,7 @@ $(document).ready(function(){
     {
      var el = document.createElement("div");
       
-     el.setAttribute("style","border-radius:10px;margin-left:35%;color:white; position:absolute;z-index:10000;top:10%;width:30%;line-height: 80px; background-color:#262626; text-align:center;");
+     el.setAttribute("style","border-radius:10px;margin-left:20%;color:white; position:absolute;z-index:10000;top:10%;width:60%;line-height:normal; background-color:#000000; text-align:center;");
      
      el.innerHTML = msg
      setTimeout(function(){
@@ -194,12 +194,11 @@ $(document).ready(function(){
                     type : "POST", 
                     url: '/addorder/delete/',
                     data: {
-                        oid:id,                         
-                        dataType: "json",
+                        oid:id,
                         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                        action: 'POST'
+                        //action: 'POST'
                     },
-                    success: function (data) {    
+                    success: function () {    
                             alert('Delete Success')                   
                         
                     }

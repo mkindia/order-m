@@ -233,6 +233,7 @@ def add_order(request, atri):
             if request.method =='POST':                
                 orderid=Orders.objects.get(pk=request.POST.get('oid'))
                 orderid.delete()
+                messages.success(request,"Order Delete Success")
                 return HttpResponseRedirect('/')
      else:
          return HttpResponseRedirect('/')       
