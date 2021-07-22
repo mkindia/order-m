@@ -67,7 +67,7 @@
                                                 <form>
                                                         {% csrf_token %}
                                                         <input class="form-control btn-outline-danger btn-sm "
-                                                                id="ordelete" type="submit" formmethod="POST" oid={{ orders.id }} {% if orders.sent_cancel > 0 or orders.sent_trs_id != NULL %} 
+                                                                id="ordelete" type="button" oid={{ orders.id }} {% if orders.sent_cancel > 0 or orders.sent_trs_id != NULL %} 
                                                                 disabled=true style="background-color: rgb(232, 232, 232);"
                                                         {% endif %} value="Delete" >
                                                 </form>

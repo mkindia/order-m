@@ -34,7 +34,7 @@
             <div class="col-6 g-1">
                 <form method="POST" class="d-inline">
                      {% csrf_token %}                    
-                    <input class="form-control btn-outline-danger rounded-pill btn-sm" seid={{details.id}} type="submit" value="Delete" id='sedelete'>
+                    <input class="form-control btn-outline-danger rounded-pill btn-sm" data-bs-dismiss="modal" seid={{details.id}} type="button" value="Delete" id='sedelete'>
                 </form>
             </div>
         </div>

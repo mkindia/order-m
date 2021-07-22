@@ -158,6 +158,7 @@ def for_data(request):
 
 def add_order(request, atri):
      if request.user.is_authenticated:
+        ordfom=ordesform()
         party=Clients.objects.all()
         items = Items.objects.all().order_by('item_name')
         item='None'   
@@ -219,22 +220,17 @@ def add_order(request, atri):
                    sev=Orders(consignees_id=conid,party_id=party_id,orderdate=date,
                    item_id=item_id,item_des=item_des,item_price=item_price,qty=cartons,unit=unit,balance=cartons,comment=comment)                
                    sev.save()
-                                     
-                    
-                #array_data = request.POST['info']
-                #data = json.loads(array_data)
                 
-                #print(data[0])
                 return HttpResponseRedirect('/addorder/add/')
                                    
             else:
-                ordfom=ordesform()        
+                ordfom=ordesform()
+                       
         if atri == 'delete':
             if request.method =='POST':                
                 orderid=Orders.objects.get(pk=request.POST.get('oid'))
-                orderid.delete()
-                messages.success(request,"Order Delete Success")
-                return HttpResponseRedirect('/')
+                orderid.delete()                
+            
      else:
          return HttpResponseRedirect('/')       
      return render(request,'addorder.html', {'orderform':ordfom,'partys':party,'sitem':item,'items':items,'atri':atri})
@@ -284,7 +280,8 @@ def addsent(request, atri):
 
                             
                         else:
-                            sev.save()  
+                            sev.save()
+                        messages.success(request,'Order sent Success')    
                         return HttpResponseRedirect('/')
                     else:
                      
@@ -431,7 +428,7 @@ def addsent(request, atri):
                 sento = Orders.objects.get(pk=oid)
                 Ordersid=sento.id
                 sent_cancel=sento.sent_cancel                
-                obal=sento.balance             
+                obal=sento.balance
                 sent_trs_id=sento.sent_trs_id
                
                 #oupdate=Orders.objects.get(pk=Ordersid)
@@ -443,7 +440,7 @@ def addsent(request, atri):
                     rco.delete()
                 rsent=Sentorder.objects.get(pk=sid)                
                 rsent.delete()
-
+                
                 return HttpResponseRedirect('/')
    
     else:

@@ -16,7 +16,7 @@ $(document).ready(function(){
     {
      var el = document.createElement("div");
       
-     el.setAttribute("style","border-radius:10px;margin-left:20%;color:white; position:absolute;z-index:10000;top:10%;width:60%;line-height:normal; background-color:#000000; text-align:center;");
+     el.setAttribute("style","border-radius:15px;color:black;border-color: black ; position:absolute;z-index:10000;top:0%;width:100%;line-height:50px; background-color:#00f7ff; text-align:center;");
      
      el.innerHTML = msg
      setTimeout(function(){
@@ -37,6 +37,46 @@ $(document).ready(function(){
 
         document.getElementById("consign").disabled=true;
 
+        function showAjexOrder(pid,con)
+        {   
+                
+            if(con == "All Consignee" && pid != "selectparty"  )
+            {
+              
+            //  document.getElementById("navconsignee").disabled=false;
+            
+            url2="/for_data/";   
+    
+        $.ajax({
+ 
+            url: url2,
+            data: {
+                'pid': pid
+            },
+            success: function (data) {    
+                    
+                $("#orders").html(data);
+            }
+ 
+        });
+            }
+            else
+            {
+            //  document.getElementById('navconsignee').disabled=true;              
+            $.ajax({
+ 
+             url: '/for_data/',
+             data: {
+                 'conid': con
+             },
+             success: function (data) {
+                 $("#orders").html(data);
+             }
+ 
+         });
+ 
+        };
+        };
          // For select party
        $("#consid").change(function()
        {
@@ -159,7 +199,8 @@ $(document).ready(function(){
       
         // For Delete sent data
         $("#sentdetailtable tbody").on('click', '#sedelete', function () {
-
+            let pid=document.getElementById('consid').value;
+            let con=document.getElementById('consign').value;
            if ( confirm("Are you sure to Delete this record ?"))
            {
 
@@ -172,10 +213,11 @@ $(document).ready(function(){
                 data: {
                     sid:id,
                     csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                    action: 'POST'
+                
                 },
-                success: function (data) {    
-                          alert('Delete Success')                   
+                success: function (data) {
+                    showAjexOrder(pid,con);  
+                          alert('Delete Success');              
                    
                 }
             })
@@ -185,7 +227,8 @@ $(document).ready(function(){
 
         // For Delete Consignee Order
         $("#ordertableid tbody").on('click', '#ordelete', function () {
-
+            let pid=document.getElementById('consid').value;
+            let con=document.getElementById('consign').value;
             if ( confirm("Are you sure to Delete this Order ?"))
             {
  
@@ -198,8 +241,9 @@ $(document).ready(function(){
                         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                         //action: 'POST'
                     },
-                    success: function () {    
-                            alert('Delete Success')                   
+                    success: function () {
+                            showAjexOrder(pid,con);
+                            alert('Order Delete Success');              
                         
                     }
                 })
@@ -629,9 +673,6 @@ if(window.location.pathname=='/addorder/add/'){
     });
    
    
-    // for add table row dynamicaly
-  
-    
     $("#addorder").on('click', function () {        
         info=[];
         let party_id=document.getElementById("consid").value;
@@ -686,7 +727,7 @@ if(window.location.pathname=='/addorder/add/'){
                                     priceval.value=null;
 
                                 //window.setTimeout('alert("Order Item Success");',100);              
-                                tempAlert("Success",800)
+                                tempAlert("add Item Order Success",1500)
                         }
                     });
                 }
@@ -726,61 +767,6 @@ if(window.location.pathname=='/addorder/add/'){
         */
 
     });
-
-    //Remove table row
-    $('#ordertableid').on('click', '#delrow', function () {
-        $(this).closest('tr').remove();
-        count=count-1
-    })
-
-    
-    // For Save item to database
-  /*  $("#saveorders").on('click', function () {
-        info=[];
-        d=[];
-        var n1 = document.getElementById("ordertableid").rows.length;
-        var party_id=document.getElementById('consid').value
-        var con_id=document.getElementById('consign').value;
-        var id_orderdate=document.getElementById('id_orderdate').value;
-        
-        if(party_id != "" && con_id != "" && id_orderdate != "")
-        {
-            if(n1 >1)
-       {
-        for(i=1; i<n1;i++){
-         
-            var item_id=document.getElementById("ordertableid").rows[i].cells.item(0).innerHTML;
-            var item=document.getElementById("ordertableid").rows[i].cells.item(1).innerHTML;
-            var item_des=document.getElementById("ordertableid").rows[i].cells.item(2).innerHTML;
-            var qty=document.getElementById("ordertableid").rows[i].cells.item(3).innerHTML;
-            var unit=document.getElementById("ordertableid").rows[i].cells.item(4).innerHTML;
-            var price=document.getElementById("ordertableid").rows[i].cells.item(5).innerHTML;
-           
-            info.push(party_id,con_id,id_orderdate,item_id,item_des,qty,unit,price);
-        }
-        $.ajax({        
-            type : "POST",
-            url: '/addorder/add/',
-            data: {'info[]':info,
-               
-                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-               // action: 'POST'
-               
-            },
-            success: function (database) {    
-                    window.setTimeout('alert("Order Item Success");location.reload(true); window.close();' , 100);              
-                   
-            }
-        });
-      
-        }
-        else{alert('Plese add Order Frist')}
-        }
-        else{ alert('Please Select Party, Consignee, and Date') }
-        
-        
-        
-    })*/
 
     $("#additem").on('click', function () {
         var itemname = document.getElementById("add_item")
