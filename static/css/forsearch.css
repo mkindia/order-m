@@ -1,0 +1,46 @@
+
+  .dropbtn {
+   background-color: rgb(236, 231, 236);
+  
+   border:2px black solid;
+   
+   font-size: 18px;
+
+   width: 100%;
+  
+   border-radius: 4px;
+  
+   cursor: pointer;
+ }
+ 
+ .dropbtn:hover, .dropbtn:focus {
+   background-color: rgb(227, 230, 231);
+  
+ }
+ 
+ .dropdowndiv {
+   display: block;   
+   position: relative;
+   align-content: center;
+   
+ }
+ 
+ .dropdown-content {
+   display: none;   
+   z-index: 1;   
+   background-color: rgb(221, 221, 221);
+   border-radius: 6px;
+   text-align: center;
+   padding: 2px;
+ }
+ .searchonclick{
+    width: 100%; background-color: transparent; border-width: 0px; padding: 4px; 
+ }
+
+.downaero{
+    text-align:center; margin-top: 3px; width: auto;margin-left: -30px;  position: absolute;
+}
+ .searchtext{
+  font-size: 18px; width:100%; border-radius: 6px; align-self: center;padding: 4px;text-align: center;
+ }
+.show {display: block;}

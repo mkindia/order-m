@@ -11,12 +11,12 @@ $(document).ready(function(){
             $('button[aria-expanded="true"]').click();
         }
     });
-
+    // for temalert box
     function tempAlert(msg,duration)
     {
      var el = document.createElement("div");
       
-     el.setAttribute("style","border-radius:15px;color:black;border-color: black ; position:absolute;z-index:10000;top:0%;width:100%;line-height:50px; background-color:#00f7ff; text-align:center;");
+     el.setAttribute("style","border-radius:15px;color:black;border-color: black ; position:absolute;z-index:10000;top:0%;width:98%;line-height:50px; background-color:#00f7ff; text-align:center;");
      
      el.innerHTML = msg
      setTimeout(function(){
@@ -24,15 +24,15 @@ $(document).ready(function(){
          },duration);
      document.body.appendChild(el);
     }
-
+    // messsage time out box
     window.setTimeout(function() {
         $(".alert").fadeTo(500, 0).slideUp(500, function(){
             $(this).remove(); 
         });
     }, 1000);
-      
-  //  tempAlert("Order Added Success",2000);
- // For home
+
+    //for search box
+   
  if(window.location.pathname=='/'){
 
         document.getElementById("consign").disabled=true;
@@ -47,18 +47,18 @@ $(document).ready(function(){
             
             url2="/for_data/";   
     
-        $.ajax({
+              $.ajax({
  
-            url: url2,
-            data: {
-                'pid': pid
-            },
-            success: function (data) {    
+                 url: url2,
+                    data: {
+                        'pid': pid
+                     },
+                     success: function (data) {    
                     
-                $("#orders").html(data);
-            }
+                     $("#orders").html(data);
+                    }
  
-        });
+                     });
             }
             else
             {
@@ -73,10 +73,11 @@ $(document).ready(function(){
                  $("#orders").html(data);
              }
  
-         });
+              });
  
         };
         };
+    
          // For select party
        $("#consid").change(function()
        {
@@ -197,7 +198,7 @@ $(document).ready(function(){
 
         });
       
-        // For Delete sent data
+        // For Delete sent data 
         $("#sentdetailtable tbody").on('click', '#sedelete', function () {
             let pid=document.getElementById('consid').value;
             let con=document.getElementById('consign').value;
@@ -216,7 +217,7 @@ $(document).ready(function(){
                 
                 },
                 success: function (data) {
-                    showAjexOrder(pid,con);  
+                          showAjexOrder(pid,con);  
                           alert('Delete Success');              
                    
                 }
@@ -225,10 +226,12 @@ $(document).ready(function(){
 
         });
 
-        // For Delete Consignee Order
+        // For Delete Consignee Order ordelete
         $("#ordertableid tbody").on('click', '#ordelete', function () {
+            
             let pid=document.getElementById('consid').value;
             let con=document.getElementById('consign').value;
+           // document.getElementById("sedelete").setAttribute('data-bs-dismiss',"modal");
             if ( confirm("Are you sure to Delete this Order ?"))
             {
  
@@ -242,11 +245,11 @@ $(document).ready(function(){
                         //action: 'POST'
                     },
                     success: function () {
-                            showAjexOrder(pid,con);
+                            showAjexOrder(pid,con);                           
                             alert('Order Delete Success');              
                         
                     }
-                })
+                });
              }         
  
          });
@@ -382,10 +385,13 @@ if(window.location.pathname=='/editconsignee/delete/'){
 }
 // For Edit Items
 if(window.location.pathname=='/items/edit/'){
-    
-    $("#select_item").change(function(){
-       
-        var selectvalue= $(this).val();
+
+    $("#editbtn").click(function(){
+        let selectvalue=document.getElementById('showinput').value2send;
+       // alert(selectvalue);
+       // var selectvalue= $(this).val();
+       if(selectvalue!=null)
+       {
         $.ajax({
     
             url: '/form_data/item_editform',
@@ -396,11 +402,12 @@ if(window.location.pathname=='/items/edit/'){
                       
                 $("#form_data").html(data);
             }
-        })
-    })
+        });
+    }
+    });
+    
 
-
-}
+};
 // For Delete Items
 if(window.location.pathname=='/items/delete/'){
     

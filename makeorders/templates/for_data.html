@@ -3,13 +3,14 @@
         <td colspan="5"> 
                 <div class="row g-1">
                         <div class="col-12 text-start Bold">
-                                <h class="badge bg-dark ">{{party}} / 
+                                <h class="badge bg-dark ">{{party}} /
                        
                                 {% for consign in con %}
                                 {% if consign.id == orders.consignees_id %}
                                  {{ consign.consignee }} </h>
                                 {% endif %}
                                 {% endfor %}
+                                <h style="overflow-x: auto; white-space: nowrap; width: 210px; font-weight: bold; text-align: center; display:inline-block">{% if orders.comment != none %}{{orders.comment}}{% endif %}</h>
                         </div>
                        
                               

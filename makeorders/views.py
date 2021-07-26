@@ -206,8 +206,7 @@ def add_order(request, atri):
                    d=[]       
                    for t in range(j, k*9):                       
                       d.append(data[t])
-                     
-                   print(data[8])
+                   
                    party_id=d[0]
                    conid=d[1]
                    date=d[2]
