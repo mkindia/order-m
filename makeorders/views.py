@@ -44,7 +44,7 @@ def user_logout(request):
 def home(request):
     if request.user.is_authenticated:
       request.session.modified=True
-      party=Clients.objects.all()   
+      party=Clients.objects.all().order_by('party') 
       return render(request, "index.html", {'partys':party,'username':request.user,})
     else:
      return HttpResponseRedirect('/userlogin/')
@@ -52,7 +52,7 @@ def home(request):
 def con_id(request, atri):
     request.session.modified=True
     id = request.GET.get('cons1')
-    cons1 = Consignees.objects.filter(party_id=id)
+    cons1 = Consignees.objects.filter(party_id=id).order_by('consignee')
     return render(request, 'con_data.html', {'consi' : cons1,'atri':atri}) 
 
 def add_consignee(request,pr):
@@ -159,7 +159,7 @@ def for_data(request):
 def add_order(request, atri):
      if request.user.is_authenticated:
         ordfom=ordesform()
-        party=Clients.objects.all()
+        party=Clients.objects.all().order_by('party')
         items = Items.objects.all().order_by('item_name')
         item='None'   
         if atri == 'edit':

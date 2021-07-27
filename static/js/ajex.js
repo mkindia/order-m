@@ -16,7 +16,7 @@ $(document).ready(function(){
     {
      var el = document.createElement("div");
       
-     el.setAttribute("style","border-radius:15px;color:black;border-color: black ; position:absolute;z-index:10000;top:0%;width:98%;line-height:50px; background-color:#00f7ff; text-align:center;");
+     el.setAttribute("style","font-size:22px;font-weight:bold; border-radius:20px;color:black;border-color: black ;position:absolute;z-index:10000;top:0%;width:100%;line-height:50px; background-color:#00f7ff; text-align:center;");
      
      el.innerHTML = msg
      setTimeout(function(){
@@ -34,7 +34,7 @@ $(document).ready(function(){
     //for search box
    
  if(window.location.pathname=='/'){
-
+        
         document.getElementById("consign").disabled=true;
 
         function showAjexOrder(pid,con)
@@ -254,7 +254,7 @@ $(document).ready(function(){
  
          });
         
- }
+ };
  
  // For edit party
 if(window.location.pathname=='/editparty/edit/'){
@@ -274,7 +274,7 @@ if(window.location.pathname=='/editparty/edit/'){
     })
 })
 
-}
+};
 // For Delete Party
 if(window.location.pathname=='/editparty/delete/'){
     $("#partylist").change(function(){
@@ -291,7 +291,7 @@ if(window.location.pathname=='/editparty/delete/'){
             $("#form_data").html(data);
         }
     })
-})}
+})};
 // For Edit Consignee
 if(window.location.pathname=='/editconsignee/edit/'){
   
@@ -338,7 +338,7 @@ if(window.location.pathname=='/editconsignee/edit/'){
 
 
 
-}
+};
 // For Delete Consignee
 if(window.location.pathname=='/editconsignee/delete/'){
         
@@ -382,7 +382,7 @@ if(window.location.pathname=='/editconsignee/delete/'){
 
    });
 
-}
+};
 // For Edit Items
 if(window.location.pathname=='/items/edit/'){
 
@@ -410,10 +410,12 @@ if(window.location.pathname=='/items/edit/'){
 };
 // For Delete Items
 if(window.location.pathname=='/items/delete/'){
-    
-    $("#select_item").change(function(){
-       
-        var selectvalue= $(this).val();
+  
+    $('#editbtn').click(function(){
+
+       let selectvalue=document.getElementById('showinput').value2send;
+       // alert("hrloo");
+        //var selectvalue= $(this).val();
         $.ajax({
     
             url: '/form_data/item_deleteform',
@@ -424,8 +426,8 @@ if(window.location.pathname=='/items/delete/'){
                       
                 $("#form_data").html(data);
             }
-        })
-    })
+        });
+    });
 
     $("#form_data").on('click', '#itemdel', function () {
 
@@ -465,7 +467,7 @@ if(window.location.pathname=='/items/delete/'){
 
     });
 
-}
+};
 // For item add
 if(window.location.pathname=='/items/add/'){
         
@@ -481,7 +483,7 @@ if(window.location.pathname=='/items/add/'){
         }
     })
 
-}
+};
 
 if(window.location.pathname=='/itemwiseorders/item_wise/'){
 
@@ -531,7 +533,7 @@ if(window.location.pathname=='/itemwiseorders/item_wise/'){
     })
    
 
-}
+};
 
 if(window.location.pathname=='/itemwiseorders/date_wise/'){
 
@@ -556,7 +558,7 @@ if(window.location.pathname=='/itemwiseorders/date_wise/'){
 
    
 
-}
+};
 
 if(window.location.pathname=='/addsent/add/'){
     $('#scon').hide()
@@ -592,7 +594,7 @@ if(window.location.pathname=='/addsent/add/'){
         
     })    
 
-}
+};
 
 if(window.location.pathname=='/addsent/edit/'){
 
@@ -625,13 +627,11 @@ if(window.location.pathname=='/addsent/edit/'){
         })    
 
 
-}
+};
 
 if(window.location.pathname=='/addorder/add/'){
     document.getElementById("addorder2").disabled=true;
    
-   
-
     $("#id_orderdate").change(function()
     {
         
@@ -689,8 +689,10 @@ if(window.location.pathname=='/addorder/add/'){
         if(document.getElementById("id_comment").value != ""){comment=document.getElementById("id_comment").value};
         
         let iw = document.getElementById("item_name");
-        let item_id=iw.value;
-        let item=iw.options[iw.selectedIndex].text;
+       // let item_id=iw.value;
+      //  let item=iw.options[iw.selectedIndex].text;
+        let item_id=document.getElementById('showinput').value2send;
+        let item=document.getElementById('showinput').value;
 
         let item_des = $("#id_item_des").val();
         let qty = $("#id_qty").val();
@@ -701,8 +703,8 @@ if(window.location.pathname=='/addorder/add/'){
                
          if(item_des != ""){item_des= item_des,item_des1="("+item_des+")" };
        
-    if(item != "Select Item")
-    {
+    if(item != "Select Item ...")
+    { 
         if(qty != "")
         {  
             if(unit != "")
@@ -721,8 +723,8 @@ if(window.location.pathname=='/addorder/add/'){
                             
                         },
                         success: function (database) {
-                            var x=document.getElementById("item_name");       
-                                    x.selectedIndex=0;
+                               document.getElementById("showinput").value='Select Item ...';       
+                                   
 
                                 var x2=document.getElementById("id_item_des");       
                                     x2.value=null;
@@ -809,7 +811,7 @@ if(window.location.pathname=='/addorder/add/'){
     })
    
 
-}
+};
 
 
 });
