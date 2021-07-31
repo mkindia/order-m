@@ -62,6 +62,7 @@
         </div>
 
     </div>
+   
 </form>
 
 {% if messages %}{% for message in messages %}
@@ -71,5 +72,8 @@
 <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
 
 {% endfor %}{% endif %}
+<script>
+document.getElementById("id_qty").value={{bal}}
+</script>
 
 {% endblock content %}

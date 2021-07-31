@@ -3,7 +3,7 @@ from django.utils import timezone
 from django.db.models.fields import BLANK_CHOICE_DASH, DateTimeField, IntegerField, NullBooleanField
 from django.forms.widgets import DateInput, DateTimeBaseInput, NullBooleanSelect
 from django.shortcuts import redirect, render, HttpResponseRedirect
-from django.http import JsonResponse
+from django.http import JsonResponse, response
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -240,7 +240,8 @@ def addsent(request, atri):
         con=Consignees.objects.all()
         if atri=='add':
             sento = Orders.objects.filter(id= request.GET.get('oid'))            
-            sentform=Sentorderform()            
+            sentform=Sentorderform()
+            bal=request.GET.get('bal')    
             ordercarton=0               
             findconsignee=0
             for c in sento :
@@ -290,7 +291,8 @@ def addsent(request, atri):
                 else:  
                 
                     sentform=Sentorderform()
-
+            else:
+                    return render(request,'addsent.html',{'sentform':sentform,'bal':bal,'action':action})
         if atri=='edit':
             sid=request.GET.get('sid')           
             sdetail=Sentorder.objects.get(pk=sid)
@@ -480,14 +482,15 @@ def items(request, atri):
                        
            
         if atri=='edit':
-            
-            if request.POST.get('item_id'):
-                pid=request.POST.get('item_id')
+          
+            if request.POST.get('selectedItem'):
+
+                pid=Items.objects.get(item_name=request.POST.get('selectedItem').title())
                 
                 itemform=Itemsform(request.POST)
                 if itemform.is_valid():
                     name=itemform.cleaned_data['item_name'].title()
-                    pi=Items.objects.get(pk=int(pid))
+                    pi=Items.objects.get(pk=int(pid.id))
                     conflict=Items.objects.all()
                     con=''
                     noofcon=0
@@ -499,28 +502,30 @@ def items(request, atri):
                         messages.warning(request,'Item Already Exist  '+ name)
                         return HttpResponseRedirect('/items/edit/')                   
                     else :
-                        sev=Items.objects.get(id=int(pid))
+                        sev=Items.objects.get(id=int(pid.id))
                         sev.item_name=name
                         sev.save()
                         messages.success(request,'Item Update Success  '+ name)
                         return HttpResponseRedirect('/items/edit/')
                                    
         if atri=='delete':
-             
+             print(request.POST.get('item_id'))
              if request.method=='POST':
+                item_id=request.POST.get('item_id')
                 if request.POST.get('item_id'):                   
+                    
                     item1='None'                           
-                    ordfom=Orders.objects.filter(item_id=request.POST.get('item_id'))
-                    for it in ordfom : 
-                        item1=it.item_id               
+                    ordfom=Orders.objects.filter(item_id=item_id)
+                    for item in ordfom:
+                       item1=item.item_id            
                     
                     if item1 == 'None':                         
-                        pid=Items.objects.get(pk=request.POST.get('item_id'))                 
+                        pid=Items.objects.get(pk=item_id)                 
                         pid.delete()
                     else:
-                        itemname=Items.objects.filter(pk=request.POST.get('item_id'))
+                        itemname=Items.objects.filter(pk=item_id)
                         for inn in itemname:
-                             item1=inn.item_name      
+                             item1=inn.item_name
                             
                     response = {'msg':item1} # response message
                     return JsonResponse(response) # return response as JSON
@@ -533,7 +538,11 @@ def items_data(request):
     item=Items.objects.all()
     sitem=item.latest('updated_at')
     lastitemname=sitem.item_name
-    return render(request,'items_data.html',{'items':item, 'sitem':lastitemname})    
+    lastitemid=sitem.id
+    response ={'sitem':lastitemname,'sid':lastitemid,'items':item}    
+    #return JsonResponse(response)
+    # return response.HttpResponse("hello",context:)
+    return render(request,'items_data.html',response)    
 
 def add_party(request,pr):
     if request.user.is_authenticated:  

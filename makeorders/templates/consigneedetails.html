@@ -9,8 +9,8 @@
 <h5 class="form-control badge alert-danger text-center sticky-top sticky-offset">Consignee Details</h5>
 
 
-<div class="">
-<input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Consignee.." title="Type in a name">
+<div>
+<input class="form-control" type="text" id="myInput" onkeyup="searchcon()" placeholder="Search for Consignee.." title="Type in a name">
  
 </div>
 <table class="table table-sm mt-3" id="myTable">
@@ -24,7 +24,7 @@
     <tbody>
        
         
-          {% for con in allcon %}
+      {% for con in allcon %}
          
      <tr class="text-center">
         <td>
@@ -44,7 +44,7 @@
 
 </table>
 <script>
-function myFunction() {
+function searchcon() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
   filter = input.value.toUpperCase();

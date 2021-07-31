@@ -16,7 +16,7 @@ $(document).ready(function(){
     {
      var el = document.createElement("div");
       
-     el.setAttribute("style","font-size:22px;font-weight:bold; border-radius:20px;color:black;border-color: black ;position:absolute;z-index:10000;top:0%;width:100%;line-height:50px; background-color:#00f7ff; text-align:center;");
+     el.setAttribute("style","font-size:22px;font-weight:bold;margin-left:15%;top:2px; border-radius:10px;color:black;border-color:#4385cc ; border-width:4px; border-style: solid; position:absolute;z-index:10000;width:70%;line-height:auto; background-color:#f2f6f8; text-align:center;");
      
      el.innerHTML = msg
      setTimeout(function(){
@@ -34,7 +34,7 @@ $(document).ready(function(){
     //for search box
    
  if(window.location.pathname=='/'){
-        
+       // tempAlert("hrkkkh hjgd fjghj",5000);
         document.getElementById("consign").disabled=true;
 
         function showAjexOrder(pid,con)
@@ -401,7 +401,9 @@ if(window.location.pathname=='/items/edit/'){
             success: function (data) {    
                       
                 $("#form_data").html(data);
-            }
+            },
+            fail : function(){alert('Item Not Found')},
+            error: function(){alert('page not found')}
         });
     }
     });
@@ -414,7 +416,7 @@ if(window.location.pathname=='/items/delete/'){
     $('#editbtn').click(function(){
 
        let selectvalue=document.getElementById('showinput').value2send;
-       // alert("hrloo");
+       
         //var selectvalue= $(this).val();
         $.ajax({
     
@@ -430,29 +432,25 @@ if(window.location.pathname=='/items/delete/'){
     });
 
     $("#form_data").on('click', '#itemdel', function () {
-
-        var id = $('#select_item').val();
+          var id = document.getElementById('showinput').value2send;
+       // var id = $('#select_item').val();
         $.ajax({
 
             type : "POST", 
             url: '/items/delete/',
             data: {
-                item_id:id,
-             //item_name : $('#select_item').val(),
-             //last_name : $('#last_name').val(),
-             //csrfmiddlewaretoken: '{{ csrf_token }}',                 
+                item_id:id,                
              dataType: "json",
              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-             action: 'post'
-     
+        
             },
             
             success: function(data){
               
                 if (data.msg!='None'){alert('Can not delete item Exist In order (  '+data.msg+'  )')}
-                if(data.msg=='None'){
-                     window.location.replace('/');
+                if(data.msg=='None'){                    
                      alert('Item Delete Success');
+                     window.location.replace('/');
                     }
                    
                //$('#form_data').html(data.msg) /* response message */      
@@ -693,17 +691,16 @@ if(window.location.pathname=='/addorder/add/'){
       //  let item=iw.options[iw.selectedIndex].text;
         let item_id=document.getElementById('showinput').value2send;
         let item=document.getElementById('showinput').value;
-
+        
         let item_des = $("#id_item_des").val();
         let qty = $("#id_qty").val();
         let unit = $("#id_unit").val();
-        let price = document.getElementById('id_item_price').value;
-        
+        let price = document.getElementById('id_item_price').value;        
         let item_des1 = null;
                
          if(item_des != ""){item_des= item_des,item_des1="("+item_des+")" };
        
-    if(item != "Select Item ...")
+    if(item != "")
     { 
         if(qty != "")
         {  
@@ -723,9 +720,8 @@ if(window.location.pathname=='/addorder/add/'){
                             
                         },
                         success: function (database) {
-                               document.getElementById("showinput").value='Select Item ...';       
+                               document.getElementById("showinput").value=null;       
                                    
-
                                 var x2=document.getElementById("id_item_des");       
                                     x2.value=null;
 
@@ -784,26 +780,27 @@ if(window.location.pathname=='/addorder/add/'){
             type : "POST", 
             url: '/items/add/',
             data: {
-                         
+                dataType: "json",   
                 item_name:itemname.value,               
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 action: 'POST'
-                
+
             },
-            success: function (data) { 
+            success: function (data) {
+               // var lastitem=data.sitem;
+                //        alert(lastitem); 
                 $.ajax({
     
                     url: '/items_data/',
                     data: {
                         'item_id': null
                     },
-                    success: function (data) {    
-                              
-                        $("#item_name").html(data);
-                        
+                    success: function (data) {
+                    
+                     $("#item_name").html(data);
+                                          
                     }
-                })             
-                 
+                });
                 
             }            
         });

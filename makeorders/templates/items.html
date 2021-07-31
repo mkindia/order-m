@@ -10,7 +10,7 @@
 
 
 {% if messages %}
-{% for message in messages %} {% if message.tags %} class="{{message.tags}}" {% endif %} 
+{% for message in messages %} {% if message.tags %} {% endif %} 
 <div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-2" {% endif %} 
      {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-2" {% endif %} >
      
@@ -22,7 +22,7 @@
 {% endif %}
 
 <h6 class="form-control badge alert-primary text-center"> New Items </h6>
-<div class="col-sm-10 col-md-8 col-lg-5 mx-auto">
+<div class="col-sm-12 col-md-10 col-lg-6 mx-auto">
 <form class="form" method="POST">
     {% csrf_token %}
     <div class="row g-1">
@@ -30,10 +30,18 @@
         
         <div class="col-9" >
           <div class="dropdowndiv" >
-            <div class="dropbtn">
-            <input onclick="myFunction()" type="button" value2send="" id="showinput" class="searchonclick" value="Select Item ..."><i class="downaero"> &#9660;</i>
-            </div>
+            
+            <input onclick="myFunction()" 
+            type="text" readonly value2send=""placeholder="Search Item ..."
+             name="selectedItem" id="showinput"              
+             style="width: 100%;font-weight:bold;
+             border-radius: 6px;padding: 6px; text-align: center; 
+             background-color: rgb(241, 241, 241);">
+            
+             <i class="downaero" style="top: 6px; position: absolute; margin-left: -30px;"> &#9660;</i>
+           
              <div id="myDropdown" class="dropdown-content">
+
               <input type="text" list="items" oninput="onInput()" id="input" class="searchtext" />
               
               <datalist id="items">
@@ -57,9 +65,6 @@
     </div>  
 </form>
 
-
-
-</div>
 
 
 {% endblock content %}

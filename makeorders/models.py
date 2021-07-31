@@ -94,7 +94,7 @@ class Sentorder(models.Model):
 
     orders = models.ForeignKey(Orders, on_delete=models.CASCADE)
     date = models.DateField()
-    qty = models.FloatField(default=1)
+    qty = models.FloatField()
     status = models.CharField(max_length=30,blank=True, null=True, choices=sent_cancel,default='Delivered',)
     consignee_id=models.PositiveIntegerField(blank=True, null=True,)
     by = models.CharField(max_length=30, blank=True, null=True, choices=by,default='ByUs',)

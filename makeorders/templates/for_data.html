@@ -90,6 +90,7 @@
                                                  <form action="{% url 'addsent' 'add' %}">
                                                         <input type="hidden" name="oid" value={{ orders.id }}>
                                                         <input type="hidden" name="item_id" value={{ orders.item_id }}>
+                                                        <input type="hidden" name="bal" value={{ orders.balance }}>
                                                         <input type="hidden" name="unit" value={{ orders.unit }}>
                                                         <input type="hidden" name="item_price" value={{ orders.item_price }}>
                                                         <input class="form-control btn-outline-dark btn-sm"

@@ -1,8 +1,22 @@
-
-{% for item in items %}
+<!--{% for item in items %}
 {% if item.item_name == sitem %}
 <option value="{{ item.id}}" selected> {{item.item_name}}</option>
 {% else %}
 <option value="{{ item.id }}"> {{item.item_name}}</option>
 {% endif %}
-{% endfor %}
+{% endfor %} -->
+<div class="dropdowndiv">
+    <div class="dropbtn">
+        <input onclick="myFunction()" type="button" value2send="{{sid}}" id="showinput" class="searchonclick"
+            value="{{sitem}}"><i class="downaero"> &#9660;</i>
+    </div>
+    <div id="myDropdown" class="dropdown-content">
+        <input type="text" list="items" oninput="onInput()" id="input" class="searchtext" />
+
+        <datalist id="items">
+            {% for item in items %}
+            <option data-value="{{item.id}}" value="{{item.item_name}}"></option>
+            {% endfor %}
+        </datalist>
+    </div>
+</div>

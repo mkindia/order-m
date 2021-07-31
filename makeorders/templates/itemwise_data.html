@@ -100,6 +100,7 @@ $(function() {
         if(ounit.trim() == "Roll"){Roll += parseFloat(bal);}
         if(ounit.trim() == "Liter"){Liter += parseFloat(bal);}
         
+        
          }
         var  balance = "";       
         if(Carton !=0 ){balance = balance + " , " + Carton + " / Carton"};
@@ -112,6 +113,7 @@ $(function() {
         if(Meter !=0 ){balance =balance + " , " + Meter + " / Meter"};
         if(Roll !=0 ){balance =balance + " , " + Roll + " / Roll"};
         if(Liter !=0 ){balance =balance + " , " + Liter + " / Liter"};
+       
 
         balance = balance.substring(2);
                 
