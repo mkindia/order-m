@@ -1,12 +1,11 @@
-{% load static %}
+
 <!doctype html>
 <html lang="en">
 
 <head>
   <!--title-->
   <title>
-    {% block title %}
-    {% endblock title %}
+  
   </title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -26,6 +25,7 @@
       border: 1px solid #ccc;
       box-sizing: border-box;
       border-radius: 6px;
+      font-size: larger;
     }
 
     /* Set a style for all buttons */
@@ -33,10 +33,10 @@
       background-color: #0468aa;
       color: white;
       padding: 14px 20px;
-      margin: 8px 0;
+      margin-top: 25px;
       cursor: pointer;
       width: 100%;
-
+      border-radius:10px;
 
     }
 
@@ -44,16 +44,16 @@
       opacity: 0.8;
     }
 
-    .width {
+    form {
       width: 85%;
+      border: black 1px solid;
+      border-radius: 10px;
+      padding: 20px;
     }
 
     .center {
-      margin: auto;
-      margin-top: auto;
-      padding: 20px;
-      border: black 1px solid;
-      border-radius: 10px;
+      margin: auto; 
+      
     }
 
     /* Add Zoom Animation */
@@ -85,17 +85,29 @@
     /* Change styles for span and cancel button on extra small screens */
     @media only screen and (min-width: 700px) {
 
-      .width {
+      form {
         width: 70%;
       }
     }
 
     @media only screen and (min-width: 900px) {
 
-      .width {
+      form {
         width: 40%;
       }
     }
+
+    #footer {
+            clear: both;
+            position:fixed;    
+            left: 0px;
+            bottom: 0;
+            width: 100%;
+            background: rgb(202, 202, 202);
+            text-align: center;
+            border-radius: 6px;
+            
+        }
   </style>
 
 </head>
@@ -103,14 +115,14 @@
 <body>
 
   <div style="text-align: center; margin-top:40px auto;">
-    <h1>Please Sign In</h1>
+    <h2>Please Sign In</h2>
     {% if form.non_field_errors %}
     {% for error in form.non_field_errors%}
     <p> {{error}} </p>
     {% endfor%}
     {% endif %}
   </div>
-
+<div class="center">
   <form class="center width animate" method="POST">
     {% csrf_token %}
     <div class="container" style=" display: inline;">
@@ -120,13 +132,18 @@
       <label for="password"><b>{{form.password.label_tag}}</b>{{form.password.errors|striptags}}</label>
       {{form.password}}
 
-      <button type="submit" style="border-radius: 6px; margin-top: 20px;">Login</button>
+      <button type="submit">Login</button>
 
     </div>
 
   </form>
-
-
+  
+</div>
+<div id="footer"> <p>Copyright
+  1993-2021 All Right Reserved ||
+  Spangle And Si Logo are registered Trademark of Shilpa Industries</p>
+</div>
+ 
 </body>
-
+ 
 </html>

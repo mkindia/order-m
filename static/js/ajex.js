@@ -387,9 +387,7 @@ if(window.location.pathname=='/editconsignee/delete/'){
 if(window.location.pathname=='/items/edit/'){
 
     $("#editbtn").click(function(){
-        let selectvalue=document.getElementById('showinput').value2send;
-       // alert(selectvalue);
-       // var selectvalue= $(this).val();
+        let selectvalue=document.getElementById('showinput').value2send;     
        if(selectvalue!=null)
        {
         $.ajax({
