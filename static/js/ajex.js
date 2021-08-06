@@ -685,8 +685,7 @@ if(window.location.pathname=='/addorder/add/'){
         if(document.getElementById("id_comment").value != ""){comment=document.getElementById("id_comment").value};
         
         let iw = document.getElementById("item_name");
-       // let item_id=iw.value;
-      //  let item=iw.options[iw.selectedIndex].text;
+       
         let item_id=document.getElementById('showinput').value2send;
         let item=document.getElementById('showinput').value;
         
@@ -719,7 +718,7 @@ if(window.location.pathname=='/addorder/add/'){
                         },
                         success: function (database) {
                                document.getElementById("showinput").value=null;       
-                                   
+                               document.getElementById("input").value=null;
                                 var x2=document.getElementById("id_item_des");       
                                     x2.value=null;
 
@@ -745,30 +744,7 @@ if(window.location.pathname=='/addorder/add/'){
     }
     else(alert("Please Select Item"));
 
-      /*  if(document.getElementById('consid').value > 0)
-        {
-         if (count !=10) // add row
-        {
-        $("#items").append('<tr><td style="display:none;">'+item_id+'</td><td>'+ item + item_des1 +'</td><td style="display:none;">'+ item_des +'</td><td>'+ qty +'</td><td>'+unit+'</td><td>'+price+'</td><td><button class="btn-close" id="delrow" type="button"  > </button></td></tr>');
-        count = count+1
-        }else{alert("Only 10 Items add")}
-         }
-         else{alert("Enter item , Qty , Price")}
-         
-        var x=document.getElementById("item_name");       
-        x.selectedIndex=0;
-
-        var x=document.getElementById("id_item_des");       
-        x.value=null
-
-        var qtyval=document.getElementById("id_qty");
-        qtyval.value=null
-
-        var priceval=document.getElementById("id_item_price");
-        priceval.value=null
-        
-        */
-
+     
     });
 
     $("#additem").on('click', function () {
