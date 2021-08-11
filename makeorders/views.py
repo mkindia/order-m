@@ -22,9 +22,10 @@ def user_login(request):
                 if vuser is not None:
                     login(request, vuser)
                     request.session['accesskey'] = 'accesskey'
-                    #messages.success(request,'Success')
+                    #superuser=request.user.is_superuser
+                    #messages.success(request,suer)                   
                     return HttpResponseRedirect('/')
-
+                    
         else:        
             fm=Userauthform()
         return render(request,'userlogin.html',{'form':fm})

@@ -12,7 +12,7 @@
     </thead>
     <tbody>
         {% for orders in order %}
-
+         {% if orders.qty != orders.sent_cancel %}
          <tr>
             <td colspan="5" class="table-active">
                 <div class="row g-0">
@@ -66,8 +66,8 @@
             {{orders.balance}} / {{orders.unit}}
         </td>
         </tr>
-       
-        {% endfor %}        
+       {% endif %}
+     {% endfor %}        
     </tbody>
     {% if filter == 'item_wise' %}
     <tbody class="table-light">
