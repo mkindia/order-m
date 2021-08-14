@@ -263,14 +263,14 @@ def addsent(request, atri):
                     if request.POST.get('Con_id'):
                         findconsignee=request.POST.get('Con_id')
                     sev=Sentorder(orders_id=request.GET.get('oid'),date=date,
-                    qty=cartons,status=status,consignee_id=findconsignee,by=by)
+                    qty=cartons,status=status,consignee_id=findconsignee,by=by,updated_at=timezone.now)
                     sentcancel=sent_cancel+cartons
                     
-                    if ordercarton>=sentcancel :                        
+                    if ordercarton>=sentcancel :
+                        sev.save()                       
                         Orders.objects.filter(pk=Ordersid).update(sent_cancel=sent_cancel+float(cartons),
                         balance=ordercarton-sentcancel)
                         if status == 'Transfer To':
-                            sev.save()                             
                             latestsent=Sentorder.objects.latest('updated_at')
                             transferorder=Orders(party_id=fclient.party_id,consignees_id=request.POST.get('Con_id'),orderdate=date,
                             item_id=request.GET.get('item_id'),item_price=request.GET.get('item_price'),
@@ -278,10 +278,7 @@ def addsent(request, atri):
                             transferorder.save()
                             soi=Orders.objects.get(sent_trs_id=latestsent.id)
                             Sentorder.objects.filter(pk=latestsent.id).update(order_trs_id=soi.id)
-
                             
-                        else:
-                            sev.save()
                         messages.success(request,'Order sent Success')    
                         return HttpResponseRedirect('/')
                     else:
@@ -293,7 +290,7 @@ def addsent(request, atri):
                 
                     sentform=Sentorderform()
             else:
-                    return render(request,'addsent.html',{'sentform':sentform,'bal':bal,'action':action})
+                    return render(request,'addsent.html',{'sentform':sentform,'bal':bal,'action':action,'transferto':trsferto})
         if atri=='edit':
             sid=request.GET.get('sid')           
             sdetail=Sentorder.objects.get(pk=sid)
@@ -315,8 +312,7 @@ def addsent(request, atri):
             unit=sento.unit
             findconsignee=sento.consignees_id
             obal=sento.balance
-            sent_trs_id=sento.sent_trs_id
-
+            
             if order_trs_id != None:
                 trto=Orders.objects.get(pk=order_trs_id)                
                 trsent_cancel=trto.sent_cancel
@@ -340,9 +336,7 @@ def addsent(request, atri):
                     if ordercarton>=sentcancel :                       
                        
                         if order_trs_id != None and status != 'Transfer To' :     # if orderder transfer to consignee                      
-                                #trsfer data delete
-                                ord=Orders.objects.get(pk=order_trs_id)
-                                ord.delete()
+                               
                                 #order data update
                                 oupdate=Orders.objects.get(pk=Ordersid)
                                 oupdate.sent_cancel=sent_cancel+float(cartons)-float(seqty)
@@ -357,13 +351,16 @@ def addsent(request, atri):
                                 supdate.by=by
                                 supdate.order_trs_id=None
                                 supdate.save()
+                                 #trsfer data delete
+                                ord=Orders.objects.get(pk=order_trs_id)
+                                ord.delete()
                         elif order_trs_id == None and status == 'Transfer To':
                             transferorder=Orders(party_id=fclient.party_id,consignees_id=request.POST.get('Con_id'),orderdate=date,
                             item_id=item_id,item_price=item_price,
                             qty=cartons,unit=unit,balance=cartons,sent_trs_id=sid)
                             transferorder.save()
 
-                            latestsent=Orders.objects.latest('updated_at') # find last record from data table
+                            latestsent=Orders.objects.latest('created_at') # find last record from data table
                             supdate= Sentorder.objects.get(pk=seid)
                             supdate.date=date
                             supdate.qty=cartons

@@ -86,7 +86,7 @@ class Sentorder(models.Model):
 
     
     sent_cancel=[('Cancelled','Cancelled'),
-                ('Delivered','Delivered'),
+                ('Sent','Sent'),
                 ('Transfer To','Transfer To Consignee'),]
 
     by = [('ByUs','ByUs'),
@@ -95,7 +95,7 @@ class Sentorder(models.Model):
     orders = models.ForeignKey(Orders, on_delete=models.CASCADE)
     date = models.DateField()
     qty = models.FloatField()
-    status = models.CharField(max_length=30,blank=True, null=True, choices=sent_cancel,default='Delivered',)
+    status = models.CharField(max_length=30,blank=True, null=True, choices=sent_cancel,default='Sent',)
     consignee_id=models.PositiveIntegerField(blank=True, null=True,)
     by = models.CharField(max_length=30, blank=True, null=True, choices=by,default='ByUs',)
     order_trs_id =models.PositiveIntegerField(blank=True,null=True)
