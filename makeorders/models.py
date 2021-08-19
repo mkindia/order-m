@@ -74,7 +74,7 @@ class Orders(models.Model):
     balance = models.FloatField(default=0, blank=True, null=True)
     sent_trs_id =models.PositiveIntegerField(blank=True,null=True)    
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True, editable=True),
+    updated_at = models.DateTimeField(auto_now=True, editable=True)
     comment = models.CharField(max_length=100,blank=True,null=True)
     # renames the instances of the model
     # with their title name

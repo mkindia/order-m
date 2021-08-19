@@ -1,4 +1,4 @@
-function myFunction() {
+/*function myFunction() {
     
   if(document.getElementById("myDropdown").style.display=="block"){
       document.getElementById("myDropdown").style.display="none"
@@ -17,4 +17,9 @@ function onInput() {
         break;       
       };
     };
-  };
+  }; */
+
+  $('#select2').select2({    
+    placeholder: "Select an item",
+    width:"100%",    
+    });

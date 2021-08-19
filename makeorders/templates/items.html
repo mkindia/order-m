@@ -1,13 +1,12 @@
 {% extends 'base.html' %}
 
 
-
 {% load static %}
 
 {% block title %}items {% endblock title %}
 
 {% block content %}
-
+	
 
 {% if messages %}
 {% for message in messages %} {% if message.tags %} {% endif %} 
@@ -29,7 +28,7 @@
         {% if action == 'edit' or action == 'delete' %}
         
         <div class="col-9" >
-          <div class="dropdowndiv" >
+         <!-- <div class="dropdowndiv" >
             
             <input onclick="myFunction()" 
             type="text" readonly value2send=""placeholder="Search Item ..."
@@ -51,20 +50,30 @@
               </datalist>
             </div>
            
-          </div>
+          </div> -->
+          <select id="select2" name="selectedItem">   
+            {% for item in items %}
+            <option value="{{item.id}}"> {{item.item_name}}</option>
+            {% endfor %}
+          </select>    
         </div>
         <div class="col-3" >
-          <button class="form-control btn btn-success" id="editbtn" type="button">Edit</button>
+          {% if action == 'delete' %}
+          <button class="form-control btn btn-danger" id="editbtn" type="button">Delete</button>
+          {% endif %}
+          {% if action == 'edit' %}
+          <button class="form-control btn btn-primary" id="editbtn" type="button">Edit</button>
+          {% endif %}
         </div>
        </div>
         {% endif %}
        
         <div class="col-md-12 mt-2" id='form_data'>
             
-        </div>      
+        </div>
+       
     </div>  
 </form>
 
-
-
-{% endblock content %}
+  
+{% endblock content %} 

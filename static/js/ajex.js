@@ -16,7 +16,7 @@ $(document).ready(function(){
     {
      var el = document.createElement("div");
       
-     el.setAttribute("style","font-size:22px;font-weight:bold;margin-left:15%;top:2px; border-radius:10px;color:black;border-color:#4385cc ; border-width:4px; border-style: solid; position:absolute;z-index:10000;width:70%;line-height:auto; background-color:#f2f6f8; text-align:center;");
+     el.setAttribute("style","font-size:22px;font-weight:bold;margin-left:15%;top:2px; border-radius:10px;color:black;border-color:#4385cc ; border-width:2px; border-style: solid; position:absolute;z-index:10000;width:70%;line-height:auto; background-color:#f2f6f8; text-align:center;");
      
      el.innerHTML = msg
      setTimeout(function(){
@@ -387,14 +387,15 @@ if(window.location.pathname=='/editconsignee/delete/'){
 if(window.location.pathname=='/items/edit/'){
 
     $("#editbtn").click(function(){
-        let selectvalue=document.getElementById('showinput').value2send;     
+        let selectvalue=document.getElementById('select2').value; 
+       
        if(selectvalue!=null)
        {
         $.ajax({
     
             url: '/form_data/item_editform',
             data: {
-                'item_id': selectvalue
+                item_id: selectvalue,
             },
             success: function (data) {    
                       
@@ -413,18 +414,24 @@ if(window.location.pathname=='/items/delete/'){
   
     $('#editbtn').click(function(){
 
-       let selectvalue=document.getElementById('showinput').value2send;
-       
+       let selectvalue=document.getElementById('select2').value;
+      
         //var selectvalue= $(this).val();
         $.ajax({
-    
-            url: '/form_data/item_deleteform',
+            type : "POST", 
+            url: '/items/delete/',
             data: {
-                'item_id': selectvalue
+                item_id: selectvalue,
+                csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
             },
             success: function (data) {    
                       
-                $("#form_data").html(data);
+                //$("#form_data").html(data);
+                if (data.msg!='None'){alert('Can not delete item Exist In order (  '+data.msg+'  )')}
+                if(data.msg=='None'){                    
+                     alert('Item Delete Success');
+                     window.location.replace('/');
+                    }
             }
         });
     });
@@ -684,11 +691,11 @@ if(window.location.pathname=='/addorder/add/'){
         let comment = null; 
         if(document.getElementById("id_comment").value != ""){comment=document.getElementById("id_comment").value};
         
-        let iw = document.getElementById("item_name");
-       
-        let item_id=document.getElementById('showinput').value2send;
-        let item=document.getElementById('showinput').value;
-        
+       // let item_id=document.getElementById('showinput').value2send;
+       // let item=document.getElementById('showinput').value;
+       // let item=document.getElementById('select2');
+        let item_id=document.getElementById('select2').value;
+       // alert(item.value +" "+item.options[item.selectedIndex].text)
         let item_des = $("#id_item_des").val();
         let qty = $("#id_qty").val();
         let unit = $("#id_unit").val();
@@ -697,7 +704,7 @@ if(window.location.pathname=='/addorder/add/'){
                
          if(item_des != ""){item_des= item_des,item_des1="("+item_des+")" };
        
-    if(item != "")
+    if(item_id != null)
     { 
         if(qty != "")
         {  
@@ -717,8 +724,8 @@ if(window.location.pathname=='/addorder/add/'){
                             
                         },
                         success: function (database) {
-                               document.getElementById("showinput").value=null;       
-                               document.getElementById("input").value=null;
+                            $('#select2').val(null).trigger('change');                                   
+                              // document.getElementById("input").value=null;
                                 var x2=document.getElementById("id_item_des");       
                                     x2.value=null;
 
@@ -753,8 +760,7 @@ if(window.location.pathname=='/addorder/add/'){
         $.ajax({        
             type : "POST", 
             url: '/items/add/',
-            data: {
-                dataType: "json",   
+            data: {  
                 item_name:itemname.value,               
                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
                 action: 'POST'
@@ -763,6 +769,7 @@ if(window.location.pathname=='/addorder/add/'){
             success: function (data) {
                // var lastitem=data.sitem;
                 //        alert(lastitem); 
+                
                 $.ajax({
     
                     url: '/items_data/',
@@ -771,8 +778,8 @@ if(window.location.pathname=='/addorder/add/'){
                     },
                     success: function (data) {
                     
-                     $("#item_name").html(data);
-                                          
+                     $("#select2").html(data);
+                     tempAlert("item added success please select",1500);
                     }
                 });
                 

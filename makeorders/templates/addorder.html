@@ -145,7 +145,7 @@
 
 
 
-<div class="modal fade" id="additemorder" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true"
+<div class="modal fade" id="additemorder" data-bs-backdrop="static" aria-labelledby="exampleModalLabel2" aria-hidden="true"
   tabindex="-1">
   <div class="modal-dialog modal-dialog-top">
     <div class="modal-content">
@@ -157,14 +157,12 @@
 
         <div class="row g-1">
        
-            <div class="col-10" id="item_name">
-            <div class="dropdowndiv" >
+            <div class="col-11">
+           <!-- <div class="dropdowndiv" >
             
-            <input onclick="myFunction()" type="text" readonly value2send="" name="selectedItem" id="showinput" 
+            <input onclick="myFunction()" type="text" readonly value2send="" name="selectedItem" id="showinput" class="searchonclick"
             
-            style="width: 100%;font-weight:bold;
-             border-radius: 6px;padding: 6px; text-align: center; 
-             background-color: rgb(241, 241, 241);" placeholder="Search Item ..."><i style="top: 6px; position: absolute; margin-left: -30px;"> &#9660;</i>
+             placeholder="Search Item ..."><i class="downaero"> &#9660;</i>
             
              <div id="myDropdown" class="dropdown-content">
               <input type="text" list="items" oninput="onInput()" id="input" class="searchtext" />
@@ -175,9 +173,14 @@
                 {% endfor %}              
               </datalist>
             </div>
-           </div>
+           </div> -->
+           <select id="select2">             
+            {% for item in items %}
+            <option value={{item.id}}>{{item.item_name}}</option>
+            {% endfor %}
+          </select>     
             </div>
-        <a class="btn alert-secondary col-2" data-bs-toggle="modal" data-bs-target="#additemmodel">+</a>
+        <a class="btn alert-secondary col-1" data-bs-toggle="modal" data-bs-target="#additemmodel">+</a>
 
         </div>
 
@@ -219,7 +222,7 @@
             {{orderform.unit}}
           </div>
         </div>
-          <button type="button" id="addorder" style="width: 100%;height: 40px; border-radius: 8px; margin-top: 15px; background-color: aqua;">Submit</button>
+          <button type="button" id="addorder" style="width: 100%;height: 40px; border-radius: 8px; margin-top: 35px; background-color: aqua;">Submit</button>
        
       </div>
 
@@ -236,7 +239,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="form" action="/items/add/" method="POST">
+        <form class="form" method="POST">
           {% csrf_token %}
           <div class="row">
           <label>Enter Item name
@@ -256,4 +259,16 @@
   </div>
 </div>
 
+<script>
+
+  $(document).ready(function() {
+    $("#select2").select2({
+      dropdownParent: $("#additemorder"),
+      placeholder: "Select an item",
+      width:"100%"
+    });
+  });
+  
+  </script>
+  
 {% endblock content %}

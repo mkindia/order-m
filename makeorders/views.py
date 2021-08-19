@@ -483,12 +483,12 @@ def items(request, atri):
           
             if request.POST.get('selectedItem'):
 
-                pid=Items.objects.get(item_name=request.POST.get('selectedItem').title())
-                
+                #pid=Items.objects.get(item_name=request.POST.get('selectedItem').title())
+                pid =request.POST.get('selectedItem')
                 itemform=Itemsform(request.POST)
                 if itemform.is_valid():
                     name=itemform.cleaned_data['item_name'].title()
-                    pi=Items.objects.get(pk=int(pid.id))
+                    pi=Items.objects.get(pk=pid)
                     conflict=Items.objects.all()
                     con=''
                     noofcon=0
@@ -500,7 +500,7 @@ def items(request, atri):
                         messages.warning(request,'Item Already Exist  '+ name)
                         return HttpResponseRedirect('/items/edit/')                   
                     else :
-                        sev=Items.objects.get(id=int(pid.id))
+                        sev=Items.objects.get(id=pid)
                         sev.item_name=name
                         sev.save()
                         messages.success(request,'Item Update Success  '+ name)
@@ -536,10 +536,11 @@ def items_data(request):
     item=Items.objects.all()
     sitem=item.latest('updated_at')
     lastitemname=sitem.item_name
-    lastitemid=sitem.id
-    response ={'sitem':lastitemname,'sid':lastitemid,'items':item}    
+    lastitemid=int(sitem.id)
+    response ={'sid':lastitemid,'sitem':lastitemname,'items':item}
+    
     #return JsonResponse(response)
-    # return response.HttpResponse("hello",context:)
+    #return response.HttpResponse(response)
     return render(request,'items_data.html',response)    
 
 def add_party(request,pr):
