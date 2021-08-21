@@ -5,8 +5,6 @@
 {% load static %}
 
 
-
-
 {% if messages %}{% for message in messages %}
 <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
 <div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-1" {% endif %} 
@@ -20,21 +18,23 @@
 {% block content %}
 
 <form>
-  <div class="row g-2 mt-auto mb-2 p-1">
-    <div class="form-floating col-md-6">
-      <select id="consid" class="form-select " name='id'>
+  <div class="row g-2 mb-2 p-1">
+    <div class="col-md-6">
+       <label for="confind">Party</label>
+      <select id="consid" class="select2" name='id'>
         <option value="selectparty" selected> Select Party</option>
         {% for party in partys %}
         <option value="{{ party.id }} "> {{ party.party }}</option>
         {% endfor %}
       </select>
-      <label for="confind">Party</label>
+     
     </div>
-    <div class="form-floating col-md-6" id="index_consignee">
-      <select id="consign" class="form-select" name='id'>
+    <div class="col-md-6" id="index_consignee">
+       <label for="consigneeselect ">Consignee</label>
+      <select id="consign" class="select2" name='id'>
         <option value="Select Consignee" selected> All Consignee</option>
       </select>
-      <label for="consigneeselect ">Consignee</label>
+     
     </div>
 
   </div>

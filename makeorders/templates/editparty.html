@@ -24,15 +24,16 @@
   {% csrf_token %}
 
   <div class="row g-1 mb-1">    
-    <div class="form-floating">
-      <select id="partylist" class="form-select" name='party_id' required>
+    <div class="col-12">
+    <label for="confind">Select Party</label>
+      <select id="partylist" class="select2" name='party_id' required>
         <option></option>
         {% for party in partys %}
         <option value="{{ party.id }} "> {{ party.party }}</option>
         {% endfor %}
       </select>
-      <label for="confind ">Select Party</label>
-    </div>
+      <div>
+    
 </div>
 
     <div class="row g-1 mb-1" id="form_data">

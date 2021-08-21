@@ -61,12 +61,14 @@
 .show {display: block;}
 
 .select2-selection,
-.select2-selection__rendered, 
-.select2-selection__arrow {
-    height: 38px !important;
-    line-height: 38px !important;
+.select2-selection__rendered {
+    height: 220% !important;
+    line-height: 220% !important;
     
 }
 
-
+.select2-selection__arrow{
+  height: 100% !important;
+    line-height: 100% !important;
+}
 

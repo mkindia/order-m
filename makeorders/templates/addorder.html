@@ -21,30 +21,37 @@
   <div class="row g-2 m-1">
     {% if sitem == 'None' %}
     <div class="col-sm-6">
-      <div class="input-group input-group">
-        <select id="consid" class="form-select" name='party_id' Required=true>
+      <div class="row g-0">
+        <div class="col-11">
+        <select id="consid" class="select2" name='party_id' Required=true>
           <option value="" disabled selected hidden>Choose Party...</option>
           {% for party in partys %}
           <option value="{{ party.id }} "> {{ party.party }}</option>
           {% endfor %}
         </select>
-        <a class="btn btn-outline-secondary btn-md" href="/addparty/order/">Add New</a>
-      </div>
+        </div>
+        <div class="col-1">
+        <a class="btn btn-outline-secondary btn-md form-control" href="/addparty/order/">+</a>
+          </div>
+          </div>
     </div>
     <div class="col-sm-6">
-      <div class="input-group input-group">
-        <select id="consign" class="form-select" name='consignee_id' Required=true>
+      <div class="row g-0">
+       <div class="col-11">
+        <select id="consign" class="select2" name='consignee_id' Required=true>
           <option value="" disabled selected hidden>Choose Consignee...</option>
         </select>
-        <a class="btn btn-outline-secondary btn-md" href="/addconsignee/order/">Add New</a>
-      </div>
+        </div>
+        <div class="col-1">
+        <a class="btn btn-outline-secondary btn-md form-control" href="/addconsignee/order/">+</a>
+        </div>
+        </div>
     </div>
     {% endif %}
   </div>
 
-  {% if atri == 'edit' %} <div class="row g-2 mt-1 m-1">
-  
-    
+  {% if atri == 'edit' %}
+   <div class="row g-2 mt-1 m-1">
       <div class="col-sm-6">
         <div class=" input-group input-group">
           <a class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#additemmodel">add item</a>
@@ -174,7 +181,7 @@
               </datalist>
             </div>
            </div> -->
-           <select id="select2">             
+           <select id="select2" class="select2">             
             {% for item in items %}
             <option value={{item.id}}>{{item.item_name}}</option>
             {% endfor %}

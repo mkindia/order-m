@@ -19,7 +19,7 @@ function onInput() {
     };
   }; */
 
-  $('#select2').select2({    
-    placeholder: "Select an item",
+  $('.select2').select2({    
+    placeholder: "Select in",
     width:"100%",    
     });

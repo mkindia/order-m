@@ -411,9 +411,11 @@ if(window.location.pathname=='/items/edit/'){
 };
 // For Delete Items
 if(window.location.pathname=='/items/delete/'){
-  
+     
+   
     $('#editbtn').click(function(){
-
+        if( confirm("Delete This Item ?") )
+   {
        let selectvalue=document.getElementById('select2').value;
       
         //var selectvalue= $(this).val();
@@ -430,44 +432,11 @@ if(window.location.pathname=='/items/delete/'){
                 if (data.msg!='None'){alert('Can not delete item Exist In order (  '+data.msg+'  )')}
                 if(data.msg=='None'){                    
                      alert('Item Delete Success');
-                     window.location.replace('/');
+                     //window.location.replace('/items/delete/');
                     }
             }
         });
-    });
-
-    $("#form_data").on('click', '#itemdel', function () {
-          var id = document.getElementById('showinput').value2send;
-       // var id = $('#select_item').val();
-        $.ajax({
-
-            type : "POST", 
-            url: '/items/delete/',
-            data: {
-                item_id:id,                
-             dataType: "json",
-             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-        
-            },
-            
-            success: function(data){
-              
-                if (data.msg!='None'){alert('Can not delete item Exist In order (  '+data.msg+'  )')}
-                if(data.msg=='None'){                    
-                     alert('Item Delete Success');
-                     window.location.replace('/');
-                    }
-                   
-               //$('#form_data').html(data.msg) /* response message */      
-               //       
-              
-            },
-     
-            failure: function() {
-                alert('Fail')
-            } 
-        });
-
+    }
     });
 
 };

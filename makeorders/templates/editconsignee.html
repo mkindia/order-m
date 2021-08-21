@@ -20,20 +20,21 @@
 <form method="POST">
       {% csrf_token %}
       <div class="row g-1">            
-            <div class="form-floating col-md-6">
-                  <select id="partylist" class="form-select " name='party_id' required>
+            <div class="col-md-6">
+                  <label for="confind ">Select Party</label>
+                  <select id="partylist" class="select2" name='party_id' required>
                         <option value="selectparty"> Select Party</option>
                         {% for party in partys %}
                         <option value="{{ party.id }} "> {{ party.party }}</option>
                         {% endfor %}
                   </select>
-                  <label for="confind ">Select Party</label>
+                  
             </div>
-            <div class="form-floating  col-md-6">
-                  <select id="consigneelist" class="form-select" name='consigneeid' required>
+            <div class="col-md-6">
+                   <label for="consigneeselect ">Consignee</label>
+                  <select id="consigneelist" class="select2" name='consigneeid' required>
                         <option></option>
                   </select>
-                  <label for="consigneeselect ">Consignee</label>
 
             </div>
 
