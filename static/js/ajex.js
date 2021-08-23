@@ -668,7 +668,8 @@ if(window.location.pathname=='/addorder/add/'){
         let item_des = $("#id_item_des").val();
         let qty = $("#id_qty").val();
         let unit = $("#id_unit").val();
-        let price = document.getElementById('id_item_price').value;        
+        let price = document.getElementById('id_item_price').value;
+        let per = document.getElementById('id_per').value;      
         let item_des1 = null;
                
          if(item_des != ""){item_des= item_des,item_des1="("+item_des+")" };
@@ -681,7 +682,7 @@ if(window.location.pathname=='/addorder/add/'){
             {   
                 if(price != "")
                 {
-                    info.push(party_id,con_id,id_orderdate,item_id,item_des,qty,unit,price,comment);
+                    info.push(party_id,con_id,id_orderdate,item_id,item_des,qty,unit,price,comment,per);
 
                     $.ajax({        
                         type : "POST",

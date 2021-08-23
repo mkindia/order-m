@@ -43,12 +43,13 @@ class consigneeform(forms.ModelForm):
 class ordesform(forms.ModelForm):
     class Meta:
         model = Orders
-        fields = ['orderdate','item_des','item_price','qty','unit','comment']
+        fields = ['orderdate','item_des','item_price','per','qty','unit','comment']
         labels={'qty':'Qty'}
         widgets ={'orderdate':forms.DateInput(attrs={'class':'form-control','type':'date','placeholder':"select date"}),
             'item_des':forms.TextInput(attrs={'class':'form-control text-capitalize','placeholder':"enter item des."}),
             'item_price':forms.TextInput(attrs={'class':'form-control','type':'number','step':'0.1',
-            'placeholder':"enter price"}),           
+            'placeholder':"enter price"}),
+            'per':forms.Select(attrs={'class':'form-select'}),        
             'qty':forms.TextInput(attrs={'class':'form-control','step':'0.1','min':'0.1',
             'type':'number','placeholder':"enter qty."}),
             'unit':forms.Select(attrs={'class':'form-select'}),
