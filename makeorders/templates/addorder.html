@@ -185,7 +185,8 @@
               </datalist>
             </div>
            </div> -->
-           <select id="select2" class="select2">             
+           <select id="select2" class="select2">
+            <option hidden selected></option>           
             {% for item in items %}
             <option value={{item.id}}>{{item.item_name}}</option>
             {% endfor %}
@@ -276,8 +277,10 @@
 
   $(document).ready(function() {
     $("#select2").select2({
-      dropdownParent: $("#additemorder"),      
-      width:"100%"
+      dropdownParent: $("#additemorder"),
+      placeholder: "Select ...",     
+      width:"100%",
+      
     });
   });
   

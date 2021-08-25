@@ -7,6 +7,8 @@
 
 {% block content %}
 
+
+<div id="loader"></div>
 <h6 class=" form-control badge alert-dark text-center sticky-top sticky-offset">Show Orders </h6>
 <div class="row g-1">
  
@@ -25,11 +27,14 @@
     </div>
     </form>
 </div>
-<div class="row g-0 mt-1">
+
+<div class="row g-0 mt-1" id="showcon">
     <div class="table-responsive" id="from_itemwise_data">        
  
     </div>
     
 </div>
+
+
 
 {% endblock content %}

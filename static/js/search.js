@@ -20,6 +20,7 @@ function onInput() {
   }; */
 
   $('.select2').select2({    
-    placeholder: "Select ...",
-    width:"100%",    
+    placeholder: "Select ...",    
+    width:"100%",
+    
     });
