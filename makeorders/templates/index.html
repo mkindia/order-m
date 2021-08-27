@@ -41,15 +41,31 @@
 </form>
 <div class="row g-0">
   <div class="row g-1 mt-0">
-    <div class="col-8">
-      <h6 class="sticky-top text-secondary sticky-offset p-1 ">Consignee Orders</h6>
-    </div>
+   
+    <div class="col-8 text-end form-switch">
+      <input class="form-check-input mt-2" type="checkbox" id="showcompleted">
+      <label class="form-check-label mt-1" for="showcompleted">Show Completed</label>
+     </div>
     <div class="col-4">
       <a class="form-control text-center text-decoration-none btn alert-primary sticky-top sticky-offset p-1 rounded-3"
         href="{% url 'addorder' 'add' %}">Add Orders</a>
     </div>
   </div>
-  <div class="table-responsive mt-2">
+  <div class="table-responsive mt-2" id="ordercompleted">
+    <table class="table table-sm" id="ordertableid">
+      <thead class="table-secondary">
+        <tr class="text-center">
+          <th scope="col">Date </th>
+          <th scope="col">Item</th>
+          <th scope="col">Order</th>
+          <th scope="col">Sent</th>
+          <th scope="col">Balance</th>
+        </tr>
+      </thead>
+      <tbody id="co"></tbody>
+    </table>
+  </div>
+  <div class="table-responsive mt-2" id="ordernotcompleted">
     <table class="table table-sm" id="ordertableid">
       <thead class="table-secondary">
         <tr class="text-center">

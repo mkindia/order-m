@@ -156,7 +156,7 @@ def consigneeDetails(request):
     return render(request, "consigneedetails.html", {'allcon': allconsignee})
 
 
-def for_data(request):
+def for_data(request, atri):
     request.session.modified = True
     items = Items.objects.all()
     if request.GET.get('pid'):
@@ -173,7 +173,7 @@ def for_data(request):
         partyq = Consignees.objects.get(pk=conid)
         party = partyq.party
         conq = Consignees.objects.filter(pk=conid)
-    return render(request, 'for_data.html', {'order': orders, 'item': items, 'party': party, 'con': conq})
+    return render(request, 'for_data.html', {'order': orders, 'item': items, 'party': party, 'con': conq, 'atri':atri})
 
 
 def add_order(request, atri):

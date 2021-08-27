@@ -1,4 +1,5 @@
 {% for orders in order %}
+{% if atri == 'uco' and orders.qty != orders.sent_cancel %}
 <tr>
         <td colspan="5"> 
                 <div class="row g-1">
@@ -47,7 +48,7 @@
         <td colspan="1">
                 <div class="row g-1">
                         <div class="col-12 text-start Bold">
-                               <h class="badge  alert-dark">Price {{orders.item_price}} / {{orders.per}}</h>
+                               <h class="badge  alert-dark text-wrap">Price {{orders.item_price}} / {{orders.per}}</h>
                         </div>
                        
                               
@@ -109,4 +110,117 @@
                 </div>
         </td>
 </tr>
+{% endif %}
+{% if atri == 'co' and orders.qty == orders.sent_cancel %}
+        <tr>
+        <td colspan="5"> 
+                <div class="row g-1">
+                        <div class="col-12">
+                               
+                                <h class="badge bg-dark">{{party}} /
+                       
+                                {% for consign in con %}
+                                {% if consign.id == orders.consignees_id %}
+                                 {{ consign.consignee }} </h>
+                                {% endif %}
+                                {% endfor %}
+                               
+                                
+                                <span style="font-weight: bold; font-size: 14px;">{% if orders.comment != none %}{{orders.comment}}{% endif %}</span>
+                                
+                        </div>
+                       
+                              
+                        
+                </div>
+        </td>
+</tr>
+<tr class="text-center" {% if orders.qty == orders.sent_cancel %} style="background-color: rgb(199, 250, 211);" {% endif %}>
+        <td>
+                {{ orders.orderdate}}
+        </td>
+        <td>
+                {% for it in item %}
+                {% if it.id == orders.item_id %}
+                {{ it.item_name }} {% if orders.item_des != "" %} ( {{ orders.item_des }} ) {% endif %}
+                {% endif %}
+                {% endfor %}
+        </td>
+        <td>
+                {{ orders.qty }} / {{orders.unit}}
+        </td>
+        <td>
+                {{ orders.sent_cancel }} / {{orders.unit}}
+        </td>
+        <td>
+                {{orders.balance}} / {{orders.unit}}
+        </td>
+</tr>
+<tr>
+        <td colspan="1">
+                <div class="row g-1">
+                        <div class="col-12 text-start Bold">
+                               <h class="badge  alert-dark text-wrap">Price {{orders.item_price}} / {{orders.per}}</h>
+                        </div>
+                       
+                              
+                        
+                </div>
+        </td>
+        
+       
+        <td colspan="4">
+                <div class="row g-1 me-1">
+                        
+                                        <div class="col-3">
+                                                <form>
+                                                        <input type="hidden" name="oid" value={{ orders.id }}>
+                                                        <input class="form-control btn-outline-primary btn-sm" id='eoid'
+                                                                oid={{ orders.id }} formmethod="GET" type="submit" {% if orders.sent_cancel > 0 or orders.sent_trs_id != NULL %}
+                                                        disabled=true style="background-color: rgb(232, 232, 232);" {% endif %} formaction="{% url 'addorder' 'edit' %}"
+                                                        value="Edit">
+                                                </form>
+                                        </div>
+                                        <div class="col-3">
+                                                <form>
+                                                        {% csrf_token %}
+                                                        <input class="form-control btn-outline-danger btn-sm "
+                                                                id="ordelete" type="button" oid={{ orders.id }} {% if orders.sent_cancel > 0 or orders.sent_trs_id != NULL %} 
+                                                                disabled=true style="background-color: rgb(232, 232, 232);"
+                                                        {% endif %} value="Delete" >
+                                                </form>
+                                        </div>
+                                        <div class="col-3">
+                                                <form>
+                                                        <input type="button" {% if orders.sent_cancel == 0 %} disabled=true 
+                                                        style="background-color: rgb(232, 232, 232);" {% endif %}
+                                                                class="form-control btn-outline-success btn-sm"
+                                                                data-bs-toggle="modal" data-bs-target="#sent_datails" id="sentdetailbtn"
+                                                                atb={{ orders.id }} value="Details">
+                                                </form>
+                                        </div>        
+                                        <div class="col-3">        
+                                                 <form action="{% url 'addsent' 'add' %}">
+                                                        <input type="hidden" name="oid" value={{ orders.id }}>
+                                                        <input type="hidden" name="item_id" value={{ orders.item_id }}>
+                                                        <input type="hidden" name="bal" value={{ orders.balance }}>
+                                                        <input type="hidden" name="unit" value={{ orders.unit }}>
+                                                        <input type="hidden" name="item_price" value={{ orders.item_price }}>
+                                                        <input class="form-control btn-outline-dark btn-sm"
+                                                                type="submit" formmethod="GET" {% if orders.qty == orders.sent_cancel %}
+                                                                disabled=true style="background-color: rgb(232, 232, 232);" {% endif %} value="Send">
+                                                </form>
+                                        </div>                
+                                              
+                                        
+                        
+                        </div>
+                        
+
+
+                       
+                </div>
+        </td>
+</tr>
+{% endif %}
 {% endfor %}
