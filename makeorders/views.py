@@ -1,18 +1,18 @@
 
 from django.utils import timezone
-from django.db.models.fields import BLANK_CHOICE_DASH, DateTimeField, IntegerField, NullBooleanField
-from django.forms.widgets import DateInput, DateTimeBaseInput, NullBooleanSelect
+
 from django.shortcuts import redirect, render, HttpResponseRedirect
-from django.http import JsonResponse, response
-from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .models import Clients, Consignees, Orders, Sentorder, Items
 from .form import consigneeform, ordesform, Sentorderform, Clientform, Userauthform, Itemsform
-
+from django.views.decorators.cache import cache_control
 # User Login form
 
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def user_login(request):
     if not request.user.is_authenticated:
         if request.method == 'POST':
@@ -26,35 +26,49 @@ def user_login(request):
                     request.session['accesskey'] = 'accesskey'
                     # superuser=request.user.is_superuser
                     # messages.success(request,suer)
-                    return HttpResponseRedirect('/')
+                    return redirect('/')
+                    #return HttpResponseRedirect('/')
 
         else:
             fm = Userauthform()
-        return render(request, 'userlogin.html', {'form': fm})
+            return render(request, 'userlogin.html', {'form': fm})
     else:
         request.session.flush()
         request.session.clear_expired()
-        return HttpResponseRedirect('/')
+        return redirect('/')
 
 # Logout user
-
 
 def user_logout(request):
     logout(request)
     request.session.flush()
     request.session.clear_expired()
-    return HttpResponseRedirect('/userlogin/')
+    return HttpResponseRedirect('/')
 
-# Create your views here.
-
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def home(request):
-    if request.user.is_authenticated:
+    fm = Userauthform()
+    if request.user.is_authenticated:       
         request.session.modified = True
         party = Clients.objects.all().order_by('party')
         return render(request, "index.html", {'partys': party, 'username': request.user, })
     else:
-        return HttpResponseRedirect('/userlogin/')
+        party = Clients.objects.all().order_by('party')
+        if request.method == 'POST':            
+            fm = Userauthform(request=request, data=request.POST)
+            if fm.is_valid():
+                uname = fm.cleaned_data['username']
+                upass = fm.cleaned_data['password']
+                vuser = authenticate(username=uname, password=upass)
+                if vuser is not None:
+                    login(request, vuser)
+                    request.session['accesskey'] = 'accesskey'                   
+                    return redirect('/')
+        else:
+             request.session.flush()
+             request.session.clear_expired()
+             return render(request, "index.html", {'partys': party, 'username': request.user, 'form':fm })
+
 
 
 def con_id(request, atri):

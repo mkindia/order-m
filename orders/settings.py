@@ -128,3 +128,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS =[os.path.join(BASE_DIR,'static'),]
 # By me For session time out
 #SESSION_COOKIE_AGE = 240
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'

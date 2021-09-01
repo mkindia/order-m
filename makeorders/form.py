@@ -18,8 +18,8 @@ class Itemsform(forms.ModelForm):
 
 class Userauthform(AuthenticationForm):
          fields=['first_name']
-         username=forms.CharField(widget=forms.TextInput())
-         password=forms.CharField(widget=forms.PasswordInput())
+         username=forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+         password=forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control'}))
 
 class Clientform(forms.ModelForm):
     class Meta:

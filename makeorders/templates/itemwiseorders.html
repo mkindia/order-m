@@ -4,18 +4,13 @@
 
 {% load static %}
 
-
+{% block bodyheader %} Orders {% endblock bodyheader %}
 {% block content %}
+<!--<h6 class=" form-control badge alert-dark text-center sticky-top sticky-offset">Show Orders </h6> -->
 
-
-<div id="loader"></div>
-<h6 class=" form-control badge alert-dark text-center sticky-top sticky-offset">Show Orders </h6>
-<div class="row g-1">
- 
+  <div class="row">
     <form method="POST">
         {% csrf_token %}
-    <div class="col-md-12 mb-2">
-        <label for="select_item">Select Item:</label>
         <select id="select_item" class="select2" name='item_id' Required=true>
           <option value="" disabled selected hidden>Choose Item...</option>
           <option value="sdwo">Show Date Wise Item Orders</option>
@@ -24,7 +19,7 @@
           {% endfor %}
         </select>
         
-    </div>
+    
     </form>
 </div>
 
@@ -35,6 +30,14 @@
     
 </div>
 
+<script>
 
+  $(document).ready(function() {
+    $("#select2").select2({      
+      placeholder: "Select an item ...",               
+    });
+  });
+  
+  </script>
 
 {% endblock content %}

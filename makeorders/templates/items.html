@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block title %}items {% endblock title %}
-
+ {% block bodyheader %}Items{% endblock bodyheader %} 
 {% block content %}
 	
 
@@ -20,7 +20,6 @@
 {% endfor %}
 {% endif %}
 
-<h6 class="form-control badge alert-primary text-center">Items </h6>
 <div class="col-sm-12 col-md-10 col-lg-6 mx-auto">
 <form class="form" method="POST">
     {% csrf_token %}

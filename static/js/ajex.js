@@ -30,13 +30,15 @@ $(document).ready(function () {
         });
     }, 1000);
 
-    //for search box
-
+    //for loader disabled
+    document.getElementById("loader").style.display = "none";
     if (window.location.pathname == '/') {
+        
         // tempAlert("hrkkkh hjgd fjghj",5000);
         document.getElementById("consign").disabled = true;
         document.getElementById("showcompleted").disabled = true;
         document.getElementById("ordercompleted").style.display = "none";
+        
         function showAjexOrder(pid, con) {
 
             if (con == "All Consignee" && pid != "selectparty") {
@@ -513,7 +515,7 @@ $(document).ready(function () {
 
     if (window.location.pathname == '/itemwiseorders/item_wise/') {
 
-        document.getElementById("loader").style.display = "none";
+       
 
         $("#select_item").change(function () {
             document.getElementById("loader").style.display = "block";
@@ -723,7 +725,7 @@ $(document).ready(function () {
                     if (unit != "") {
                         if (price != "") {
                             info.push(party_id, con_id, id_orderdate, item_id, item_des, qty, unit, price, comment, per);
-                            $("#addorder").disabled = true;
+                            document.getElementById("addorder").style.display="none";
                             $.ajax({
                                 type: "POST",
                                 url: '/addorder/add/',
@@ -749,7 +751,7 @@ $(document).ready(function () {
 
                                     //window.setTimeout('alert("Order Item Success");',100);              
                                     tempAlert("add Item Order Success", 1500)
-                                    $("#addorder").disabled = false;
+                                    document.getElementById("addorder").style.display="block";
                                 }
                             });
                         }

@@ -3,6 +3,11 @@
 {% block title %} Add Orders {% endblock title %}
 
 {% load static %}
+  {% block bodyheader %} 
+  {% if sitem == 'None' %} New Order {% endif %}
+  {% if sitem != 'None' %} Edit Order {% endif %}
+  {% endblock bodyheader %}
+
 {% block content %}
 {% if messages %}
 <div class="alert alert-success alert-dismissible fade show mt-1" role="alert">
@@ -12,10 +17,7 @@
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endif %}
-<h6 class="form-control badge alert-primary text-center">
-  {% if sitem == 'None' %} New Order {% endif %}
-  {% if sitem != 'None' %} Edit Order {% endif %}
-</h6>
+
 <form class="form" id="test_form" method="POST">
   {% csrf_token %}
   <div class="row g-2 m-1">
