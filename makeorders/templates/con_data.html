@@ -25,3 +25,8 @@
 {% endfor %}
 {% endif %}
 
+{% if atri == "forhomeSent"  %} 
+{% for con in consi %}
+<option value="{{ con.id }} "> {{con.consignee}}</option>
+{% endfor %}
+{% endif %}

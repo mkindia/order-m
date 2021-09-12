@@ -8,7 +8,7 @@
 {% block content %}
 <!--<h6 class=" form-control badge alert-dark text-center sticky-top sticky-offset">Show Orders </h6> -->
 
-  <div class="row">
+ 
     <form method="POST">
         {% csrf_token %}
         <select id="select_item" class="select2" name='item_id' Required=true>
@@ -18,10 +18,8 @@
           <option value="{{ items.id }} "> {{ items.item_name }}</option>
           {% endfor %}
         </select>
-        
-    
     </form>
-</div>
+
 
 <div class="row g-0 mt-1" id="showcon">
     <div class="table-responsive" id="from_itemwise_data">        

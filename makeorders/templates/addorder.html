@@ -20,7 +20,7 @@
 
 <form class="form" id="test_form" method="POST">
   {% csrf_token %}
-  <div class="row g-2 m-1">
+  <div class="row g-2">
     {% if sitem == 'None' %}
     <div class="col-sm-6">
       <div class="row g-0">
@@ -102,7 +102,7 @@
     <hr class="mb-1 mt-2">
   </div>
   {% endif %}
-  <div class="row g-2 mt-2 m-1">
+  <div class="row g-2 mt-2">
     <div class="col-sm-6">
       <div class="input-group">
         <div class="input-group-prepend">
@@ -123,7 +123,7 @@
   </div>
 
    
-      <div class="row g-2 justify-content-end mt-4 m-1">
+      <div class="row g-0 justify-content-end mt-4">
         {% if atri == 'add' %}
      
         <input class="col-sm-6 btn btn-secondary" data-bs-toggle="modal"
@@ -265,7 +265,7 @@
             <input class="form-control text-capitalize" maxlength="30" id="add_item" type="text" required>
           </div>
           <div class="row g-1 mt-3 justify-content-end">
-          <button type="button" id="additem" class="btn btn-primary" data-bs-dismiss="modal">Add item</button>
+          <button type="button" id="additem" class="btn btn-primary">Add item</button>
           </div>
         </form>
       </div>

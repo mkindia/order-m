@@ -7,7 +7,8 @@
 {% if messages %}{% for message in messages %}
 <!-- {% if message.tags %} class="{{message.tags}}" {% endif %} -->
 <div {% if message.tags == 'success' %} class="alert alert-success alert-dismissible fade show mt-1" {% endif %} 
-{% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-1" {% endif %} role="alert">
+     {% if message.tags == 'warning' %} class="alert alert-danger alert-dismissible fade show mt-1" {% endif %} 
+     role="alert">
   <strog>{{message}}</strog>
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
@@ -16,7 +17,8 @@
 
 {% block content %}
 {% if user.is_authenticated %}
-<script>document.getElementById("back").style.display="block";</script>
+
+<script>document.getElementById("back").style.display = "block";</script>
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark rounded p-1 me-1 ms-1" style="margin-top: 2px;">
   <div class="container-fluid">
     <a class="navbar-brand active" aria-current="page" href="{% url 'home' %}">Home</a>
@@ -88,50 +90,51 @@
 
       </ul>
       {% endif %}
-      <div  >
+      <div>
         {% if user.is_authenticated %}
         <a class=" btn btn-outline-danger text-decoration-none text-light me-2"
           href="{% url 'user_logout' %}">Logout</a>
-          {% endif %}
-          
-      </div>     
+        {% endif %}
+
+      </div>
 
     </div>
 
-    
+
   </div>
 
 </nav>
 
 <form>
   <div class="row g-2 mb-2 p-1">
+
     <div class="col-md-6">
-       <label for="confind">Party</label>
+      <label for="confind">Party</label>
       <select id="consid" class="select2" name='id'>
         <option value="selectparty" selected> Select Party</option>
         {% for party in partys %}
         <option value="{{ party.id }} "> {{ party.party }}</option>
         {% endfor %}
       </select>
-     
+
     </div>
     <div class="col-md-6" id="index_consignee">
-       <label for="consigneeselect ">Consignee</label>
+      <label for="consigneeselect ">Consignee</label>
       <select id="consign" class="select2" name='id'>
         <option value="Select Consignee" selected> All Consignee</option>
       </select>
-     
+
     </div>
 
   </div>
 </form>
 <div class="row g-0">
   <div class="row g-1 mt-0">
-   
+
     <div class="col-8 text-end form-switch">
       <input class="form-check-input mt-2" type="checkbox" id="showcompleted">
       <label class="form-check-label mt-1 me-1" for="showcompleted">Show Completed</label>
-     </div>
+    </div>
     <div class="col-4">
       <a class="form-control text-center text-decoration-none btn alert-primary sticky-top sticky-offset p-1 rounded-3"
         href="{% url 'addorder' 'add' %}">Add Orders</a>
@@ -165,35 +168,37 @@
       <tbody id="orders"></tbody>
     </table>
   </div>
-  
+
 </div>
 
 {% else %}
-<script>document.getElementById("back").style.display="none";</script>
+<script>document.getElementById("back").style.display = "none";</script>
 <div style="text-align: center; margin-top:20px auto;">
-  <h4 style="padding: 10px; background-color: rgb(74, 84, 117);color: white;  margin: auto; width: 85%; border-top-left-radius: 10px; border-top-right-radius: 10px;">Please Sign In</h4>
-  {% if form.non_field_errors %}
-  {% for error in form.non_field_errors%}
-  <p> {{error}} </p>
-  {% endfor%}
-  {% endif %}
+  <h4
+    style="padding: 10px; background-color: rgb(74, 84, 117);color: white;  margin: auto; width: 85%; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+    PLEASE SIGN IN</h4>
+
 </div>
-<form  method="POST"  class="border-box g-1" style=" padding: 20px;  
+<form method="POST" style=" padding: 20px;  
 margin: auto; width:85%; border: solid rgb(0, 0, 0) 1px; 
 border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
- 
+  {% if form.non_field_errors %}
+  {% for error in form.non_field_errors%}
+  <p style="text-align: center;"> {{error}} </p>
+  {% endfor%}
+  {% endif %}
   {% csrf_token %}
-    <label for="uname"><b>{{form.username.label_tag}}</b>{{form.username.errors|striptags}}</label>
-      {{form.username}}
-        <br>
-      <label for="password"><b>{{form.password.label_tag}}</b>{{form.password.errors|striptags}}</label>
-      {{form.password}}
+  <label for="uname"><b>{{form.username.label_tag}}</b>{{form.username.errors|striptags}}</label>
+  {{form.username}}
+  <br>
+  <label for="password"><b>{{form.password.label_tag}}</b>{{form.password.errors|striptags}}</label>
+  {{form.password}}
 
- 
- <div class="text-end">
-  <button type="submit" class="btn btn-primary mt-4">Sign in</button>
- </div>
-  
+
+  <div class="text-end">
+    <button type="submit" class="btn btn-primary mt-4">Sign in</button>
+  </div>
+
 </form>
 {% endif %}
 <!-- Modal Show Sent Details-->
@@ -227,6 +232,67 @@ border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
   </div>
 
 </div>
+<div class="modal fade" id="sentOrder" tabindex="-1" data-bs-keyboard="false" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Sent Order</h5>
+        <button type="button" class="btn-close" id="sentclose" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <div class="row g-2">
+          <div class="col-sm-6">
+            Date:{{sf.date}}
+          </div>
+          <div class="col-sm-6">
+            Qty:{{sf.qty}}
+          </div>
+          <div class="col-sm-6">
+            Status:{{sf.status}}
+          </div>
+
+          <div id="scon" class="col-sm-6">
+            <label for="transid">Select Consignee:</label>
+            <select id="transid" class="form-select" name="transid">
+
+            </select>
+          </div>
+
+          <div class="col-sm-6">
+            By:{{sf.by}}
+          </div>
+          <!-- <div id="docket_number" class="col-sm-6 col-6">
+            docket no:{{sentform.docket_number}}
+           </div> -->
+
+          <div class="col-sm-6" id="newRow">
+
+          </div>
+
+          <div class="col-sm-12 mt-3">
+
+            <input id="submitSent" class="form-control btn-success" type="button" value="Save">
+
+            {% if action == 'edit' %}
+            <input class="form-control btn-primary" type="submit" value="Update" name="Update">
+            {% endif %}
+            {% if action == 'delete' %}
+            <input class="form-control btn-danger" type="submit" value="Delete" name="delete">
+            {% endif %}
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
 
 {% if messages %}{% for message in messages %}
@@ -235,7 +301,4 @@ border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
 </script>
 
 {% endfor %}{% endif %}
-
-
-
 {% endblock content %}

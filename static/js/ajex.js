@@ -15,7 +15,7 @@ $(document).ready(function () {
     function tempAlert(msg, duration) {
         var el = document.createElement("div");
 
-        el.setAttribute("style", "font-size:22px;font-weight:bold;margin-left:15%;top:2px; border-radius:10px;color:black;border-color:#4385cc ; border-width:2px; border-style: solid; position:absolute;z-index:10000;width:70%;line-height:auto; background-color:#f2f6f8; text-align:center;");
+        el.setAttribute("style", "font-size:22px;left:25%; width:50%;top:50%;position: absolute;border-radius:8px;color:white;border-color:#4385cc ; border-width:1px; border-style: solid;z-index:10000; padding:8px; background-color:#0D8FF2;text-align: center;");
 
         el.innerHTML = msg
         setTimeout(function () {
@@ -33,12 +33,12 @@ $(document).ready(function () {
     //for loader disabled
     document.getElementById("loader").style.display = "none";
     if (window.location.pathname == '/') {
-        
-        // tempAlert("hrkkkh hjgd fjghj",5000);
+
+        //tempAlert("hrkkkh hjgd fjghj",5000);
         document.getElementById("consign").disabled = true;
         document.getElementById("showcompleted").disabled = true;
         document.getElementById("ordercompleted").style.display = "none";
-        
+
         function showAjexOrder(pid, con) {
 
             if (con == "All Consignee" && pid != "selectparty") {
@@ -117,17 +117,17 @@ $(document).ready(function () {
         $('#showcompleted').change(function () {
             let pid = document.getElementById('consid').value;
             let con = document.getElementById('consign').value;
-            
+
             if (this.checked) {
                 //  showAjexOrder(pid, con);
-                document.getElementById("co").innerHTML='';
+                document.getElementById("co").innerHTML = '';
                 showCompletedOrder(pid, con);
                 document.getElementById("ordernotcompleted").style.display = "none";
                 document.getElementById("ordercompleted").style.display = "block";
-               
+
             }
             else {
-                
+
                 document.getElementById("ordernotcompleted").style.display = "block";
                 document.getElementById("ordercompleted").style.display = "none";
             }
@@ -135,11 +135,11 @@ $(document).ready(function () {
 
         // For select party
         $("#consid").change(function () {
-            document.getElementById("showcompleted").checked=false;
-          
+            document.getElementById("showcompleted").checked = false;
+
             document.getElementById("ordernotcompleted").style.display = "block";
             document.getElementById("ordercompleted").style.display = "none";
-            
+
             if (document.getElementById("consid").value != "selectparty") {
                 document.getElementById("consign").disabled = false;
                 document.getElementById("showcompleted").disabled = false;
@@ -177,6 +177,7 @@ $(document).ready(function () {
 
                         $("#consign").html(data);
 
+
                     }
 
                 });
@@ -194,11 +195,11 @@ $(document).ready(function () {
 
             var currow = $(this).val();
             var pid = document.getElementById("consid").value;
-            document.getElementById("showcompleted").checked=false;
-            
+            document.getElementById("showcompleted").checked = false;
+
             document.getElementById("ordernotcompleted").style.display = "block";
             document.getElementById("ordercompleted").style.display = "none";
-               
+
             if (currow == "All Consignee" && pid != "selectparty") {
 
                 //  document.getElementById("navconsignee").disabled=false;
@@ -239,7 +240,117 @@ $(document).ready(function () {
 
 
         });
+        //for Sent Orders Forms
+        let oid,item_id,bal,unit,price;
+        $("#ordertableid tbody").on('click', '#sent', function () {
+           
+             var currentRow=$(this).closest("tr"); 
+             oid=currentRow.find("td:eq(0)").text();
+             item_id=currentRow.find("td:eq(1)").text();
+             bal=currentRow.find("td:eq(2)").text();
+             unit=currentRow.find("td:eq(3)").text();
+             price=currentRow.find("td:eq(4)").text();             
+             document.getElementById("id_qty").value=bal;
+           
+           // Let's test it out
+          
+            document.getElementById("id_status").value = "Sent";
+            document.getElementById('transid').value = null;
+            
+            $('#scon').hide();
+            $('#docket_number').hide();
+            // $('#id_docket_number').attr('required',true)
+            //document.getElementById('select_Consignee').disabled=true;
 
+            $("#id_status").change(function () {
+
+                var selectvalue = $(this).val();
+                if (selectvalue == 'Transfer') {
+                    $('#select_Consignee').attr('required', true);
+                    $('#scon').show();
+                    pis = document.getElementById("consid").value;
+                    $.ajax({
+
+                        url: '/con_data/forhomeSent/',
+                        data: {
+                            'cons1': pis,
+                        },
+                        success: function (data) {
+
+                            $("#transid").html(data);
+
+                        }
+                    });
+
+
+                }
+                else {
+                    $('#select_Consignee').attr('required', false);
+                    $('#scon').hide();
+
+                }
+
+                if (selectvalue == 'Sent....') {
+                    $('#id_docket_number').attr('required', true)
+                    $('#docket_number').hide();
+                }
+                else {
+                    $('#id_docket_number').attr('required', false)
+                    $('#docket_number').hide();
+
+                }
+
+            });
+
+        });
+
+       // transid = getElementById('transid').value;
+        //for submitSent
+        $("#submitSent").on('click', function () {
+            let pid = document.getElementById('consid').value;
+            let con = document.getElementById('consign').value;
+            
+            let qty= document.getElementById('id_qty').value;           
+            let status = document.getElementById('id_status').value;
+            let date = document.getElementById('id_date').value;
+            let by = document.getElementById('id_by').value;
+            let transid = document.getElementById('transid').value;
+          if(date != "")
+          {
+          if(qty<=bal && qty != 0)
+            {
+                let lastbal=bal-qty;
+                $.ajax({
+                    type: "POST",
+                    url: '/addsent/add/',
+                    data: {
+                        oid: oid,
+                        date:date,
+                        item_id:item_id,
+                        qty:qty,
+                        bal:lastbal,
+                        unit:unit,
+                        price:price,
+                        status:status,
+                        transid:transid,
+                        by:by,
+                        
+    
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                    },
+                    success: function (data) {
+                        showAjexOrder(pid, con);
+                        $('#sentOrder').modal('hide');
+                        tempAlert("Order Sent Success", 1500)
+                    }
+                });
+            }
+            else { alert('You are sending more order then balance please add first');}
+
+            }
+            else {alert('Plese Select Date')}
+                          
+        });
 
         // For show sent item
         $("#ordertableid tbody").on('click', '#sentdetailbtn', function () {
@@ -278,7 +389,8 @@ $(document).ready(function () {
                     },
                     success: function (data) {
                         showAjexOrder(pid, con);
-                        alert('Delete Success');
+                        tempAlert("Delete Success",1500);
+                                            
 
                     }
                 })
@@ -305,13 +417,15 @@ $(document).ready(function () {
                     },
                     success: function () {
                         showAjexOrder(pid, con);
-                        alert('Order Delete Success');
+                        tempAlert('Order Delete Success',1500);
 
                     }
                 });
             }
 
         });
+
+
 
     };
 
@@ -487,8 +601,8 @@ $(document).ready(function () {
                         //$("#form_data").html(data);
                         if (data.msg != 'None') { alert('Can not delete item Exist In order (  ' + data.msg + '  )') }
                         if (data.msg == 'None') {
-                            alert('Item Delete Success');
-                            //window.location.replace('/items/delete/');
+                            tempAlert('Item Delete Success',1500);
+                            
                         }
                     }
                 });
@@ -515,7 +629,7 @@ $(document).ready(function () {
 
     if (window.location.pathname == '/itemwiseorders/item_wise/') {
 
-       
+
 
         $("#select_item").change(function () {
             document.getElementById("loader").style.display = "block";
@@ -599,7 +713,7 @@ $(document).ready(function () {
         $("#id_status").change(function () {
 
             var selectvalue = $(this).val();
-            if (selectvalue == 'Transfer To') {
+            if (selectvalue == 'Transfer') {
                 $('#select_Consignee').attr('required', true);
                 $('#scon').show();
                 //document.getElementById('select_Consignee').disabled=false;           
@@ -610,7 +724,7 @@ $(document).ready(function () {
                 //document.getElementById('select_Consignee').disabled=true;
             }
 
-            if (selectvalue == 'Delivered......') {
+            if (selectvalue == 'Sent......') {
                 $('#id_docket_number').attr('required', true)
                 $('#docket_number').hide();
             }
@@ -627,7 +741,7 @@ $(document).ready(function () {
     if (window.location.pathname == '/addsent/edit/') {
 
         var status = $('#id_status').val()
-        if (status == 'Transfer To') {
+        if (status == 'Transfer') {
             $('#select_Consignee').attr('required', true);
             $('#scon').show()
         }
@@ -639,7 +753,7 @@ $(document).ready(function () {
         $("#id_status").change(function () {
 
             var selectvalue = $(this).val();
-            if (selectvalue == 'Transfer To') {
+            if (selectvalue == 'Transfer') {
                 $('#select_Consignee').attr('required', true);
                 $('#scon').show()
             }
@@ -725,7 +839,7 @@ $(document).ready(function () {
                     if (unit != "") {
                         if (price != "") {
                             info.push(party_id, con_id, id_orderdate, item_id, item_des, qty, unit, price, comment, per);
-                            document.getElementById("addorder").style.display="none";
+                            document.getElementById("addorder").style.display = "none";
                             $.ajax({
                                 type: "POST",
                                 url: '/addorder/add/',
@@ -751,7 +865,7 @@ $(document).ready(function () {
 
                                     //window.setTimeout('alert("Order Item Success");',100);              
                                     tempAlert("add Item Order Success", 1500)
-                                    document.getElementById("addorder").style.display="block";
+                                    document.getElementById("addorder").style.display = "block";
                                 }
                             });
                         }
@@ -782,9 +896,7 @@ $(document).ready(function () {
 
                 },
                 success: function (data) {
-                    // var lastitem=data.sitem;
-                    //        alert(lastitem); 
-
+                  
                     $.ajax({
 
                         url: '/items_data/',
@@ -794,6 +906,7 @@ $(document).ready(function () {
                         success: function (data) {
 
                             $("#select2").html(data);
+                            $('#additemmodel').modal('hide');
                             tempAlert("item added success please select", 1500);
                         }
                     });
