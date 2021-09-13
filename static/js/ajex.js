@@ -15,7 +15,7 @@ $(document).ready(function () {
     function tempAlert(msg, duration) {
         var el = document.createElement("div");
 
-        el.setAttribute("style", "font-size:22px;left:25%; width:50%;top:50%;position: absolute;border-radius:8px;color:white;border-color:#4385cc ; border-width:1px; border-style: solid;z-index:10000; padding:8px; background-color:#0D8FF2;text-align: center;");
+        el.setAttribute("style", "font-size:22px;left:5%;bottom: 0;width:90%; margin-bottom:3px; position: absolute;border-radius:8px;color:white;border-color:#4385cc ; border-width:1px; border-style: solid;z-index:10000; padding:8px; background-color:#0D8FF2;text-align: center;");
 
         el.innerHTML = msg
         setTimeout(function () {
@@ -317,7 +317,7 @@ $(document).ready(function () {
             let transid = document.getElementById('transid').value;
           if(date != "")
           {
-          if(qty<=bal && qty != 0)
+          if(qty<=parseFloat(bal) && qty != 0)
             {
                 let lastbal=bal-qty;
                 $.ajax({

@@ -154,7 +154,7 @@
         </td>
 </tr>
 <tr>
-        <td colspan="1">
+        <td colspan="2">
                 <div class="row g-1">
                         <div class="col-12 text-start Bold">
                                <h class="badge  alert-dark text-wrap">Price {{orders.item_price}} / {{orders.per}}</h>
@@ -166,20 +166,20 @@
         </td>
         
        
-        <td colspan="4">
+        <td colspan="3">
                 <div class="row g-1 me-1">
                         
                                        
-                                        <div class="col-6">
+                                        <div class="col-7">
                                                 <form>
                                                         {% csrf_token %}
                                                         <input class="form-control btn-outline-danger btn-sm "
                                                                 id="ordelete" type="button" oid={{ orders.id }}
                                                                
-                                                         value="Delete Complited" >
+                                                         value="Delete Completed" >
                                                 </form>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-5">
                                                 <form>
                                                         <input type="button" {% if orders.sent_cancel == 0 %} disabled=true 
                                                         style="background-color: rgb(232, 232, 232);" {% endif %}

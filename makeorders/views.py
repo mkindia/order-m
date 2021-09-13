@@ -314,7 +314,7 @@ def addsent(request, atri):
                                                    qty=cartons, unit=unit, balance=cartons, sent_trs_id=latestsent.id)
                             transferorder.save()
                             soi = Orders.objects.get(sent_trs_id=latestsent.id)
-                            Sentorder.objects.filter(pk=latestsent.id).update(order_trs_id=soi.id)
+                            Sentorder.objects.filter(pk=latestsent.id).update(order_trs_id=soi.id,consignee_id=transid)
                 return redirect('/')
                 """
                 sev.save()
