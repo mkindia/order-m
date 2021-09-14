@@ -11,7 +11,7 @@
 
     <td>
         {{ details.status }}
-        {% if details.status == 'Transfer To' %}
+        {% if details.status == 'Transfer' %}
         {% for con in consignees %}
         {% if details.consignee_id == con.id %} ->> {{con.consignee}} {% endif %}
         {% endfor %}

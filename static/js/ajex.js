@@ -15,9 +15,9 @@ $(document).ready(function () {
     function tempAlert(msg, duration) {
         var el = document.createElement("div");
 
-        el.setAttribute("style", "font-size:22px;left:5%;bottom: 0;width:90%; margin-bottom:3px; position: absolute;border-radius:8px;color:white;border-color:#4385cc ; border-width:1px; border-style: solid;z-index:10000; padding:8px; background-color:#0D8FF2;text-align: center;");
+        el.setAttribute("style", "font-size:22px;left:3%;bottom: 0;width:94%; margin-bottom:15px; position: absolute;border-radius:8px;color:white;border-color:#4385cc ; border-width:1px; border-style: solid;z-index:10000; padding:8px; background-color:#0D8FF2;text-align: center;");
 
-        el.innerHTML = msg
+        el.innerHTML = msg.toUpperCase();
         setTimeout(function () {
             el.parentNode.removeChild(el);
         }, duration);
@@ -36,8 +36,8 @@ $(document).ready(function () {
 
         //tempAlert("hrkkkh hjgd fjghj",5000);
         document.getElementById("consign").disabled = true;
-        document.getElementById("showcompleted").disabled = true;
-        document.getElementById("ordercompleted").style.display = "none";
+     //   document.getElementById("showcompleted").disabled = true;
+      //  document.getElementById("ordercompleted").style.display = "none";
 
         function showAjexOrder(pid, con) {
 
@@ -92,7 +92,7 @@ $(document).ready(function () {
                     },
                     success: function (data) {
 
-                        $("#co").html(data);
+                        $("#orders").html(data);
                     }
 
                 });
@@ -106,7 +106,7 @@ $(document).ready(function () {
                         'conid': con
                     },
                     success: function (data) {
-                        $("#co").html(data);
+                        $("#orders").html(data);
                     }
 
                 });
@@ -120,29 +120,29 @@ $(document).ready(function () {
 
             if (this.checked) {
                 //  showAjexOrder(pid, con);
-                document.getElementById("co").innerHTML = '';
+               // document.getElementById("co").innerHTML = '';
                 showCompletedOrder(pid, con);
-                document.getElementById("ordernotcompleted").style.display = "none";
-                document.getElementById("ordercompleted").style.display = "block";
+               // document.getElementById("ordernotcompleted").style.display = "none";
+              //  document.getElementById("ordercompleted").style.display = "block";
 
             }
             else {
-
-                document.getElementById("ordernotcompleted").style.display = "block";
-                document.getElementById("ordercompleted").style.display = "none";
+                 showAjexOrder(pid,con);
+             //   document.getElementById("ordernotcompleted").style.display = "block";
+             //   document.getElementById("ordercompleted").style.display = "none";
             }
         });
 
         // For select party
         $("#consid").change(function () {
-            document.getElementById("showcompleted").checked = false;
+             document.getElementById("showcompleted").checked = false;
 
-            document.getElementById("ordernotcompleted").style.display = "block";
-            document.getElementById("ordercompleted").style.display = "none";
+          //  document.getElementById("ordernotcompleted").style.display = "block";
+           // document.getElementById("ordercompleted").style.display = "none";
 
             if (document.getElementById("consid").value != "selectparty") {
                 document.getElementById("consign").disabled = false;
-                document.getElementById("showcompleted").disabled = false;
+              //  document.getElementById("showcompleted").disabled = false;
                 var programingId = $(this).val();
                 var orderid = 0;
                 // alert(url)
@@ -184,7 +184,7 @@ $(document).ready(function () {
             }
             else {
                 document.getElementById("consign").disabled = true;
-                document.getElementById("showcompleted").disabled = true;
+               // document.getElementById("showcompleted").disabled = true;
             }
 
         });
@@ -197,8 +197,8 @@ $(document).ready(function () {
             var pid = document.getElementById("consid").value;
             document.getElementById("showcompleted").checked = false;
 
-            document.getElementById("ordernotcompleted").style.display = "block";
-            document.getElementById("ordercompleted").style.display = "none";
+          //  document.getElementById("ordernotcompleted").style.display = "block";
+          //  document.getElementById("ordercompleted").style.display = "none";
 
             if (currow == "All Consignee" && pid != "selectparty") {
 
@@ -277,7 +277,7 @@ $(document).ready(function () {
                         },
                         success: function (data) {
 
-                            $("#transid").html(data);
+                            $("#orders").html(data);
 
                         }
                     });
