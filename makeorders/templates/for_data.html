@@ -139,7 +139,7 @@
         <td>
                 {% for it in item %}
                 {% if it.id == orders.item_id %}
-                {{ it.item_name }} {% if orders.item_des != "" %} ( {{ orders.item_des }} ) {% endif %}
+                {{ it.item_name }} {% if orders.item_des != "" and  orders.item_des != none %} ( {{ orders.item_des }} ) {% endif %}
                 {% endif %}
                 {% endfor %}
         </td>
