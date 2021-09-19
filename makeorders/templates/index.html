@@ -19,21 +19,19 @@
 {% if user.is_authenticated %}
 
 <script>document.getElementById("back").style.display = "block";</script>
-<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark rounded p-1 me-1 ms-1" style="margin-top: 2px;">
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" aria-label="Main navigation">
   <div class="container-fluid">
-    <a class="navbar-brand active" aria-current="page" href="{% url 'home' %}">Home</a>
-
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
-      aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <div>
+      <a class="navbar-brand active btn-sm text-dark alert-primary" aria-current="page" href="{% url 'home' %}">Home</a>
+          <a class="nav-item text-light text-decoration-none"
+          href="{% url 'addorder' 'add' %}">Add Orders</a>
+      </div>
+    <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-      {% if user.is_authenticated %}
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="navid">
-
+    <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
@@ -51,7 +49,7 @@
             </li>
             <li>
               <a class="dropdown-item text-danger" href="{% url 'edit_party' 'delete' %}">Delete Party</a>
-            </li>
+            </li>           
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -87,60 +85,54 @@
 
         <li><a class="nav-link" href="{% url 'addorder' 'add' %}">Add Orders</a></li>
         <li><a class="nav-link" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Order</a></li>
-
-      </ul>
-      {% endif %}
-      <div>
-        {% if user.is_authenticated %}
-        <a class=" btn btn-outline-danger text-decoration-none text-light me-2"
-          href="{% url 'user_logout' %}">Logout</a>
-        {% endif %}
-
-      </div>
-
+        
+       
+      </ul>      
+      <div class="d-flex">
+        <a class="form-control btn btn-danger text-decoration-none text-light me-2"
+              href="{% url 'user_logout' %}">Logout</a>
+              
+        </div>
     </div>
-
-
   </div>
-
 </nav>
 
 <form>
-  <div class="row g-2 mb-2 p-1">
+  <div class="row g-2 p-1">
 
     <div class="col-md-6">
-      <label for="confind">Party</label>
+      <div class="row g-1">
+      <h6 class="col-3 text-end p-2">Party</h6>
+     <div class="col-9">
       <select id="consid" class="select2" name='id'>
         <option value="selectparty" selected> Select Party</option>
         {% for party in partys %}
         <option value="{{ party.id }} "> {{ party.party }}</option>
         {% endfor %}
-      </select>
-
+      </select> 
+      </div>
+      </div>
     </div>
     <div class="col-md-6" id="index_consignee">
-      <label for="consigneeselect ">Consignee</label>
-      <select id="consign" class="select2" name='id'>
+      <div class="row g-1">        
+      <label class="col-3 text-end p-2" for="consign">Consignee</label>
+      <div class="col-9">
+      <select id="consign" class="select2 col-11" name='id'>
         <option value="Select Consignee" selected> All Consignee</option>
       </select>
-
+      </div>
+      </div>
     </div>
 
   </div>
 </form>
-<div class="row g-0">
-  <div class="row g-1 mt-0">
 
-    <div class="col-8 text-end form-switch">
-      <input class="form-check-input mt-2" type="checkbox" id="showcompleted">
-      <label class="form-check-label mt-1 me-1" for="showcompleted">Show Completed</label>
+    <div class="col-12 text-end form-switch">
+      <input class="form-check-input" type="checkbox" id="showcompleted">
+      <label class="form-check-label me-1" for="showcompleted">Show Completed</label>
     </div>
-    <div class="col-4">
-      <a class="form-control text-center text-decoration-none btn alert-primary sticky-top sticky-offset p-1 rounded-3"
-        href="{% url 'addorder' 'add' %}">Add Orders</a>
-    </div>
-  </div>  
-  <div class="table-responsive mt-2" id="ordernotcompleted">
+    
+  <div class="table-responsive mt-1" id="ordernotcompleted">
     <table class="table table-sm" id="ordertableid">
       <thead class="table-secondary">
         <tr class="text-center">
@@ -155,7 +147,6 @@
     </table>
   </div>
 
-</div>
 
 {% else %}
 <script>document.getElementById("back").style.display = "none";</script>
@@ -186,6 +177,20 @@ border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
   </div>
 
 </form>
+<div id="footer" style=" clear: both;
+  position:fixed;    
+  left: .5%;
+  margin-bottom: 4px;
+  
+  bottom: 0;
+  width: 99%;
+  background: rgb(202, 202, 202);
+  text-align: center;
+  border-radius: 6px;
+  z-index: -1;"> <p>Copyright
+    1993-2021 All Right Reserved ||
+    Spangle And Si Logo are registered Trademark of Shilpa Industries</p>
+  </div>
 {% endif %}
 <!-- Modal Show Sent Details-->
 <div class="modal fade" id="sent_datails" tabindex="-1" data-bs-keyboard="false" aria-labelledby="exampleModalLabel"
@@ -201,14 +206,14 @@ border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
         <form>
           <table class="table" id="sentdetailtable">
             <thead class="thead-dark">
-              <tr class="text-center fs-5">
+              <tr class="text-center">
                 <th scope="col">Date </th>
                 <th scope="col">Order</th>
                 <th scope="col">Status</th>
                 <th scope="col">By</th>
               </tr>
             </thead>
-            <tbody id="sentdetaildata">
+            <tbody id="sentdetaildata" style="font-size: small;">
             </tbody>
           </table>
         </form>

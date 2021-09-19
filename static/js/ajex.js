@@ -35,8 +35,8 @@ $(document).ready(function () {
     if (window.location.pathname == '/') {
 
         //tempAlert("hrkkkh hjgd fjghj",5000);
-        document.getElementById("consign").disabled = true;
-     //   document.getElementById("showcompleted").disabled = true;
+          document.getElementById("consign").disabled = true;
+          document.getElementById("showcompleted").disabled = true;
       //  document.getElementById("ordercompleted").style.display = "none";
 
         function showAjexOrder(pid, con) {
@@ -138,11 +138,11 @@ $(document).ready(function () {
              document.getElementById("showcompleted").checked = false;
 
           //  document.getElementById("ordernotcompleted").style.display = "block";
-           // document.getElementById("ordercompleted").style.display = "none";
+          //  document.getElementById("ordercompleted").style.display = "none";
 
             if (document.getElementById("consid").value != "selectparty") {
                 document.getElementById("consign").disabled = false;
-              //  document.getElementById("showcompleted").disabled = false;
+                document.getElementById("showcompleted").disabled = false;
                 var programingId = $(this).val();
                 var orderid = 0;
                 // alert(url)
@@ -184,7 +184,7 @@ $(document).ready(function () {
             }
             else {
                 document.getElementById("consign").disabled = true;
-               // document.getElementById("showcompleted").disabled = true;
+                document.getElementById("showcompleted").disabled = true;
             }
 
         });

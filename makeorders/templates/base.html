@@ -10,8 +10,7 @@
   </title>
   <!-- Required meta tags -->
   <meta charset="utf-8">
-
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="{% static 'js/jQuery.js' %}"></script>
   <script src="{% static 'js/select2.min.js' %}"></script>
@@ -19,11 +18,13 @@
   <link rel="stylesheet" href="{% static 'css/forsearch.css' %}" />
   <link rel="stylesheet" href="{% static 'css/loader.css' %}" />
   <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
-
+  <link rel="stylesheet" href="{% static 'css/offcanvas.css' %}" />
+ 
   {% block head %} {% endblock head %}
 </head>
 
-<body class="bg-light" style="padding-top: 3.2rem;">
+<body class="bg-light" style="padding-top: 3.5rem;">
+  
   <div class="row fixed-top me-1 ms-1" style="margin-top: 2px; height: 45px;" id="back">
     <div class="input-group p-0" >
       <button class="form-control bg-dark text-light border-0 text-start"  disabled>{% block bodyheader %} Wellcome {% endblock bodyheader %}
@@ -47,6 +48,8 @@
   <script src="{% static 'js/bootstrap.js' %}"></script>
   <script src="{% static 'js/ajex.js' %}"></script>
   <script src="{% static 'js/search.js' %}"></script>
+  <script src="{% static 'js/offcanvas.js' %}"></script>
+ 
 
 </body>
 
