@@ -22,7 +22,7 @@
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" aria-label="Main navigation">
   <div class="container-fluid">
         <div class="nav-item m-1">
-          <a class="form-control badge bg-primary text-decoration-none me-2"
+          <a class="form-control btn btn-outline-light btn-sm text-decoration-none me-2"
           href="{% url 'addorder' 'add' %}">Add Orders</a>
         </div>
     <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
@@ -37,7 +37,7 @@
             Party
           </a> -->
          
-          <button type="button" class="badge bg-secondary form-control  dropdown-toggle" id="partydropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="60,60">
+          <button type="button" class="btn btn-outline-light  btn-sm form-control  dropdown-toggle" id="partydropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="60,60">
             Party
           </button>
          
@@ -61,7 +61,7 @@
             aria-expanded="false">
             Consignee
           </a> -->
-          <button class="badge bg-secondary form-control dropdown-toggle" type="button" id="consigneedropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-outline-light btn-sm form-control dropdown-toggle" type="button" id="consigneedropdown" data-bs-toggle="dropdown" aria-expanded="false">
             Consignee
           </button>
           <ul class="dropdown-menu" aria-labelledby="consigneedropdown" >
@@ -80,7 +80,7 @@
             aria-expanded="false">
             Items
           </a> -->
-          <button class="badge bg-secondary form-control dropdown-toggle" type="button" id="itemsdropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <button class="btn btn-outline-light btn-sm form-control dropdown-toggle" type="button" id="itemsdropdown" data-bs-toggle="dropdown" aria-expanded="false">
             Items
           </button>
           <ul class="dropdown-menu" aria-labelledby="itemsdropdown">
@@ -94,12 +94,12 @@
         </li>
 
         
-        <li class="nav-item m-1"><a class="badge bg-secondary text-decoration-none form-control" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Order</a></li>
+        <li class="nav-item m-1"><a class="btn btn-outline-light btn-sm text-decoration-none form-control" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Order</a></li>
         
        
       </ul>      
       <div class="d-flex">
-        <a class="form-control badge bg-danger text-decoration-none"
+        <a class="form-control btn btn-danger btn-sm text-decoration-none"
               href="{% url 'user_logout' %}">Logout</a>
               
         </div>
