@@ -78,3 +78,16 @@
      <br>
      <input class="form-control btn-success mt-2"  type="submit" value="Submit"> 
    {% endif %}
+
+  {% if atri == 'allparty' %}
+          <option value="" disabled selected hidden>Choose Party...</option>          
+          {% for party in form %}
+          <option value="{{ party.id }}"> {{ party.party }}</option>        
+          {% endfor %}
+  {% endif %}
+   {% if atri == 'allconsignee' %} 
+          <option value="" disabled selected hidden>Choose Consignee...</option>         
+          {% for con in form %}         
+           <option value="{{ con.id }}"> {{ con.consignee }}</option>         
+          {% endfor %}
+  {% endif %}

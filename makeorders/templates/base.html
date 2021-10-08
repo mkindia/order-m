@@ -25,15 +25,12 @@
 
 <body class="bg-light" style="padding-top: 3.5rem;">
   
-  <div class="row fixed-top me-1 ms-1" style="margin-top: 2px; height: 45px;" id="back">
-    <div class="input-group p-0" >
-      <button class="form-control bg-dark text-light border-0 text-start"  disabled>{% block bodyheader %} Wellcome {% endblock bodyheader %}
+  <div class="row fixed-top me-1 ms-1 text-center" style="margin-top: 2px; height: 40px;" id="back">
+    
+      <button class="form-control bg-dark  text-light border-0 text-start" disabled>{% block bodyheader %} Wellcome {% endblock bodyheader %}
+        <span class="position-absolute btn btn-secondary btn-sm badge  end-0 me-2"  onclick="history.back(-1)">
+          <-- GoBack </span>
       </button>
-      <button class="btn btn-secondary p-2" type="button" onclick="history.back(-1)">
-        <-- GoBack </button>
-    </div>
-
-
   </div>
   
   <div class="me-1 ms-1">

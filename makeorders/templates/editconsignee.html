@@ -19,9 +19,9 @@
 <h5 class="form-control badge alert-danger text-center">Edit Consignee</h5>
 <form method="POST">
       {% csrf_token %}
-      <div class="row g-1">            
+      <div class="row g-1 p-1">            
             <div class="col-md-6">
-                  <label for="confind ">Select Party</label>
+                  <label for="partylist">Select Party</label>
                   <select id="partylist" class="select2" name='party_id' required>
                         <option value="selectparty"> Select Party</option>
                         {% for party in partys %}
@@ -31,9 +31,9 @@
                   
             </div>
             <div class="col-md-6">
-                   <label for="consigneeselect ">Consignee</label>
+                   <label for="consigneelist ">Consignee</label>
                   <select id="consigneelist" class="select2" name='consigneeid' required>
-                        <option></option>
+                        
                   </select>
 
             </div>

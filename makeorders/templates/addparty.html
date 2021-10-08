@@ -4,6 +4,9 @@
 
 {% load static %}
 
+{% block bodyheader %} Add Party {% endblock bodyheader %}
+      
+
 {% block content %}
 {% if messages %}
 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -14,7 +17,8 @@
 </div>
 {% endif %}
 
-<h5 class="form-control badge alert-danger text-center"> New Party </h5>
+ 
+
 <form method="POST">
   {% csrf_token %}
 

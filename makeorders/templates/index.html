@@ -21,23 +21,27 @@
 <script>document.getElementById("back").style.display = "block";</script>
 <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark" aria-label="Main navigation">
   <div class="container-fluid">
-    <div>
-      <a class="navbar-brand active btn-sm text-dark alert-primary" aria-current="page" href="{% url 'home' %}">Home</a>
-          <a class="nav-item text-light text-decoration-none"
+        <div class="nav-item m-1">
+          <a class="form-control badge bg-primary text-decoration-none me-2"
           href="{% url 'addorder' 'add' %}">Add Orders</a>
-      </div>
+        </div>
     <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+        <li class="nav-item dropdown m-1">
+         <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
             Party
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          </a> -->
+         
+          <button type="button" class="badge bg-secondary form-control  dropdown-toggle" id="partydropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="60,60">
+            Party
+          </button>
+         
+          <ul class="dropdown-menu" aria-labelledby="partydropdown">
 
             <li><a class="dropdown-item" href="{% url 'addparty' 'addparty' %}">Add Party</a></li>
 
@@ -52,12 +56,15 @@
             </li>           
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" id="navconsignee" data-bs-toggle="dropdown"
+        <li class="nav-item dropdown m-1">
+         <!-- <a class="nav-link dropdown-toggle" role="button" id="navconsignee" data-bs-toggle="dropdown"
             aria-expanded="false">
             Consignee
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          </a> -->
+          <button class="badge bg-secondary form-control dropdown-toggle" type="button" id="consigneedropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Consignee
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="consigneedropdown" >
             <li><a class="dropdown-item" href="{% url 'add_consignee' 'addcon' %}">Add Consignee</a></li>
             <li><a class="dropdown-item" href="{% url 'edit_consignee' 'edit' %}">Edit Consignee</a></li>
             <li><a class="dropdown-item" href="{% url 'consigneedetails' %}">Show Consignee Details</a></li>
@@ -68,12 +75,15 @@
                 href="{% url 'edit_consignee' 'delete' %}">Delete Consignee</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" role="button" id="navitems" data-bs-toggle="dropdown"
+        <li class="nav-item dropdown m-1">
+         <!--<a class="nav-link dropdown-toggle" role="button" id="navitems" data-bs-toggle="dropdown"
             aria-expanded="false">
             Items
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          </a> -->
+          <button class="badge bg-secondary form-control dropdown-toggle" type="button" id="itemsdropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            Items
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="itemsdropdown">
             <li><a class="dropdown-item" href="{% url 'items' 'add' %}">Add Items</a></li>
             <li><a class="dropdown-item" href="{% url 'items' 'edit' %}">Edit items</a></li>
             <li>
@@ -83,13 +93,13 @@
           </ul>
         </li>
 
-        <li><a class="nav-link" href="{% url 'addorder' 'add' %}">Add Orders</a></li>
-        <li><a class="nav-link" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Order</a></li>
+        
+        <li class="nav-item m-1"><a class="badge bg-secondary text-decoration-none form-control" href="{% url 'item_wise' 'item_wise' %}" diabled=true>Show Order</a></li>
         
        
       </ul>      
       <div class="d-flex">
-        <a class="form-control btn btn-danger text-decoration-none text-light me-2"
+        <a class="form-control badge bg-danger text-decoration-none"
               href="{% url 'user_logout' %}">Logout</a>
               
         </div>
@@ -115,7 +125,7 @@
     </div>
     <div class="col-md-6" id="index_consignee">
       <div class="row g-1">        
-      <label class="col-3 text-end p-2" for="consign">Consignee</label>
+        <h6 class="col-3 text-end p-2">Consignee</h6>
       <div class="col-9">
       <select id="consign" class="select2 col-11" name='id'>
         <option value="Select Consignee" selected> All Consignee</option>

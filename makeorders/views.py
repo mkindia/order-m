@@ -1,4 +1,6 @@
 
+from django.http import response
+from django.http.response import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseNotAllowed, HttpResponseNotModified
 from django.utils import timezone
 
 from django.shortcuts import redirect, render, HttpResponseRedirect
@@ -38,7 +40,6 @@ def user_login(request):
         return redirect('/')
 
 # Logout user
-
 def user_logout(request):
     logout(request)
     request.session.flush()
@@ -70,8 +71,6 @@ def home(request):
              request.session.clear_expired()
         return render(request, "index.html", {'partys': party, 'username': request.user, 'form':fm })
 
-
-
 def con_id(request, atri):
     request.session.modified = True
     id = request.GET.get('cons1')
@@ -81,40 +80,61 @@ def con_id(request, atri):
 
 def add_consignee(request, pr):
     if request.user.is_authenticated:
-
+       
+      if pr == 'order':
+          if request.is_ajax() or request.method == 'POST':
+                    consignee1 = request.POST.get('id_consignee').title()
+                    station = request.POST.get('id_station').title()
+                    transport = request.POST.get('id_transport').title()
+                    partyid = request.POST.get('id_party')                   
+                    conflict = Consignees.objects.filter(party_id=partyid)
+                    con = ''
+                    for i in conflict: 
+                         if i.consignee == consignee1:
+                            con = i.consignee
+                         
+                    if con != consignee1:
+                        sev = Consignees(party_id=partyid, consignee=consignee1, station=station, transport=transport)
+                        sev.save()
+                        return HttpResponse('Success')
+                    else:
+                        return HttpResponseBadRequest()
+          
+      else:
         if request.method == 'POST':
+
             confom = consigneeform(request.POST)
             partyid = request.POST.get('party_id').title()
             consignee1 = request.POST.get('consignee').title()
             conflict = Consignees.objects.filter(party_id=partyid)
             con = ''
             for i in conflict:
-                con = i.consignee
-                if con == consignee1:
+                if i.consignee == consignee1:
+                            con = i.consignee                
+            if con == consignee1:
                     messages.warning(request, 'Consignee Already Exist')
-                    return HttpResponseRedirect('/addparty/')
-
-            if confom.is_valid():
-                sht = confom.cleaned_data['consignee'].title()
-                sta = confom.cleaned_data['station'].title()
-                tr = confom.cleaned_data['transport'].title()
-                sev = Consignees(party_id=int(request.POST.get(
-                    'party_id')), consignee=sht, station=sta, transport=tr)
-                sev.save()
-                if pr == 'order':
-                    return HttpResponseRedirect('/addorder/add/')
-                else:
-                    return HttpResponseRedirect('/')
+                    return HttpResponseRedirect('/addconsignee/addcon/')
+            else :
+                if confom.is_valid():
+                    sht = confom.cleaned_data['consignee'].title()
+                    sta = confom.cleaned_data['station'].title()
+                    tr = confom.cleaned_data['transport'].title()
+                    sev = Consignees(party_id=int(request.POST.get(
+                        'party_id')), consignee=sht, station=sta, transport=tr)
+                    sev.save()
+                    messages.success(request,'Consignee Added Success')
+                    return redirect('/addconsignee/addcon/')
 
         else:
             party = Clients.objects.all()
             confom = consigneeform()
+            return render(request, 'add_consignee.html', {'form': confom, 'partys': party})
+
     else:
         return HttpResponseRedirect('/')
 
         # print(id)
-    return render(request, 'add_consignee.html', {'form': confom, 'partys': party})
-
+    
 
 def edit_consignee(request, atri):
     if request.user.is_authenticated:
@@ -155,11 +175,14 @@ def edit_consignee(request, atri):
         if atri == 'delete':
             if request.method == 'POST':
                 if request.POST.get('consigneeid'):
-                    pid = Consignees.objects.get(
-                        pk=request.POST.get('consigneeid').title())
-                    pid.delete()
-                    messages.warning(request, 'Consignee Delete Success')
-                    return HttpResponseRedirect('/')
+                    pid = Consignees.objects.get(pk=request.POST.get('consigneeid').title())
+                    if pid.party_consignee == None:                       
+                        pid.delete()
+                        messages.warning(request, 'Consignee Delete Success')
+                        return HttpResponseRedirect('/')
+                    else:
+                        messages.success(request,'Consignee not Delete it Primary')
+                        return redirect('/editconsignee/delete/')
     else:
         return HttpResponseRedirect('/')
 
@@ -662,7 +685,7 @@ def add_party(request, pr):
 
             if str(party) == str(request.POST.get('party')):
                 messages.warning(request, 'Party Already Exist')
-                return HttpResponseRedirect('/addparty/')
+                return redirect('/addparty/')
             else:
                 clients = Clientform(request.POST)
                 if clients.is_valid():
@@ -679,15 +702,29 @@ def add_party(request, pr):
                     consev = Consignees(party_id=int(pid), consignee=name, party_consignee=int(
                         pid), station=station, transport=transport)
                     consev.save()
-                    if pr == 'order':
-                        return HttpResponseRedirect('/addorder/add/')
-                    else:
-                        return HttpResponseRedirect('/')
+                    return redirect('/')
+                if pr == 'order':
+                        p_name=request.POST.get('id_party').title()
+                        s_name=request.POST.get('id_station').title()
+                        t_name=request.POST.get('id_transport').title()
+                        padd = Clients(party=p_name, station=s_name, transport=t_name)
+                        padd.save()
+                        pid = ''
+                        i = Clients.objects.filter(party=p_name)
+                        for id in i:
+                          pid = id.id
+                        consev = Consignees(party_id=int(pid), consignee=p_name, party_consignee=int(
+                        pid), station=s_name, transport=t_name)
+                        consev.save()
+                        #messages.success(request, 'Party add Success  ' + name)
+                        #return redirect('/addorder/add/')
+                
+                        
 
         else:
             clients = Clientform()
     else:
-        return HttpResponseRedirect('/')
+        return redirect('/')
     return render(request, 'addparty.html', {'clients': clients})
 
 
@@ -778,8 +815,17 @@ def form_data(request, atri):
     if atri == 'addsent':
         if request.POST.get('oid'):
             dataform = consigneeform.objects.get('consignee')
+    if atri == 'allparty' :
+        if request.POST.get('party') == 'all':
+            match=request.POST.get('selected')
+            dataform = Clients.objects.all().order_by('party')
+    if atri == 'allconsignee' :
+        if request.POST.get('consignee') == 'all' and request.POST.get('party_id')!= None:
+            match=request.POST.get('selected')
+            dataform = Consignees.objects.filter(party_id=request.POST.get('party_id')).order_by('consignee')
 
-    return render(request, 'form_data.html', {'form': dataform, 'atri': atri})
+
+    return render(request, 'form_data.html', {'form': dataform, 'atri': atri,})
 
 
 def item_wise(request, filter):

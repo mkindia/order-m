@@ -30,6 +30,44 @@ $(document).ready(function () {
         });
     }, 1000);
 
+    // for featch consignee
+    function getallconsignee(party_id,selected,dest){
+
+        $.ajax({
+            type: "POST",
+            url: '/form_data/allconsignee',
+            data: {
+                party_id:party_id,
+                consignee:'all',
+                selected:selected,                
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                
+            },
+            success: function (data) {
+                $("#"+dest).html(data);
+            }
+        });
+        
+       
+         }
+    // for FETCH party function
+    function getallparty(id,selected){
+        
+        $.ajax({
+            type: "POST",
+            url: '/form_data/allparty',
+            data: {
+                party:'all',
+                selected:selected,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                
+            },
+            success: function (data) {
+                $("#"+id).html(data);
+            }
+        });
+         }
+
     //for loader disabled
     document.getElementById("loader").style.display = "none";
     if (window.location.pathname == '/') {
@@ -118,27 +156,17 @@ $(document).ready(function () {
             let pid = document.getElementById('consid').value;
             let con = document.getElementById('consign').value;
 
-            if (this.checked) {
-                //  showAjexOrder(pid, con);
-               // document.getElementById("co").innerHTML = '';
-                showCompletedOrder(pid, con);
-               // document.getElementById("ordernotcompleted").style.display = "none";
-              //  document.getElementById("ordercompleted").style.display = "block";
-
+            if (this.checked) {            
+                showCompletedOrder(pid, con);              
             }
             else {
-                 showAjexOrder(pid,con);
-             //   document.getElementById("ordernotcompleted").style.display = "block";
-             //   document.getElementById("ordercompleted").style.display = "none";
+                 showAjexOrder(pid,con);             
             }
         });
 
         // For select party
         $("#consid").change(function () {
              document.getElementById("showcompleted").checked = false;
-
-          //  document.getElementById("ordernotcompleted").style.display = "block";
-          //  document.getElementById("ordercompleted").style.display = "none";
 
             if (document.getElementById("consid").value != "selectparty") {
                 document.getElementById("consign").disabled = false;
@@ -769,17 +797,27 @@ $(document).ready(function () {
 
     if (window.location.pathname == '/addorder/add/') {
         document.getElementById("addorder2").disabled = true;
-
+        document.getElementById("selectconsignee").disabled=true;
+        var party_name = document.getElementById("id_party").value
+       
+        getallparty('consid',null); // call allparty
         $("#id_orderdate").change(function () {
 
             if (document.getElementById('id_orderdate').value != "") {
-                if (document.getElementById('consid').value != "") {
+                if (document.getElementById('consid').value != "") 
+                {
                     document.getElementById('addorder2').disabled = false;
+                    
                 }
-                else (document.getElementById('addorder2').disabled = true)
+                else {
+                    document.getElementById('addorder2').disabled = true;
+                    
+                     }
 
             }
-            else (document.getElementById('addorder2').disabled = true)
+            else {
+                document.getElementById('addorder2').disabled = true;
+                document.getElementById("selectconsignee").disabled=true;}
 
         });
 
@@ -787,12 +825,17 @@ $(document).ready(function () {
         $("#consid").change(function () {
 
             if (document.getElementById('consid').value != "") {
+                document.getElementById("selectconsignee").disabled=false;
                 if (document.getElementById('id_orderdate').value != "") {
                     document.getElementById('addorder2').disabled = false;
+                   
                 }
                 else (document.getElementById('addorder2').disabled = true)
             }
-            else (document.getElementById('addorder2').disabled = true)
+            else {
+                document.getElementById('addorder2').disabled = true;
+                document.getElementById("selectconsignee").disabled=true;
+                 }
 
             var programingId = $(this).val();
 
@@ -916,6 +959,109 @@ $(document).ready(function () {
 
         })
 
+        $("#addparty").on('click', function () {
+                      
+            var party_name = document.getElementById("id_party").value;           
+            var transport_name = document.getElementById("id_transport").value;  
+            var station_name = document.getElementById("id_station").value
+           
+            if(party_name == null || party_name =="")
+            {
+                alert('Please Enter Party Name')
+            }
+            else if(station_name == null || station_name == "")
+            {
+                alert('Please Enter Station Name')
+            }
+            else if( transport_name == null || transport_name == "" )
+            {
+                alert('Please Enter Transport Name')
+            }
+            else
+            {
+            $.ajax({
+                type: "POST",
+                url: '/addparty/order/',
+                data: {
+                    id_party: party_name,
+                    id_station: station_name,
+                    id_transport: transport_name,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                   
+                },
+                success: function (data) {
+                    getallparty('consid',party_name);
+                    document.getElementById("id_party").value=null;
+                    document.getElementById("id_station").value=null;
+                    document.getElementById("id_transport").value=null;              
+                    $('#addparty_model').modal('hide');
+                    tempAlert("Party added success please select", 1500);
+                }
+            });
+            }
+        })
+       
+        $("#addconsignee").on('click', function () {
+            
+            var party_name = document.getElementById('consid').value;  
+            var consignee_name = document.getElementById("id_consignee").value;
+            var station_name = document.getElementById("con_station").value;
+            var transport_name = document.getElementById("con_transport").value;
+            if(party_name == null || party_name == "")
+            {
+                alert('Please Select Party First')
+            }            
+            else if(consignee_name == null || consignee_name =="")
+            {
+                alert('Please Enter Consignee Name');
+            }
+            else if(station_name == null || station_name == "")
+            {
+                alert('Please Enter Station Name');
+            }
+            else if( transport_name == null || transport_name == "" )
+            {
+                alert('Please Enter Transport Name');
+            }
+            else
+            {
+            $.ajax({
+                type: "POST",
+                url: '/addconsignee/order/',
+                data: {
+                    id_party: party_name,
+                    id_consignee : consignee_name,
+                    id_station: station_name,
+                    id_transport: transport_name,
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                   
+                },
+
+                success: function (data) {                    
+                    getallconsignee(party_name,consignee_name,'consign');
+                    document.getElementById("id_consignee").value=null;
+                    document.getElementById("con_station").value=null;
+                    document.getElementById("con_transport").value=null;              
+                    $('#addconsignee_model').modal('hide');
+                    var theSelect = document.getElementById('consign');
+                    theSelect.options[theSelect.options.length - 1].value;
+                    
+                    tempAlert('Consignee added success please select Party', 1500);
+                    
+                },
+                error: function (data) {
+                    
+                    alert('Consignee Allready Exist');
+                    
+                },
+                failure: function(data) { 
+                    alert('Got an error dude');
+                }
+
+                });
+
+            }
+        })
 
     };
 
