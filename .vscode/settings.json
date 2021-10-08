@@ -1,5 +1,11 @@
+<<<<<<< HEAD
+{
+    "python.pythonPath": "/usr/bin/python",
+    "editor.fontSize": 18
+=======
 {
     "python.pythonPath": "/usr/bin/python",
     "editor.fontSize": 18,
     "git.ignoreLimitWarning": true
+>>>>>>> 5327bff1387b372bb84fe09b2327f4281a061738
 }
